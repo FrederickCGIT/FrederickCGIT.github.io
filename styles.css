@@ -99,8 +99,8 @@ p {
 /* --- Homepage Hero --- */
 .hero img {
     width: 100%;
-    max-height: 750px;
-    margin-bottom: 25px;
+    height: auto;
+    margin-bottom: 30px;
 }
 
 /* --- Generic Product Grid (for photos) --- */
@@ -182,4 +182,98 @@ footer {
         font-size: 2.2rem;
     }
 
-    header nav li
+    header nav li {
+        margin-left: 20px;
+    }
+
+    header nav a {
+        font-size: 1.05rem;
+    }
+
+    main h2 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1.05rem;
+    }
+
+    /* Two-column grid for tablets */
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+    }
+
+    .product-card h4 {
+        font-size: 1.3rem;
+    }
+
+    .product-card .price {
+        font-size: 1.15rem;
+    }
+
+    #page-about .owner-photo {
+        max-width: 400px;
+        float: right;
+        margin-left: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+/* --- DESKTOP (1025px and above) --- */
+@media (min-width: 1025px) {
+    .container {
+        padding: 20px 40px;
+    }
+
+    header .logo h1 {
+        font-size: 2.5rem;
+    }
+
+    header nav li {
+        margin-left: 25px;
+    }
+
+    header nav a {
+        font-size: 1.1rem;
+    }
+
+    main h2 {
+        font-size: 2.2rem;
+    }
+
+    p {
+        font-size: 1.1rem;
+    }
+
+    /* Hero image max-height for desktop */
+    .hero img {
+        max-height: 750px;
+        object-fit: cover;
+    }
+
+    /* Three-column grid for desktop */
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .product-card h4 {
+        font-size: 1.4rem;
+    }
+
+    .product-card .price {
+        font-size: 1.2rem;
+    }
+
+    #page-about .owner-photo {
+        max-width: 600px;
+    }
+}
+
+/* --- MOBILE LANDSCAPE & SMALL TABLETS (481px - 768px) --- */
+@media (min-width: 481px) and (max-width: 768px) {
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
