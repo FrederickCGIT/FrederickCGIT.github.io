@@ -2,6 +2,7 @@
  * FILE: styles.css
  * My notes: A basic scaffold. Don't judge me. 
  * It's just here to hold your fonts and photos.
+ * UPDATED: Now responsive with mobile, tablet, and desktop breakpoints
  */
 
 /* --- Basic Setup & Graph Paper Background --- */
@@ -19,13 +20,13 @@ body {
     background-size: 20px 20px;
 }
 
-/* --- Desktop-Only Container --- */
+/* --- Responsive Container --- */
 .container {
-    max-width: 1200px; /* Fixed width for desktop */
-    margin: 0 auto; /* Centers the layout */
-    background-color: #ffffff; /* White paper on top of the graph paper */
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #ffffff;
     box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    padding: 20px 40px;
+    padding: 20px;
 }
 
 /* --- Header & Navigation --- */
@@ -36,11 +37,12 @@ header {
     border-bottom: 2px solid #eee;
     padding-bottom: 20px;
     margin-bottom: 30px;
+    flex-wrap: wrap;
 }
 
 header .logo h1 {
     margin: 0;
-    font-size: 2.5rem;
+    font-size: 2rem;
     font-weight: 900;
 }
 
@@ -54,17 +56,18 @@ header nav ul {
     margin: 0;
     padding: 0;
     display: flex;
+    flex-wrap: wrap;
 }
 
 header nav li {
-    margin-left: 25px;
+    margin-left: 15px;
 }
 
 header nav a {
     text-decoration: none;
     color: #555;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -74,14 +77,13 @@ header nav a.active {
     color: #007bff; /* A nice, safe corporate blue */
 }
 
-
 /* --- Main Content Area --- */
 main {
     padding: 20px 0;
 }
 
 main h2 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     font-weight: 800;
     border-bottom: 3px solid #007bff;
     padding-bottom: 10px;
@@ -90,7 +92,7 @@ main h2 {
 }
 
 p {
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.7;
 }
 
@@ -104,8 +106,8 @@ p {
 /* --- Generic Product Grid (for photos) --- */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3-column grid */
-    gap: 30px;
+    grid-template-columns: 1fr; /* Mobile-first: single column */
+    gap: 20px;
 }
 
 .product-card {
@@ -117,34 +119,44 @@ p {
 .product-card img {
     width: 100%;
     height: auto;
-    aspect-ratio: 1 / 1; /* Makes placeholder square */
+    aspect-ratio: 1 / 1;
     object-fit: cover;
     background: #f0f0f0;
 }
 
 .product-card h4 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     margin: 15px 0 5px 0;
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+/* Product text hover state */
+.product-card:hover h4 {
+    color: #007bff;
 }
 
 .product-card .price {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: #333;
     margin-bottom: 20px;
+    transition: color 0.3s ease; /* Smooth color transition */
+}
+
+/* Product price hover state */
+.product-card:hover .price {
+    color: #0056b3; /* Darker blue on hover */
 }
 
 /* --- About Page Specifics --- */
 #page-about .owner-photo {
     width: 100%;
-    max-width: 600px;
+    max-width: 100%;
     height: auto;
-    float: right;
-    margin-left: 20px;
-    margin-bottom: 20px;
+    float: none;
+    margin: 0 0 20px 0;
     border: 10px solid #f0f0f0;
 }
-
 
 /* --- Footer --- */
 footer {
@@ -153,4 +165,21 @@ footer {
     margin-top: 40px;
     text-align: center;
     color: #999;
+    font-size: 0.9rem;
 }
+
+/* ========================================
+   RESPONSIVE BREAKPOINTS
+   ======================================== */
+
+/* --- TABLET (769px - 1024px) --- */
+@media (min-width: 769px) {
+    .container {
+        padding: 20px 30px;
+    }
+
+    header .logo h1 {
+        font-size: 2.2rem;
+    }
+
+    header nav li
