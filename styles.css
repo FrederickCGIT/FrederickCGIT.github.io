@@ -99,7 +99,7 @@ p {
 /* --- Homepage Hero --- */
 .hero img {
     width: 100%;
-    height: auto;
+    max-height: auto;
     margin-bottom: 30px;
 }
 
