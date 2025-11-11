@@ -99,8 +99,8 @@ p {
 /* --- Homepage Hero --- */
 .hero img {
     width: 100%;
-    max-height: auto;
-    margin-bottom: 30px;
+    max-height: 750px;
+    margin-bottom: 25px;
 }
 
 /* --- Generic Product Grid (for photos) --- */
