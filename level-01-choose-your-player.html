@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Level 01 · Choose Your Player — Qualtrics Labs · L0 Start-Up Lab</title>
+  <meta name="description" content="Level 01 of the L0 Start-Up Lab. Decide who's actually using Qualtrics, build your player cards, and bring them to your team." />
+
+  <!-- ============================================================
+       PLACEHOLDER · FAVICON
+       Replace with the Qualtrics 32×32 favicon SVG when deployed.
+       Brand asset: Logos/Qualtrics/Qualtrics_favicon/svg/Q_Favicon_32x32.svg
+       ============================================================ -->
+  <!-- <link rel="icon" type="image/svg+xml" href="/assets/Q_Favicon_32x32.svg" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Shared Labs styles (tokens, header, level pattern, buttons, cohort, footer) -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- ============================================================
+       Page-specific styles ONLY.
+       Everything not listed below comes from styles.css.
+       Tokens used: var(--c-ink), var(--c-ink-soft), var(--c-cobalt),
+       var(--c-rule), var(--c-bg), var(--c-bg-alt), var(--c-white),
+       var(--c-dark-grey), var(--gradient-brand), var(--gradient-soft),
+       var(--font-display), var(--font-body), var(--font-mono),
+       var(--s-1)…var(--s-10), var(--ease-out), var(--dur-fast),
+       var(--dur-med).
+       ============================================================ -->
+  <style>
+
+    /* ----------------------------------------------------------
+       BREADCRUMB · level locator under the header
+       ---------------------------------------------------------- */
+    .breadcrumb { padding: var(--s-5) 0 0; }
+    .breadcrumb__inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--c-ink-soft);
+    }
+    .breadcrumb__inner a {
+      color: var(--c-ink-soft);
+      border-bottom: 1px solid transparent;
+      transition: color var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
+    }
+    .breadcrumb__inner a:hover {
+      color: var(--c-cobalt);
+      border-bottom-color: currentColor;
+    }
+    .breadcrumb__sep { opacity: 0.4; }
+    .breadcrumb__current { color: var(--c-ink); }
+
+    /* ----------------------------------------------------------
+       PROGRESS · sticky three-beat tracker
+       ---------------------------------------------------------- */
+    .progress {
+      position: sticky;
+      top: 64px;
+      z-index: 40;
+      background: var(--c-white);
+      border-top: 1px solid var(--c-rule);
+      border-bottom: 1px solid var(--c-rule);
+    }
+    .progress__inner {
+      display: flex;
+      align-items: stretch;
+    }
+    .progress__step {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: var(--s-3);
+      padding: var(--s-4) var(--s-5);
+      border-right: 1px solid var(--c-rule);
+      color: var(--c-ink-soft);
+      transition: background var(--dur-fast) var(--ease-out),
+                  color var(--dur-fast) var(--ease-out);
+    }
+    .progress__step:last-child { border-right: none; }
+    .progress__step:hover { background: var(--c-bg); color: var(--c-ink); }
+    .progress__dot {
+      flex: 0 0 28px;
+      height: 28px;
+      width: 28px;
+      border-radius: 50%;
+      border: 2px solid var(--c-dark-grey);
+      background: var(--c-white);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--c-ink-soft);
+    }
+    .progress__label {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+      min-width: 0;
+    }
+    .progress__label small {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+    }
+    .progress__label strong {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--c-ink);
+    }
+    .progress__step[data-state="active"] { background: var(--c-bg); }
+    .progress__step[data-state="active"] .progress__dot {
+      background: var(--gradient-brand);
+      border-color: transparent;
+      color: var(--c-white);
+    }
+    .progress__step[data-state="done"] .progress__dot {
+      background: var(--c-cobalt);
+      border-color: var(--c-cobalt);
+      color: var(--c-white);
+    }
+    .progress__step[data-state="done"] .progress__dot::after { content: "✓"; }
+    .progress__step[data-state="done"] .progress__dot span { display: none; }
+    @media (max-width: 720px) {
+      .progress__step { padding: var(--s-3); }
+      .progress__label small { display: none; }
+    }
+
+    /* ----------------------------------------------------------
+       BEAT · the three-block activity flow
+       ---------------------------------------------------------- */
+    .beat {
+      padding: var(--s-10) 0;
+      border-bottom: 1px solid var(--c-rule);
+    }
+    .beat--alt { background: var(--c-bg-alt); }
+    .beat--locked { opacity: 0.55; pointer-events: none; user-select: none; }
+
+    .beat__head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: var(--s-5);
+      margin-bottom: var(--s-5);
+    }
+    .beat__index {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+      padding: 0.4em 0.9em;
+      border: 1px solid var(--c-dark-grey);
+      border-radius: 999px;
+      background: var(--c-white);
+    }
+    .beat__title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin: 0;
+      color: var(--c-ink);
+    }
+    .beat__lede {
+      font-size: 1.125rem;
+      line-height: 1.55;
+      color: var(--c-ink-soft);
+      max-width: 40rem;
+      margin-bottom: var(--s-7);
+    }
+    .beat__lock-notice {
+      display: none;
+      align-items: center;
+      gap: var(--s-3);
+      padding: var(--s-3) var(--s-4);
+      background: var(--c-white);
+      border: 1px dashed var(--c-dark-grey);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      color: var(--c-ink-soft);
+      margin-bottom: var(--s-5);
+      width: fit-content;
+    }
+    .beat--locked .beat__lock-notice { display: inline-flex; }
+    .beat__action {
+      margin-top: var(--s-7);
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s-3);
+      align-items: center;
+    }
+
+    /* ----------------------------------------------------------
+       READ CARDS · three persona blocks (Beat 1)
+       ---------------------------------------------------------- */
+    .read-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-4);
+    }
+    @media (min-width: 700px) {
+      .read-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .read-card {
+      background: var(--c-white);
+      border: 1px solid var(--c-rule);
+      border-radius: 14px;
+      padding: var(--s-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-4);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--dur-med) var(--ease-out),
+                  border-color var(--dur-med) var(--ease-out),
+                  box-shadow var(--dur-med) var(--ease-out);
+    }
+    .read-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--c-ink);
+      box-shadow: 0 16px 40px -24px rgba(10,10,15,0.18);
+    }
+    .read-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gradient-brand);
+    }
+    .read-card__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--gradient-brand);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-white);
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+    .read-card__title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin: 0;
+    }
+    .read-card__copy {
+      color: var(--c-ink-soft);
+      font-size: 0.95rem;
+      line-height: 1.55;
+      margin: 0;
+    }
+    .read-card__question {
+      margin-top: auto;
+      padding-top: var(--s-4);
+      border-top: 1px dashed var(--c-rule);
+    }
+    .read-card__question small {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+      margin-bottom: var(--s-2);
+    }
+    .read-card__question strong {
+      font-weight: 600;
+      color: var(--c-ink);
+      font-size: 0.95rem;
+      line-height: 1.4;
+      display: block;
+    }
+
+    .read-cite {
+      margin-top: var(--s-6);
+      padding: var(--s-4) var(--s-5);
+      background: var(--c-white);
+      border: 1px solid var(--c-rule);
+      border-left: 3px solid var(--c-cobalt);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      color: var(--c-ink-soft);
+    }
+
+    /* ----------------------------------------------------------
+       BUILDER · player-card builder (Beat 2)
+       ---------------------------------------------------------- */
+    .builder {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-6);
+      align-items: start;
+    }
+    @media (min-width: 900px) {
+      .builder { grid-template-columns: 320px 1fr; }
+    }
+
+    .builder__sidebar {
+      background: var(--c-white);
+      border: 1px solid var(--c-rule);
+      border-radius: 14px;
+      padding: var(--s-5);
+    }
+    @media (min-width: 900px) {
+      .builder__sidebar { position: sticky; top: 9rem; }
+    }
+    .builder__sidebar h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.15rem;
+      letter-spacing: -0.01em;
+      margin: 0 0 var(--s-3);
+      color: var(--c-ink);
+    }
+    .builder__sidebar p {
+      font-size: 0.9rem;
+      color: var(--c-ink-soft);
+      line-height: 1.55;
+      margin: 0 0 var(--s-4);
+    }
+    .builder__counter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--s-3) var(--s-4);
+      background: var(--c-bg-alt);
+      border-radius: 8px;
+      margin-bottom: var(--s-4);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+    .builder__counter strong {
+      font-weight: 700;
+      color: var(--c-ink);
+    }
+    .builder__rules { display: flex; flex-direction: column; gap: var(--s-2); }
+    .builder__rules li {
+      position: relative;
+      padding-left: 1.4rem;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: var(--c-ink-soft);
+    }
+    .builder__rules li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--c-cobalt);
+    }
+
+    .builder__cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-4);
+    }
+    @media (min-width: 700px) {
+      .builder__cards { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .player-card {
+      background: var(--c-white);
+      border: 1px solid var(--c-rule);
+      border-radius: 14px;
+      padding: var(--s-5);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-3);
+      transition: border-color var(--dur-fast) var(--ease-out),
+                  box-shadow var(--dur-fast) var(--ease-out);
+    }
+    .player-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--c-dark-grey);
+      transition: background var(--dur-fast) var(--ease-out);
+    }
+    .player-card:focus-within {
+      border-color: var(--c-cobalt);
+      box-shadow: 0 0 0 3px rgba(7, 104, 221, 0.15);
+    }
+    .player-card:focus-within::before { background: var(--gradient-brand); }
+    .player-card__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--s-3);
+    }
+    .player-card__num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+      padding: 0.3em 0.7em;
+      background: var(--c-bg-alt);
+      border-radius: 4px;
+    }
+    .player-card__remove {
+      background: transparent;
+      border: none;
+      color: var(--c-ink-soft);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      padding: 0.3em 0.7em;
+      border-radius: 4px;
+      transition: background var(--dur-fast) var(--ease-out),
+                  color var(--dur-fast) var(--ease-out);
+    }
+    .player-card__remove:hover { background: #FEE2E2; color: #B91C1C; }
+
+    .field { display: flex; flex-direction: column; gap: var(--s-2); }
+    .field label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+    }
+    .field input,
+    .field textarea,
+    .field select {
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      padding: 0.65em 0.85em;
+      border: 1px solid var(--c-rule);
+      border-radius: 8px;
+      background: var(--c-bg);
+      color: var(--c-ink);
+      width: 100%;
+      transition: border-color var(--dur-fast) var(--ease-out),
+                  background var(--dur-fast) var(--ease-out);
+    }
+    .field input:focus,
+    .field textarea:focus,
+    .field select:focus {
+      border-color: var(--c-cobalt);
+      background: var(--c-white);
+      outline: none;
+    }
+    .field textarea {
+      resize: vertical;
+      min-height: 64px;
+      font-family: inherit;
+      line-height: 1.45;
+    }
+
+    .player-card__add {
+      border: 2px dashed var(--c-dark-grey);
+      background: transparent;
+      border-radius: 14px;
+      padding: var(--s-6) var(--s-5);
+      cursor: pointer;
+      font-family: var(--font-body);
+      color: var(--c-ink-soft);
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all var(--dur-fast) var(--ease-out);
+    }
+    .player-card__add:hover:not(:disabled) {
+      border-color: var(--c-cobalt);
+      color: var(--c-cobalt);
+      background: var(--gradient-soft);
+    }
+    .player-card__add:disabled {
+      cursor: not-allowed;
+      opacity: 0.45;
+    }
+    @media (min-width: 700px) {
+      .player-card__add { grid-column: span 2; }
+    }
+
+    /* ----------------------------------------------------------
+       PRINT PREP · preview + export action (Beat 3)
+       ---------------------------------------------------------- */
+    .print-prep {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-7);
+      align-items: start;
+    }
+    @media (min-width: 900px) {
+      .print-prep { grid-template-columns: 1fr 360px; }
+    }
+    .print-prep__copy h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.5rem;
+      letter-spacing: -0.02em;
+      margin: var(--s-5) 0 var(--s-3);
+      color: var(--c-ink);
+    }
+    .print-prep__copy p {
+      color: var(--c-ink-soft);
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: var(--s-4);
+    }
+    .print-prep__panel {
+      background: var(--c-ink);
+      color: var(--c-white);
+      border-radius: 14px;
+      padding: var(--s-6);
+      position: relative;
+      overflow: hidden;
+    }
+    .print-prep__panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gradient-brand);
+    }
+    @media (min-width: 900px) {
+      .print-prep__panel { position: sticky; top: 9rem; }
+    }
+    .print-prep__panel h4 {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin: 0 0 var(--s-3);
+      color: rgba(255,255,255,0.65);
+    }
+    .print-prep__panel p {
+      font-size: 0.9rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.8);
+      margin: 0 0 var(--s-4);
+    }
+
+    .preview {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-3);
+      margin-top: var(--s-5);
+    }
+    @media (min-width: 480px) {
+      .preview { grid-template-columns: repeat(2, 1fr); }
+    }
+    .preview-card {
+      background: var(--c-white);
+      border: 1px solid var(--c-rule);
+      border-radius: 12px;
+      padding: var(--s-4);
+      position: relative;
+      overflow: hidden;
+      color: var(--c-ink);
+    }
+    .preview-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 3px;
+      background: var(--gradient-brand);
+    }
+    .preview-card__num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+      margin: var(--s-2) 0 var(--s-1);
+    }
+    .preview-card__name {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.125rem;
+      letter-spacing: -0.01em;
+      margin: 0 0 var(--s-1);
+      color: var(--c-ink);
+    }
+    .preview-card__role {
+      font-size: 0.85rem;
+      color: var(--c-ink-soft);
+      margin: 0 0 var(--s-3);
+    }
+    .preview-card__row {
+      padding: var(--s-2) 0;
+      border-top: 1px dashed var(--c-rule);
+      font-size: 0.85rem;
+      line-height: 1.45;
+      color: var(--c-ink);
+    }
+    .preview-card__row small {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+      margin-bottom: var(--s-1);
+    }
+    .preview-empty {
+      padding: var(--s-6) var(--s-4);
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+      border: 2px dashed rgba(255,255,255,0.15);
+      border-radius: 10px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+    @media (min-width: 480px) {
+      .preview-empty { grid-column: span 2; }
+    }
+
+    /* ----------------------------------------------------------
+       BUTTONS · additions to the shared system
+       (.btn, .btn--primary, .btn--ghost, etc. live in styles.css)
+       ---------------------------------------------------------- */
+    .btn--gradient {
+      background: var(--gradient-brand);
+      color: var(--c-white);
+      border-color: transparent;
+      background-size: 150% 150%;
+      background-position: 0% 50%;
+      transition: transform var(--dur-fast) var(--ease-out),
+                  background-position var(--dur-med) var(--ease-out),
+                  box-shadow var(--dur-med) var(--ease-out);
+    }
+    .btn--gradient:hover {
+      background-position: 100% 50%;
+      box-shadow: 0 12px 28px -12px rgba(95, 26, 229, 0.5);
+    }
+    .btn--sm {
+      padding: 0.6em 1em;
+      font-size: 0.85rem;
+    }
+
+    /* ----------------------------------------------------------
+       TOAST · ephemeral confirmation chip
+       ---------------------------------------------------------- */
+    .toast {
+      position: fixed;
+      bottom: var(--s-5);
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--c-ink);
+      color: var(--c-white);
+      padding: var(--s-3) var(--s-5);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      opacity: 0;
+      transition: opacity var(--dur-med) var(--ease-out),
+                  transform var(--dur-med) var(--ease-out);
+      pointer-events: none;
+      z-index: 100;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 16px 40px -16px rgba(10,10,15,0.5);
+    }
+    .toast.is-visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ----------------------------------------------------------
+       PRINT STYLESHEET · "Print Your Party"
+       Hides everything except the player-card preview.
+       ---------------------------------------------------------- */
+    @media print {
+      body { background: var(--c-white); font-size: 10.5pt; }
+      .site-header, .site-footer, .breadcrumb, .progress, .level,
+      .beat__head, .beat__lede, .beat__action, .beat__lock-notice,
+      .builder__sidebar, .player-card__add, .read-cite,
+      #beat-1, #beat-2,
+      .print-prep__copy, .print-prep__panel h4, .print-prep__panel p,
+      .cohort {
+        display: none !important;
+      }
+      .beat { padding: 0; border-bottom: none; background: var(--c-white); }
+      .print-prep { grid-template-columns: 1fr; }
+      .print-prep__panel {
+        background: var(--c-white);
+        color: var(--c-ink);
+        padding: 0;
+        position: static;
+      }
+      .print-prep__panel::before { display: none; }
+      .preview { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 0; }
+      .preview-card { break-inside: avoid; box-shadow: none; }
+      @page { margin: 0.5in; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER
+       Identical to index.html — uses shared styles.
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="index.html" aria-label="Qualtrics Labs home">
+        <!-- ============================================================
+             PLACEHOLDER · LOGO
+             Replace this <span> with the Qualtrics gradient wordmark <img>.
+             Brand asset: Logos/Qualtrics/Qualtrics_logo/svg/Qualtrics_gradient_RGB.svg
+             ============================================================ -->
+        <span class="logo-placeholder" aria-hidden="true">QUALTRICS</span>
+        <span class="site-header__divider" aria-hidden="true">·</span>
+        <span class="site-header__lockup">Labs</span>
+      </a>
+      <nav class="site-header__nav" aria-label="Primary">
+        <!-- PLACEHOLDER LINKS · Replace with real Labs IA when available -->
+        <a href="#PLACEHOLDER-catalog">Lab Catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#cohort" class="site-header__cta">Enroll</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================================
+         BREADCRUMB
+         ============================================================ -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <div class="container breadcrumb__inner">
+        <a href="index.html">L0 Start-Up Lab</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <a href="index.html#map">The Map</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <span class="breadcrumb__current" aria-current="page">Level 01 · Choose Your Player</span>
+      </div>
+    </nav>
+
+
+    <!-- ============================================================
+         LEVEL INTRO · "Welcome, Player One"
+         Reuses the .level pattern from styles.css for the giant
+         gradient numeral, body, leave-list, and meta dl.
+         Voice pulled from L0-ROS-V2.0 · Level One on-page copy.
+         ============================================================ -->
+    <section class="level" id="level-intro" aria-labelledby="level-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">01</div>
+        <div class="level__body">
+          <p class="eyebrow">Level One · Self-paced · Day 1</p>
+          <h1 id="level-title" class="level__title">Welcome, Player One.</h1>
+          <p class="level__sub">Who's logging in, and what are they trying to do?</p>
+
+          <p class="level__copy">
+            Before you build a single thing in Qualtrics, you've got a choice
+            to make: who's playing? An admin? A frontline manager? An exec
+            who only logs in for the dashboard? Each one needs a different
+            setup, and that setup gets harder to fix later. Better to make
+            the call now.
+          </p>
+          <p class="level__copy">
+            Spend 20 minutes reading. Spend 20 minutes building your player
+            cards. Bring those cards to your team — they're the start of
+            every conversation about who gets access to what.
+          </p>
+
+          <h3 class="level__sub-h">What you leave with</h3>
+          <ul class="leave-list">
+            <li>Two to four named players, each with a defined goal</li>
+            <li>A unique identifier strategy for both customers and employees</li>
+            <li>A printable player card set for internal alignment</li>
+          </ul>
+
+          <dl class="level__meta">
+            <div><dt>Format</dt><dd>Web page</dd></div>
+            <div><dt>Time</dt><dd>~45 min</dd></div>
+            <div><dt>Output</dt><dd>Player cards</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         PROGRESS · BEAT TRACKER
+         JS-driven state. data-state cycles: idle → active → done
+         ============================================================ -->
+    <nav class="progress" aria-label="Activity progress">
+      <div class="container progress__inner">
+        <a class="progress__step" href="#beat-1" data-step="1" data-state="active">
+          <span class="progress__dot"><span>1</span></span>
+          <span class="progress__label">
+            <small>Beat 1</small>
+            <strong>Read</strong>
+          </span>
+        </a>
+        <a class="progress__step" href="#beat-2" data-step="2" data-state="idle">
+          <span class="progress__dot"><span>2</span></span>
+          <span class="progress__label">
+            <small>Beat 2</small>
+            <strong>Build your player cards</strong>
+          </span>
+        </a>
+        <a class="progress__step" href="#beat-3" data-step="3" data-state="idle">
+          <span class="progress__dot"><span>3</span></span>
+          <span class="progress__label">
+            <small>Beat 3</small>
+            <strong>Print your party</strong>
+          </span>
+        </a>
+      </div>
+    </nav>
+
+
+    <!-- ============================================================
+         BEAT 1 · READ
+         Three short persona blocks. Each ends with a question
+         the customer answers in Beat 2.
+         ============================================================ -->
+    <section class="beat" id="beat-1" aria-labelledby="beat-1-title">
+      <div class="container">
+        <header class="beat__head">
+          <span class="beat__index">Beat 01 / Read</span>
+          <h2 id="beat-1-title" class="beat__title">Three players. Three setups.</h2>
+        </header>
+
+        <p class="beat__lede">
+          Spend 20 minutes here. Each block ends with a question. Hold onto
+          your answers — you'll bring them straight into the card builder
+          below.
+        </p>
+
+        <div class="read-grid">
+
+          <!-- Block 1 · The Admin -->
+          <article class="read-card">
+            <div class="read-card__icon" aria-hidden="true">A</div>
+            <h3 class="read-card__title">The Admin</h3>
+            <p class="read-card__copy">
+              The person who keeps the platform running. Sets up users,
+              defines roles, manages the directory, owns the field naming
+              conventions everyone else inherits. Touches every project,
+              builds none of them end-to-end.
+            </p>
+            <p class="read-card__copy">
+              An admin needs broad access and a clear view of who's doing
+              what. They're the difference between a clean platform in
+              year two and a mess.
+            </p>
+            <div class="read-card__question">
+              <small>Carry into Beat 2</small>
+              <strong>Who in your org will own the platform itself?</strong>
+            </div>
+          </article>
+
+          <!-- Block 2 · The Frontline Manager -->
+          <article class="read-card">
+            <div class="read-card__icon" aria-hidden="true">M</div>
+            <h3 class="read-card__title">The Frontline Manager</h3>
+            <p class="read-card__copy">
+              The person who actually acts on the data. Sees their team's
+              dashboard on Monday morning, sees a flagged ticket in the
+              afternoon, follows up with a customer or an employee by Friday.
+            </p>
+            <p class="read-card__copy">
+              They need a focused view — their team, their region, their
+              metrics. Anything more and the dashboard goes unread. The
+              setup that works for the admin will sink the manager.
+            </p>
+            <div class="read-card__question">
+              <small>Carry into Beat 2</small>
+              <strong>Which managers will live in Qualtrics weekly?</strong>
+            </div>
+          </article>
+
+          <!-- Block 3 · The Executive -->
+          <article class="read-card">
+            <div class="read-card__icon" aria-hidden="true">E</div>
+            <h3 class="read-card__title">The Executive</h3>
+            <p class="read-card__copy">
+              The person who only logs in for the dashboard, and only for
+              the top-line numbers. Wants the big picture in 60 seconds.
+              Doesn't want to filter, drill down, or learn the tool.
+            </p>
+            <p class="read-card__copy">
+              An exec view is a different design problem from a manager
+              view. Same data, ruthless edit. Get this wrong and they
+              stop opening the link.
+            </p>
+            <div class="read-card__question">
+              <small>Carry into Beat 2</small>
+              <strong>Which leaders will see the rollup view?</strong>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- ============================================================
+             SOURCE CITE · Reading content sourced from Qualtrics support
+             ============================================================ -->
+        <p class="read-cite">
+          <strong>Read deeper:</strong>
+          The full dashboard personas guide lives at
+          <a href="https://www.qualtrics.com/support/vocalize/getting-started-vocalize/sharing-administering-dashboards/#DashboardPersonas" target="_blank" rel="noopener">
+            qualtrics.com/support · Dashboard Personas →
+          </a>
+        </p>
+
+        <div class="beat__action">
+          <button type="button" class="btn btn--primary" data-action="complete-beat-1">
+            I've got my answers. Open the builder.
+            <span aria-hidden="true">→</span>
+          </button>
+          <a class="btn btn--ghost btn--sm" href="https://www.qualtrics.com/support/vocalize/getting-started-vocalize/sharing-administering-dashboards/#DashboardPersonas" target="_blank" rel="noopener">
+            Open the personas guide
+          </a>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         BEAT 2 · BUILD YOUR PLAYER CARDS
+         Locked until Beat 1 is marked complete.
+         Customer names 2–4 players, defines goals, picks identifier.
+         ============================================================ -->
+    <section class="beat beat--alt beat--locked" id="beat-2" aria-labelledby="beat-2-title">
+      <div class="container">
+        <header class="beat__head">
+          <span class="beat__index">Beat 02 / Build</span>
+          <h2 id="beat-2-title" class="beat__title">Build your player cards.</h2>
+        </header>
+
+        <p class="beat__lock-notice" aria-live="polite">
+          <span aria-hidden="true">🔒</span>
+          Finish Beat 1 to unlock the builder.
+        </p>
+
+        <p class="beat__lede">
+          Two to four players. Real names if you have them, role names if
+          you don't. Each card needs a goal — what is this player actually
+          trying to do? — and a unique identifier. Cards save as you type.
+        </p>
+
+        <div class="builder">
+          <aside class="builder__sidebar" aria-label="Builder rules">
+            <h3>The rules</h3>
+            <p>
+              Two minimums, four maximum. More than four and you're naming
+              everyone in the org chart instead of designing for actual users.
+            </p>
+            <div class="builder__counter">
+              <span>Players defined</span>
+              <strong><span id="card-count">0</span> / 4</strong>
+            </div>
+            <ul class="builder__rules">
+              <li>Name a person or a clear role — "Sarah from Ops" or "Regional CX Manager"</li>
+              <li>Goal is one sentence, ends in a verb the player does</li>
+              <li>One identifier strategy for customers, one for employees</li>
+              <li>Skip the maybes. Add only the players who'll log in</li>
+            </ul>
+          </aside>
+
+          <div class="builder__cards" id="card-grid">
+            <!-- Cards injected by JS. Add-card button rendered last. -->
+          </div>
+        </div>
+
+        <div class="beat__action">
+          <button type="button" class="btn btn--primary" data-action="complete-beat-2" disabled>
+            Lock my party. Move to print.
+            <span aria-hidden="true">→</span>
+          </button>
+          <button type="button" class="btn btn--ghost btn--sm" data-action="reset-cards">
+            Start over
+          </button>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         BEAT 3 · PRINT YOUR PARTY
+         Locked until Beat 2 has at least 2 valid cards.
+         Print stylesheet exports just the preview cards.
+         ============================================================ -->
+    <section class="beat beat--locked" id="beat-3" aria-labelledby="beat-3-title">
+      <div class="container">
+        <header class="beat__head">
+          <span class="beat__index">Beat 03 / Print</span>
+          <h2 id="beat-3-title" class="beat__title">Print your party.</h2>
+        </header>
+
+        <p class="beat__lock-notice" aria-live="polite">
+          <span aria-hidden="true">🔒</span>
+          Define at least two players to unlock the export.
+        </p>
+
+        <div class="print-prep">
+          <div class="print-prep__copy">
+            <p class="beat__lede">
+              The card set you just built is the artifact you bring to your
+              team. One page. Printable. Use it in the next stakeholder
+              meeting — it's the start of every conversation about who gets
+              access to what.
+            </p>
+
+            <h3>What you do with this</h3>
+            <p>
+              Walk it across the desk to whoever owns identity in your
+              org. Put it on the table at your next admin sync. Bring it
+              to Level 03 — you'll need these names when we build the
+              intake survey live.
+            </p>
+
+            <p>
+              Nobody else has to fill this out for you. The work is
+              already done. Print the page and move on.
+            </p>
+
+            <div class="beat__action">
+              <button type="button" class="btn btn--gradient" data-action="print">
+                <span aria-hidden="true">⎙</span>
+                Print my party (one page)
+              </button>
+              <button type="button" class="btn btn--ghost btn--sm" data-action="complete-beat-3">
+                I've got my cards. Mark Level 01 complete.
+              </button>
+            </div>
+          </div>
+
+          <aside class="print-prep__panel" aria-label="Preview">
+            <h4>Preview</h4>
+            <p>
+              This is what prints. Two-up if you have four players,
+              stacked if you have two. No sidebar, no chrome.
+            </p>
+            <div class="preview" id="preview-grid" aria-live="polite">
+              <p class="preview-empty">Cards will preview here once you fill them in above.</p>
+            </div>
+          </aside>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         COHORT CTA · Enrollment
+         Buttons link to the URLs supplied by the requester.
+         Reuses the .cohort pattern from styles.css.
+         ============================================================ -->
+    <section class="cohort" id="cohort" aria-labelledby="cohort-title">
+      <div class="container cohort__inner">
+        <div class="cohort__copy">
+          <p class="eyebrow eyebrow--inverse">Next cohort · Levels 03 &amp; 04</p>
+          <h2 id="cohort-title" class="cohort__title">
+            You finished Level 01.<br />
+            Lock in your seat.
+          </h2>
+          <p class="cohort__lede">
+            Cohorts cap at 30. Past that, the build pace breaks down.
+            Pick a start date and we'll send the calendar invites for
+            the live levels.
+          </p>
+        </div>
+
+        <div class="cohort__panel">
+          <ul class="cohort-dates" role="list">
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with next live cohort start date -->
+                <span class="cohort-dates__day">Mon</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                <!-- PLACEHOLDER · Replace with seat count from registration system -->
+                [N] of 30 seats open
+              </p>
+              <a href="https://frederickcgit.github.io/#PLACEHOLDER-cohort-1-signup" class="btn btn--primary btn--block">
+                Reserve a seat
+              </a>
+            </li>
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with second cohort start date -->
+                <span class="cohort-dates__day">Mon</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                <!-- PLACEHOLDER · Replace with seat count from registration system -->
+                [N] of 30 seats open
+              </p>
+              <a href="https://frederickcgit.github.io/#PLACEHOLDER-cohort-2-signup" class="btn btn--ghost-inverse btn--block">
+                Reserve a seat
+              </a>
+            </li>
+          </ul>
+          <p class="cohort__fineprint">
+            Levels 01, 02, 05 unlock on the dates above. Levels 03 and 04
+            run live — calendar invites land in your inbox after sign-up.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       SITE FOOTER
+       Identical to index.html.
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <!-- PLACEHOLDER · LOGO (footer)
+             Replace with Qualtrics_black_RGB.svg or gradient SVG -->
+        <span class="logo-placeholder logo-placeholder--sm" aria-hidden="true">QUALTRICS</span>
+        <p class="site-footer__tagline">Labs · L0 · Level 01</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="Footer">
+        <a href="#PLACEHOLDER-catalog">Lab catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#PLACEHOLDER-support">Support</a>
+        <a href="#PLACEHOLDER-privacy">Privacy</a>
+      </nav>
+      <p class="site-footer__legal">
+        © Qualtrics. Doc ref: L0-ROS-V2.0 · Level 01.
+      </p>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+  <!-- ============================================================
+       BEHAVIOR
+       In-memory state for the artifact preview environment.
+       NOTE FOR PRODUCTION: replace the in-memory `state` object
+       with a save-and-resume hookup against the customer's
+       community account (per Run of Show production notes).
+       Suggested: window.localStorage for a quick MVP, then move
+       to a backend store keyed on community user id.
+       ============================================================ -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ---- State ----
+      const MAX_CARDS = 4;
+      const MIN_CARDS = 2;
+
+      const state = {
+        beat1Done: false,
+        beat2Done: false,
+        beat3Done: false,
+        cards: [
+          { name: '', role: '', goal: '', identifier: 'Email address' },
+          { name: '', role: '', goal: '', identifier: 'Email address' }
+        ]
+      };
+
+      // ---- DOM refs ----
+      const beat2 = document.getElementById('beat-2');
+      const beat3 = document.getElementById('beat-3');
+      const cardGrid = document.getElementById('card-grid');
+      const previewGrid = document.getElementById('preview-grid');
+      const cardCount = document.getElementById('card-count');
+      const completeBeat2Btn = document.querySelector('[data-action="complete-beat-2"]');
+      const toast = document.getElementById('toast');
+
+      const ROLE_OPTIONS = [
+        'Admin',
+        'Frontline manager',
+        'Executive',
+        'Project lead',
+        'Contributor',
+        'Other'
+      ];
+      const ID_OPTIONS = [
+        'Email address',
+        'Employee ID',
+        'Customer ID / CRM ID',
+        'SSO subject ID',
+        'Phone number',
+        'Other'
+      ];
+
+      // ---- Toast ----
+      let toastTimer;
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('is-visible');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('is-visible'), 1800);
+      }
+
+      // ---- Render card grid ----
+      function renderCards() {
+        cardGrid.innerHTML = '';
+
+        state.cards.forEach((card, idx) => {
+          const el = document.createElement('article');
+          el.className = 'player-card';
+          el.innerHTML = `
+            <div class="player-card__head">
+              <span class="player-card__num">Player ${String(idx + 1).padStart(2, '0')}</span>
+              ${state.cards.length > MIN_CARDS
+                ? `<button type="button" class="player-card__remove" data-remove="${idx}" aria-label="Remove player ${idx + 1}">Remove</button>`
+                : ''}
+            </div>
+            <div class="field">
+              <label for="name-${idx}">Name or role</label>
+              <input id="name-${idx}" type="text" data-field="name" data-idx="${idx}"
+                     placeholder="e.g., Sarah from Ops"
+                     value="${escapeHtml(card.name)}" />
+            </div>
+            <div class="field">
+              <label for="role-${idx}">Archetype</label>
+              <select id="role-${idx}" data-field="role" data-idx="${idx}">
+                <option value="">Pick one…</option>
+                ${ROLE_OPTIONS.map(r => `
+                  <option value="${r}" ${card.role === r ? 'selected' : ''}>${r}</option>
+                `).join('')}
+              </select>
+            </div>
+            <div class="field">
+              <label for="goal-${idx}">What are they trying to do?</label>
+              <textarea id="goal-${idx}" data-field="goal" data-idx="${idx}"
+                        placeholder="One sentence. Ends in a verb they actually do.">${escapeHtml(card.goal)}</textarea>
+            </div>
+            <div class="field">
+              <label for="id-${idx}">Unique identifier</label>
+              <select id="id-${idx}" data-field="identifier" data-idx="${idx}">
+                ${ID_OPTIONS.map(o => `
+                  <option value="${o}" ${card.identifier === o ? 'selected' : ''}>${o}</option>
+                `).join('')}
+              </select>
+            </div>
+          `;
+          cardGrid.appendChild(el);
+        });
+
+        // Add card button
+        const addBtn = document.createElement('button');
+        addBtn.type = 'button';
+        addBtn.className = 'player-card__add';
+        addBtn.dataset.action = 'add-card';
+        addBtn.disabled = state.cards.length >= MAX_CARDS;
+        addBtn.textContent = state.cards.length >= MAX_CARDS
+          ? 'Four-player cap. Remove one to add another.'
+          : `+ Add player (${state.cards.length}/${MAX_CARDS})`;
+        cardGrid.appendChild(addBtn);
+
+        cardCount.textContent = state.cards.length;
+        updatePreview();
+        updateBeat2Gate();
+      }
+
+      // ---- Preview render ----
+      function updatePreview() {
+        const filled = state.cards.filter(c => (c.name || c.role) && c.goal);
+        previewGrid.innerHTML = '';
+
+        if (filled.length === 0) {
+          const empty = document.createElement('p');
+          empty.className = 'preview-empty';
+          empty.textContent = 'Cards will preview here once you fill them in above.';
+          previewGrid.appendChild(empty);
+          return;
+        }
+
+        filled.forEach((card, idx) => {
+          const el = document.createElement('div');
+          el.className = 'preview-card';
+          el.innerHTML = `
+            <p class="preview-card__num">Player ${String(idx + 1).padStart(2, '0')}</p>
+            <h4 class="preview-card__name">${escapeHtml(card.name || '—')}</h4>
+            <p class="preview-card__role">${escapeHtml(card.role || 'Archetype TBD')}</p>
+            <div class="preview-card__row">
+              <small>Goal</small>
+              ${escapeHtml(card.goal || '—')}
+            </div>
+            <div class="preview-card__row">
+              <small>Identifier</small>
+              ${escapeHtml(card.identifier || '—')}
+            </div>
+          `;
+          previewGrid.appendChild(el);
+        });
+      }
+
+      function updateBeat2Gate() {
+        const validCards = state.cards.filter(c => (c.name || c.role) && c.goal).length;
+        completeBeat2Btn.disabled = validCards < MIN_CARDS;
+      }
+
+      // ---- Progress / lock state ----
+      function setStepState(stepNum, value) {
+        const link = document.querySelector(`.progress__step[data-step="${stepNum}"]`);
+        if (link) link.dataset.state = value;
+      }
+
+      function unlockBeat(beatEl) {
+        beatEl.classList.remove('beat--locked');
+      }
+
+      function completeBeat1() {
+        if (state.beat1Done) return;
+        state.beat1Done = true;
+        setStepState(1, 'done');
+        setStepState(2, 'active');
+        unlockBeat(beat2);
+        showToast('Beat 1 complete. Builder unlocked.');
+        beat2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function completeBeat2() {
+        if (state.beat2Done) return;
+        state.beat2Done = true;
+        setStepState(2, 'done');
+        setStepState(3, 'active');
+        unlockBeat(beat3);
+        showToast('Party locked. Print is open.');
+        beat3.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function completeBeat3() {
+        if (state.beat3Done) return;
+        state.beat3Done = true;
+        setStepState(3, 'done');
+        showToast('Level 01 complete. Level 02 unlocks Day 3.');
+      }
+
+      // ---- Helpers ----
+      function escapeHtml(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      // ---- Event delegation ----
+      document.addEventListener('click', function (e) {
+        const action = e.target.closest('[data-action]')?.dataset.action;
+        const removeIdx = e.target.closest('[data-remove]')?.dataset.remove;
+
+        if (action === 'complete-beat-1') completeBeat1();
+        else if (action === 'complete-beat-2') completeBeat2();
+        else if (action === 'complete-beat-3') completeBeat3();
+        else if (action === 'add-card') {
+          if (state.cards.length < MAX_CARDS) {
+            state.cards.push({ name: '', role: '', goal: '', identifier: 'Email address' });
+            renderCards();
+          }
+        }
+        else if (action === 'reset-cards') {
+          state.cards = [
+            { name: '', role: '', goal: '', identifier: 'Email address' },
+            { name: '', role: '', goal: '', identifier: 'Email address' }
+          ];
+          renderCards();
+          showToast('Cards reset.');
+        }
+        else if (action === 'print') {
+          window.print();
+        }
+        else if (removeIdx !== undefined) {
+          const i = parseInt(removeIdx, 10);
+          if (state.cards.length > MIN_CARDS) {
+            state.cards.splice(i, 1);
+            renderCards();
+          }
+        }
+      });
+
+      document.addEventListener('input', function (e) {
+        const t = e.target;
+        const field = t.dataset.field;
+        const idx = t.dataset.idx;
+        if (field !== undefined && idx !== undefined) {
+          state.cards[parseInt(idx, 10)][field] = t.value;
+          updatePreview();
+          updateBeat2Gate();
+        }
+      });
+
+      document.addEventListener('change', function (e) {
+        const t = e.target;
+        const field = t.dataset.field;
+        const idx = t.dataset.idx;
+        if (field !== undefined && idx !== undefined) {
+          state.cards[parseInt(idx, 10)][field] = t.value;
+          updatePreview();
+          updateBeat2Gate();
+        }
+      });
+
+      // ---- Initial render ----
+      renderCards();
+    })();
+  </script>
+
+</body>
+</html>
