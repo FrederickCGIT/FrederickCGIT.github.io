@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Level 0 · Start-Up Lab — Qualtrics Labs</title>
+  <meta name="description" content="Two weeks. Five levels. One working Qualtrics platform at the end. Start-Up Lab for new Qualtrics customers." />
+
+  <!-- ============================================================
+       PLACEHOLDER · FAVICON
+       Replace with the Qualtrics 32×32 favicon SVG when deployed.
+       Brand asset: Logos/Qualtrics/Qualtrics_favicon/svg/Q_Favicon_32x32.svg
+       ============================================================ -->
+  <!-- <link rel="icon" type="image/svg+xml" href="/assets/Q_Favicon_32x32.svg" /> -->
+  <!-- <link rel="icon" type="image/png" href="/assets/Q_Favicon_32x32.png" /> -->
+
+  <!-- Inter from Google Fonts as a portable fallback for LMS embedding.
+       For production: self-host Inter + Qualtrics Sans Display per brand standards.
+       See styles.css for the @font-face placeholder block. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER
+       Self-contained chunk. Safe to lift into LMS shared header.
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="#PLACEHOLDER-labs-home" aria-label="Qualtrics Labs home">
+        <!-- ============================================================
+             PLACEHOLDER · LOGO
+             Replace this <span> with the Qualtrics gradient wordmark <img>.
+             Brand asset: Logos/Qualtrics/Qualtrics_logo/svg/Qualtrics_gradient_RGB.svg
+             Example:
+               <img src="/assets/Qualtrics_gradient_RGB.svg" alt="Qualtrics" height="22" />
+             ============================================================ -->
+        <span class="logo-placeholder" aria-hidden="true">QUALTRICS</span>
+        <span class="site-header__divider" aria-hidden="true">·</span>
+        <span class="site-header__lockup">Labs</span>
+      </a>
+      <nav class="site-header__nav" aria-label="Primary">
+        <!-- PLACEHOLDER LINKS · Replace with real Labs IA when available -->
+        <a href="#PLACEHOLDER-catalog">Lab Catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#cohort" class="site-header__cta">Enroll</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================================
+         SECTION · HERO
+         Pulled from L0-ROS-V2.0 cover + intro voice
+         ============================================================ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__pattern" aria-hidden="true">
+        <!-- ============================================================
+             PLACEHOLDER · PATTERN BACKGROUND
+             Replace background-image in styles.css (.hero__pattern) with a
+             Qualtrics master pattern SVG at low opacity.
+             Brand asset: Patterns/-flattened_svg/Qualtrics_master_pattern{N}_flat.svg
+             Recommended: pattern 7, 12, or 18 at opacity 0.06–0.10.
+             ============================================================ -->
+      </div>
+
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <p class="eyebrow">Qualtrics Labs · Level 0</p>
+          <h1 id="hero-title" class="hero__title">
+            Start-Up<br />Lab.
+          </h1>
+          <p class="hero__lede">
+            New customers don't need another tour. They need a controller
+            and a save slot. L0 is <strong>two weeks of building</strong>,
+            five levels deep.
+          </p>
+
+          <div class="hero__actions">
+            <a href="#cohort" class="btn btn--primary">
+              Enroll in the next cohort
+              <span aria-hidden="true">→</span>
+            </a>
+            <a href="#map" class="btn btn--ghost">See the map</a>
+          </div>
+        </div>
+
+        <aside class="hero__stats" aria-label="Lab at a glance">
+          <dl class="stat-grid">
+            <div class="stat-grid__item">
+              <dt>Time to clear</dt>
+              <dd>2 weeks</dd>
+            </div>
+            <div class="stat-grid__item">
+              <dt>Levels</dt>
+              <dd>5</dd>
+            </div>
+            <div class="stat-grid__item">
+              <dt>Audience</dt>
+              <dd>New customers</dd>
+            </div>
+            <div class="stat-grid__item">
+              <dt>Hosted on</dt>
+              <dd>Community</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · THE MAP (5-level overview)
+         Anchor cards. Each links to the inline level section below.
+         ============================================================ -->
+    <section class="map" id="map" aria-labelledby="map-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">The Map</p>
+          <h2 id="map-title" class="section-head__title">
+            Five levels.<br />
+            Two weeks.<br />
+            <span class="text-gradient">One working platform.</span>
+          </h2>
+          <p class="section-head__lede">
+            Levels 1 and 2 are self-paced. Levels 3 and 4 are live webinars
+            where the cohort builds together. Level 5 is the post-game.
+          </p>
+        </header>
+
+        <ol class="map-grid" role="list">
+
+          <li class="map-card">
+            <a href="#level-01" class="map-card__link">
+              <span class="map-card__num">01</span>
+              <span class="map-card__format" data-format="self">Self-paced</span>
+              <h3 class="map-card__title">Choose Your Player</h3>
+              <p class="map-card__desc">
+                Decide who's actually using Qualtrics and what they need to do.
+              </p>
+              <p class="map-card__meta">Day 1 · ~45 min</p>
+            </a>
+          </li>
+
+          <li class="map-card">
+            <a href="#level-02" class="map-card__link">
+              <span class="map-card__num">02</span>
+              <span class="map-card__format" data-format="self">Self-paced</span>
+              <h3 class="map-card__title">Pick Your Loadout</h3>
+              <p class="map-card__desc">
+                Lock in the data and identifiers you'll carry into every project.
+              </p>
+              <p class="map-card__meta">Day 3 · ~60 min</p>
+            </a>
+          </li>
+
+          <li class="map-card map-card--live">
+            <a href="#level-03" class="map-card__link">
+              <span class="map-card__num">03</span>
+              <span class="map-card__format" data-format="live">Live webinar</span>
+              <h3 class="map-card__title">First Boss Fight</h3>
+              <p class="map-card__desc">
+                Build your first survey live with the cohort. Project intake.
+              </p>
+              <p class="map-card__meta">Day 5 · 90 min</p>
+            </a>
+          </li>
+
+          <li class="map-card map-card--live">
+            <a href="#level-04" class="map-card__link">
+              <span class="map-card__num">04</span>
+              <span class="map-card__format" data-format="live">Live webinar</span>
+              <h3 class="map-card__title">Power Up</h3>
+              <p class="map-card__desc">
+                Add a working ticket flow. Learn the four integration patterns.
+              </p>
+              <p class="map-card__meta">Day 8 · 90 min</p>
+            </a>
+          </li>
+
+          <li class="map-card">
+            <a href="#level-05" class="map-card__link">
+              <span class="map-card__num">05</span>
+              <span class="map-card__format" data-format="community">Community</span>
+              <h3 class="map-card__title">Join the Party</h3>
+              <p class="map-card__desc">
+                Show your work in the community. Sign up for what's next.
+              </p>
+              <p class="map-card__meta">Day 10 · ~30 min</p>
+            </a>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · LEVEL 01 · CHOOSE YOUR PLAYER
+         ============================================================ -->
+    <section class="level" id="level-01" aria-labelledby="level-01-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">01</div>
+        <div class="level__body">
+          <p class="eyebrow">Level One · Self-paced · Day 1</p>
+          <h2 id="level-01-title" class="level__title">Choose Your Player</h2>
+          <p class="level__sub">Who's logging in, and what are they trying to do?</p>
+
+          <p class="level__copy">
+            Before you build a single thing in Qualtrics, you've got a choice
+            to make: who's playing? An admin? A frontline manager? An exec who
+            only logs in for the dashboard? Each one needs a different setup,
+            and that setup gets harder to fix later. Better to make the call now.
+          </p>
+          <p class="level__copy">
+            Spend 20 minutes reading. Spend 20 minutes building your player cards.
+            Bring those cards to your team — they're the start of every conversation
+            about who gets access to what.
+          </p>
+
+          <h3 class="level__sub-h">What you leave with</h3>
+          <ul class="leave-list">
+            <li>Two to four named players, each with a defined goal</li>
+            <li>A unique identifier strategy for both customers and employees</li>
+            <li>A printable player card set for internal alignment</li>
+          </ul>
+
+          <dl class="level__meta">
+            <div><dt>Format</dt><dd>Web page</dd></div>
+            <div><dt>Time</dt><dd>~45 min</dd></div>
+            <div><dt>Output</dt><dd>Player cards</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · LEVEL 02 · PICK YOUR LOADOUT
+         ============================================================ -->
+    <section class="level level--alt" id="level-02" aria-labelledby="level-02-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">02</div>
+        <div class="level__body">
+          <p class="eyebrow">Level Two · Self-paced · Day 3</p>
+          <h2 id="level-02-title" class="level__title">Pick Your Loadout</h2>
+          <p class="level__sub">The data and identifiers you carry into every project.</p>
+
+          <p class="level__copy">
+            Every Qualtrics project carries the same core data with it — fields
+            like region, role, department, customer ID. We call that embedded data,
+            and your loadout is the list of fields you're going to standardize
+            across every project from here on out.
+          </p>
+          <p class="level__copy">
+            This is the level customers regret skipping in year two. Pick your
+            fields well now and every dashboard you build later just works. Pick
+            badly and you'll be cleaning up in 18 months.
+          </p>
+
+          <h3 class="level__sub-h">What you leave with</h3>
+          <ul class="leave-list">
+            <li>A defined embedded data field list with rationale for each one</li>
+            <li>Confirmed unique identifiers for customers and employees</li>
+            <li>A pressure-tested loadout sheet ready for the live levels</li>
+          </ul>
+
+          <dl class="level__meta">
+            <div><dt>Format</dt><dd>Web page</dd></div>
+            <div><dt>Time</dt><dd>~60 min</dd></div>
+            <div><dt>Output</dt><dd>Loadout sheet</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · LEVEL 03 · FIRST BOSS FIGHT (LIVE)
+         ============================================================ -->
+    <section class="level level--live" id="level-03" aria-labelledby="level-03-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">03</div>
+        <div class="level__body">
+          <p class="eyebrow">Level Three · Live webinar · Day 5</p>
+          <span class="badge badge--live">Live</span>
+          <h2 id="level-03-title" class="level__title">First Boss Fight</h2>
+          <p class="level__sub">Build your first survey live with the cohort.</p>
+
+          <p class="level__copy">
+            No watching. No demos. You're in your own Qualtrics instance, building
+            a project intake survey with a cohort of other new customers. The
+            facilitator builds alongside you. When you get stuck — and you will —
+            you raise your hand and we figure it out together. That's the whole point.
+          </p>
+          <p class="level__copy">
+            Bring your player cards from Level 01 and your loadout sheet from
+            Level 02. You'll need both. Cameras on if you can.
+          </p>
+
+          <h3 class="level__sub-h">What the cohort leaves with</h3>
+          <ul class="leave-list">
+            <li>A working project intake survey live in their own instance</li>
+            <li>Usage tags configured and tested</li>
+            <li>Confidence that the work from Levels 01 and 02 shows up in real fields</li>
+            <li>A side quest: test the survey with one teammate before Level 04</li>
+          </ul>
+
+          <dl class="level__meta">
+            <div><dt>Format</dt><dd>Live webinar</dd></div>
+            <div><dt>Time</dt><dd>90 min</dd></div>
+            <div><dt>Output</dt><dd>Working survey</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · LEVEL 04 · POWER UP (LIVE)
+         ============================================================ -->
+    <section class="level level--live level--alt" id="level-04" aria-labelledby="level-04-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">04</div>
+        <div class="level__body">
+          <p class="eyebrow">Level Four · Live webinar · Day 8</p>
+          <span class="badge badge--live">Live</span>
+          <h2 id="level-04-title" class="level__title">Power Up</h2>
+          <p class="level__sub">Connect your survey to a working ticket flow.</p>
+
+          <p class="level__copy">
+            Your intake survey collects requests. Now we close the loop — every
+            new request creates a ticket, the ticket carries decision and status
+            fields, and the requestor gets a notification when something changes.
+            By the end, you'll have an end-to-end flow that runs on its own.
+          </p>
+          <p class="level__copy">
+            We'll also walk through the four integration patterns you'll meet
+            again and again: connectors, public APIs, flat files, and event-driven
+            workflows. Honest about where each one breaks.
+          </p>
+
+          <h3 class="level__sub-h">What the cohort leaves with</h3>
+          <ul class="leave-list">
+            <li>A working ticket flow tied to their intake survey</li>
+            <li>Practical fluency in the four integration patterns</li>
+            <li>An end-to-end loop: request → ticket → status → notification</li>
+            <li>A side quest: share the survey with stakeholders before Level 05</li>
+          </ul>
+
+          <dl class="level__meta">
+            <div><dt>Format</dt><dd>Live webinar</dd></div>
+            <div><dt>Time</dt><dd>90 min</dd></div>
+            <div><dt>Output</dt><dd>Ticket system</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · LEVEL 05 · JOIN THE PARTY
+         ============================================================ -->
+    <section class="level" id="level-05" aria-labelledby="level-05-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">05</div>
+        <div class="level__body">
+          <p class="eyebrow">Level Five · Community · Day 10</p>
+          <h2 id="level-05-title" class="level__title">Join the Party</h2>
+          <p class="level__sub">Show your work. Find your next lab.</p>
+
+          <p class="level__copy">
+            This last level is short by design. Two things to do — both quick,
+            both useful.
+          </p>
+          <p class="level__copy">
+            First, introduce yourself to the community. Three sentences: who you
+            are, what you do, and the one thing you're going to use Qualtrics for
+            in the next 90 days. Naming it forces clarity. The cohort sees who's
+            building what. Sometimes that's where the best questions come from.
+          </p>
+          <p class="level__copy">
+            Second, browse the lab catalog and sign up for at least two more.
+            We'll point you at the ones that match the players and use cases
+            you defined back in Level 01.
+          </p>
+
+          <h3 class="level__sub-h">What you leave with</h3>
+          <ul class="leave-list">
+            <li>A public commitment to a 90-day outcome</li>
+            <li>At least two more labs on the calendar</li>
+            <li>Visibility into what other new customers are building</li>
+            <li>An L0 completion mark on your community profile</li>
+          </ul>
+
+          <dl class="level__meta">
+            <div><dt>Format</dt><dd>Community</dd></div>
+            <div><dt>Time</dt><dd>~30 min</dd></div>
+            <div><dt>Output</dt><dd>A public commit</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · METRICS · How we know it worked
+         ============================================================ -->
+    <section class="metrics" aria-labelledby="metrics-title">
+      <div class="container">
+        <header class="section-head section-head--center">
+          <p class="eyebrow">How we know it worked</p>
+          <h2 id="metrics-title" class="section-head__title">
+            Four metrics. <span class="text-gradient">No theater.</span>
+          </h2>
+          <p class="section-head__lede">
+            L0 either produces a working platform or it doesn't. Self-reports
+            are useful but verifiable artifacts beat them every time.
+          </p>
+        </header>
+
+        <ul class="metric-grid" role="list">
+          <li class="metric-card">
+            <p class="metric-card__label">Clear rate</p>
+            <p class="metric-card__num">5<span class="metric-card__num-fade">/5</span></p>
+            <p class="metric-card__desc">
+              Levels cleared inside the two-week window. Tracked via portal completion.
+            </p>
+            <p class="metric-card__target">Target · 70%</p>
+          </li>
+
+          <li class="metric-card">
+            <p class="metric-card__label">Build evidence</p>
+            <p class="metric-card__num">2</p>
+            <p class="metric-card__desc">
+              Working artifacts in the customer's instance — intake survey
+              and ticket flow. Verified, not self-reported.
+            </p>
+            <p class="metric-card__target">Verified live</p>
+          </li>
+
+          <li class="metric-card">
+            <p class="metric-card__label">Confidence Δ</p>
+            <p class="metric-card__num">+1.5</p>
+            <p class="metric-card__desc">
+              Pre/post fluency self-report. One question, five-point scale.
+            </p>
+            <p class="metric-card__target">Target · +1.5 avg</p>
+          </li>
+
+          <li class="metric-card">
+            <p class="metric-card__label">Next-lab sign-up</p>
+            <p class="metric-card__num">2<span class="metric-card__num-fade">+</span></p>
+            <p class="metric-card__desc">
+              L1+ labs the customer signed up for in Level 05. The single best
+              leading indicator.
+            </p>
+            <p class="metric-card__target">Leading indicator</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · COHORT ENROLLMENT CTA
+         ============================================================ -->
+    <section class="cohort" id="cohort" aria-labelledby="cohort-title">
+      <div class="container cohort__inner">
+        <div class="cohort__copy">
+          <p class="eyebrow eyebrow--inverse">Next cohort</p>
+          <h2 id="cohort-title" class="cohort__title">
+            Ready to clear L0?
+          </h2>
+          <p class="cohort__lede">
+            Cohorts cap at 30. Past that, the build pace breaks down.
+            Pick a start date and we'll send the calendar invites for Levels 03 and 04.
+          </p>
+        </div>
+
+        <div class="cohort__panel">
+          <ul class="cohort-dates" role="list">
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with next live cohort start date -->
+                <span class="cohort-dates__day">Mon</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                <!-- PLACEHOLDER · Replace with seat count from registration system -->
+                [N] of 30 seats open
+              </p>
+              <a href="#PLACEHOLDER-cohort-1-signup" class="btn btn--primary btn--block">
+                Reserve a seat
+              </a>
+            </li>
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with second cohort start date -->
+                <span class="cohort-dates__day">Mon</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                <!-- PLACEHOLDER · Replace with seat count from registration system -->
+                [N] of 30 seats open
+              </p>
+              <a href="#PLACEHOLDER-cohort-2-signup" class="btn btn--ghost-inverse btn--block">
+                Reserve a seat
+              </a>
+            </li>
+          </ul>
+          <p class="cohort__fineprint">
+            Levels 01, 02, 05 unlock on the dates above. Levels 03 and 04
+            run live — calendar invites land in your inbox after sign-up.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       SITE FOOTER
+       Self-contained chunk. Safe to lift into LMS shared footer.
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <!-- PLACEHOLDER · LOGO (footer)
+             Replace with Qualtrics_black_RGB.svg or gradient SVG -->
+        <span class="logo-placeholder logo-placeholder--sm" aria-hidden="true">QUALTRICS</span>
+        <p class="site-footer__tagline">Labs · L0 · Start-Up Lab</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="Footer">
+        <a href="#PLACEHOLDER-catalog">Lab catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#PLACEHOLDER-support">Support</a>
+        <a href="#PLACEHOLDER-privacy">Privacy</a>
+      </nav>
+      <p class="site-footer__legal">
+        © Qualtrics. Doc ref: L0-ROS-V2.0.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
