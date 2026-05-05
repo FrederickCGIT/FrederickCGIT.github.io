@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Level 04 · Power Up — Qualtrics Labs · L0 Start-Up Lab</title>
+  <meta name="description" content="Level 04 of the L0 Start-Up Lab. Connect your intake survey to a working ticket flow. Build the end-to-end loop. Day 8 · 90 minutes." />
+
+  <!-- ============================================================
+       PLACEHOLDER · FAVICON
+       Brand asset: Logos/Qualtrics/Qualtrics_favicon/svg/Q_Favicon_32x32.svg
+       <link rel="icon" type="image/svg+xml" href="/assets/Q_Favicon_32x32.svg" />
+       ============================================================ -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+
+    /* ----------------------------------------------------------
+       BREADCRUMB
+       ---------------------------------------------------------- */
+    .breadcrumb { padding: var(--s-5) 0 0; }
+    .breadcrumb__inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--c-ink-soft);
+    }
+    .breadcrumb__inner a {
+      color: var(--c-ink-soft);
+      border-bottom: 1px solid transparent;
+      transition: color var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
+    }
+    .breadcrumb__inner a:hover { color: var(--c-cobalt); border-bottom-color: currentColor; }
+    .breadcrumb__sep { opacity: 0.4; }
+    .breadcrumb__current { color: var(--c-ink); }
+
+    /* ----------------------------------------------------------
+       LIVE SIGNAL BAR
+       ---------------------------------------------------------- */
+    .live-bar {
+      position: sticky;
+      top: 64px;
+      z-index: 40;
+      background: var(--c-ink);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .live-bar__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--s-5);
+      height: 52px;
+    }
+    .live-bar__left { display: flex; align-items: center; gap: var(--s-4); }
+    .live-bar__pulse {
+      display: flex;
+      align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-teal);
+    }
+    .live-bar__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--c-teal);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .live-bar__title {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.65);
+    }
+    .live-bar__right { display: flex; align-items: center; gap: var(--s-4); }
+    .live-bar__detail {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+    }
+    @media (max-width: 640px) {
+      .live-bar__detail, .live-bar__title { display: none; }
+    }
+
+    /* ----------------------------------------------------------
+       PREREQUISITE BANNER
+       Shows what Level 03 output is needed
+       ---------------------------------------------------------- */
+    .prereq-banner {
+      background: var(--c-bg-alt);
+      border-bottom: 1px solid var(--c-rule);
+      padding: var(--s-4) 0;
+    }
+    .prereq-banner__inner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--s-4) var(--s-6);
+    }
+    .prereq-banner__label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+      flex-shrink: 0;
+    }
+    .prereq-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s-2);
+    }
+    .prereq-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      padding: 0.4em 0.9em;
+      background: var(--c-white);
+      border: 1px solid var(--c-rule);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: var(--c-ink);
+      text-decoration: none;
+      transition: border-color var(--dur-fast) var(--ease-out),
+                  color var(--dur-fast) var(--ease-out);
+    }
+    .prereq-chip:hover { border-color: var(--c-cobalt); color: var(--c-cobalt); }
+    .prereq-chip__dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--gradient-brand);
+      flex-shrink: 0;
+    }
+
+    /* ----------------------------------------------------------
+       PREP · WHAT TO BRING
+       ---------------------------------------------------------- */
+    .prep {
+      padding: var(--s-10) 0;
+      background: var(--c-white);
+      border-bottom: 1px solid var(--c-rule);
+    }
+    .prep__inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-7);
+      align-items: start;
+    }
+    @media (min-width: 900px) {
+      .prep__inner { grid-template-columns: 1fr 1fr; gap: var(--s-9); }
+    }
+    .prep__copy h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin: var(--s-3) 0 var(--s-5);
+    }
+    .prep__copy p {
+      font-size: 1.0625rem;
+      line-height: 1.65;
+      color: var(--c-ink-soft);
+      margin-bottom: var(--s-4);
+    }
+
+    .checklist { display: flex; flex-direction: column; gap: var(--s-3); margin-top: var(--s-5); }
+    .checklist__item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--s-4);
+      padding: var(--s-5);
+      background: var(--c-bg);
+      border: 1px solid var(--c-rule);
+      border-radius: 12px;
+      transition: border-color var(--dur-fast) var(--ease-out);
+    }
+    .checklist__item:hover { border-color: var(--c-cobalt); }
+    .checklist__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--gradient-soft);
+      border: 1px solid var(--c-rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+    .checklist__text { flex: 1; }
+    .checklist__label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+      display: block;
+      margin-bottom: var(--s-1);
+    }
+    .checklist__title {
+      font-weight: 600;
+      color: var(--c-ink);
+      font-size: 0.95rem;
+      line-height: 1.3;
+      display: block;
+      margin-bottom: var(--s-1);
+    }
+    .checklist__desc {
+      font-size: 0.875rem;
+      color: var(--c-ink-soft);
+      line-height: 1.5;
+    }
+    .checklist__source {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--c-cobalt);
+      display: block;
+      margin-top: var(--s-2);
+      text-decoration: none;
+    }
+    .checklist__source:hover { color: var(--c-nightshade); }
+
+    /* Side panel: what this level connects -->  */
+    .connect-panel {
+      background: var(--c-ink);
+      color: var(--c-white);
+      border-radius: 18px;
+      padding: var(--s-7);
+      position: relative;
+      overflow: hidden;
+    }
+    .connect-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gradient-brand);
+    }
+    @media (min-width: 900px) {
+      .connect-panel { position: sticky; top: 8rem; }
+    }
+    .connect-panel__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: var(--s-4);
+    }
+    .connect-panel h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.6rem;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      margin-bottom: var(--s-5);
+    }
+    /* Simple flow diagram */
+    .flow {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .flow__node {
+      display: flex;
+      align-items: center;
+      gap: var(--s-3);
+      padding: var(--s-3) var(--s-4);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      position: relative;
+    }
+    .flow__node + .flow__node { margin-top: var(--s-2); }
+    .flow__node--new {
+      background: rgba(35,255,193,0.08);
+      border-color: rgba(35,255,193,0.2);
+    }
+    .flow__icon { font-size: 1rem; flex-shrink: 0; }
+    .flow__text { font-size: 0.875rem; color: rgba(255,255,255,0.85); line-height: 1.3; }
+    .flow__text strong { display: block; font-weight: 600; color: var(--c-white); }
+    .flow__text span { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+    .flow__arrow {
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.3);
+      padding: var(--s-1) 0;
+      letter-spacing: 0.1em;
+    }
+    .flow__new-badge {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--c-teal);
+      background: rgba(35,255,193,0.12);
+      border: 1px solid rgba(35,255,193,0.2);
+      padding: 0.25em 0.6em;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    /* ----------------------------------------------------------
+       INTEGRATION PATTERNS
+       The four patterns explained for customers
+       ---------------------------------------------------------- */
+    .patterns {
+      padding: var(--s-10) 0;
+      background: var(--c-bg-alt);
+      border-bottom: 1px solid var(--c-rule);
+    }
+    .patterns__intro {
+      max-width: 42rem;
+      margin-bottom: var(--s-8);
+    }
+    .patterns__intro h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin: var(--s-3) 0 var(--s-4);
+    }
+    .patterns__intro p {
+      font-size: 1.0625rem;
+      line-height: 1.6;
+      color: var(--c-ink-soft);
+    }
+
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-4);
+    }
+    @media (min-width: 700px) {
+      .pattern-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .pattern-card {
+      background: var(--c-white);
+      border: 1px solid var(--c-rule);
+      border-radius: 14px;
+      padding: var(--s-6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-4);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--dur-med) var(--ease-out),
+                  border-color var(--dur-med) var(--ease-out),
+                  box-shadow var(--dur-med) var(--ease-out);
+    }
+    .pattern-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--c-ink);
+      box-shadow: 0 16px 40px -24px rgba(10,10,15,0.18);
+    }
+    .pattern-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--gradient-brand);
+    }
+    .pattern-card__header {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--s-4);
+    }
+    .pattern-card__icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      background: var(--gradient-soft);
+      border: 1px solid var(--c-rule);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      flex-shrink: 0;
+    }
+    .pattern-card__title-wrap { flex: 1; }
+    .pattern-card__num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+      display: block;
+      margin-bottom: var(--s-1);
+    }
+    .pattern-card__title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      color: var(--c-ink);
+      margin: 0;
+    }
+    .pattern-card__copy {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: var(--c-ink-soft);
+    }
+    .pattern-card__when {
+      margin-top: auto;
+      padding-top: var(--s-4);
+      border-top: 1px dashed var(--c-rule);
+    }
+    .pattern-card__when small {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-cobalt);
+      margin-bottom: var(--s-2);
+    }
+    .pattern-card__when strong {
+      font-weight: 600;
+      color: var(--c-ink);
+      font-size: 0.9rem;
+      line-height: 1.4;
+      display: block;
+    }
+    .pattern-card__breaks {
+      margin-top: var(--s-3);
+    }
+    .pattern-card__breaks small {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #B91C1C;
+      margin-bottom: var(--s-2);
+    }
+    .pattern-card__breaks span {
+      font-size: 0.875rem;
+      color: var(--c-ink-soft);
+      line-height: 1.45;
+    }
+
+    /* ----------------------------------------------------------
+       SESSION AGENDA (customer-facing timeline)
+       ---------------------------------------------------------- */
+    .agenda {
+      padding: var(--s-10) 0;
+      background: var(--c-white);
+      border-bottom: 1px solid var(--c-rule);
+    }
+    .agenda__intro {
+      max-width: 40rem;
+      margin-bottom: var(--s-8);
+    }
+    .agenda__intro h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      letter-spacing: -0.02em;
+      margin: var(--s-3) 0 var(--s-4);
+    }
+    .agenda__intro p {
+      font-size: 1.0625rem;
+      color: var(--c-ink-soft);
+      line-height: 1.6;
+    }
+
+    .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 52px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: var(--c-rule);
+    }
+    @media (max-width: 640px) { .timeline::before { left: 36px; } }
+
+    .timeline__item {
+      display: grid;
+      grid-template-columns: 104px 1fr;
+      gap: var(--s-5);
+      padding: var(--s-5) 0;
+      position: relative;
+    }
+    @media (max-width: 640px) {
+      .timeline__item { grid-template-columns: 72px 1fr; gap: var(--s-3); }
+    }
+    .timeline__time {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding-right: var(--s-5);
+      position: relative;
+    }
+    .timeline__time::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: 6px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--c-white);
+      border: 2px solid var(--c-dark-grey);
+      z-index: 1;
+    }
+    .timeline__item--live .timeline__time::after {
+      background: var(--gradient-brand);
+      border: none;
+      width: 11px;
+      height: 11px;
+      right: -6px;
+    }
+    .timeline__item--climax .timeline__time::after {
+      background: var(--c-teal);
+      border: none;
+      width: 13px;
+      height: 13px;
+      right: -7px;
+      box-shadow: 0 0 0 4px rgba(35,255,193,0.18);
+    }
+    .timeline__min {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--c-ink);
+      line-height: 1;
+    }
+    .timeline__label {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+      margin-top: var(--s-1);
+    }
+    .timeline__body {
+      padding-bottom: var(--s-5);
+      border-bottom: 1px dashed var(--c-rule);
+    }
+    .timeline__item:last-child .timeline__body { border-bottom: none; }
+    .timeline__segment {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--c-ink-soft);
+      margin-bottom: var(--s-2);
+    }
+    .timeline__item--live .timeline__segment { color: var(--c-cobalt); }
+    .timeline__item--climax .timeline__segment { color: #0D9488; }
+    .timeline__title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.35rem;
+      letter-spacing: -0.02em;
+      margin: 0 0 var(--s-2);
+      color: var(--c-ink);
+    }
+    .timeline__desc {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--c-ink-soft);
+    }
+    .timeline__note {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      margin-top: var(--s-3);
+      padding: var(--s-2) var(--s-3);
+      background: var(--c-bg-alt);
+      border: 1px solid var(--c-rule);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: var(--c-ink-soft);
+    }
+    .timeline__note--teal {
+      background: rgba(35,255,193,0.08);
+      border-color: rgba(35,255,193,0.25);
+      color: var(--c-ink);
+    }
+    .timeline__note--climax {
+      background: var(--c-ink);
+      border-color: var(--c-ink);
+      color: var(--c-teal);
+      font-weight: 600;
+    }
+
+    /* ----------------------------------------------------------
+       OUTCOME · LEAVES WITH + SIDE QUEST
+       ---------------------------------------------------------- */
+    .outcome {
+      padding: var(--s-10) 0;
+      background: var(--c-bg-alt);
+      border-bottom: 1px solid var(--c-rule);
+    }
+    .outcome__grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-6);
+      align-items: start;
+    }
+    @media (min-width: 900px) {
+      .outcome__grid { grid-template-columns: 1fr 380px; gap: var(--s-9); }
+    }
+    .outcome__main h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      letter-spacing: -0.02em;
+      margin: var(--s-3) 0 var(--s-6);
+    }
+    .outcome-list { display: flex; flex-direction: column; gap: var(--s-3); }
+    .outcome-list__item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--s-4);
+      padding: var(--s-5);
+      background: var(--c-white);
+      border: 1px solid var(--c-rule);
+      border-radius: 12px;
+    }
+    .outcome-list__check {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--gradient-brand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .outcome-list__text {
+      font-size: 0.975rem;
+      line-height: 1.5;
+      color: var(--c-ink);
+      padding-top: 0.2rem;
+    }
+
+    /* Side quest card */
+    .side-quest {
+      background: var(--c-ink);
+      color: var(--c-white);
+      border-radius: 18px;
+      padding: var(--s-7);
+      position: relative;
+      overflow: hidden;
+    }
+    .side-quest::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--c-teal);
+    }
+    .side-quest::after {
+      content: '→';
+      position: absolute;
+      right: var(--s-5);
+      bottom: -0.6rem;
+      font-family: var(--font-display);
+      font-size: 8rem;
+      line-height: 1;
+      color: rgba(255,255,255,0.04);
+      pointer-events: none;
+    }
+    @media (min-width: 900px) { .side-quest { position: sticky; top: 8rem; } }
+    .side-quest__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-teal);
+      margin-bottom: var(--s-3);
+    }
+    .side-quest h3 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: 1.75rem;
+      letter-spacing: -0.02em;
+      color: var(--c-white);
+      margin-bottom: var(--s-4);
+    }
+    .side-quest p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.78);
+      margin-bottom: var(--s-4);
+    }
+    .side-quest__reward {
+      display: flex;
+      align-items: center;
+      gap: var(--s-3);
+      padding: var(--s-4);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+    }
+    .side-quest__reward-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .side-quest__reward-text { font-size: 0.875rem; line-height: 1.45; color: rgba(255,255,255,0.8); }
+    .side-quest__reward-text strong {
+      display: block;
+      font-weight: 700;
+      color: var(--c-teal);
+      font-size: 0.8rem;
+      margin-bottom: var(--s-1);
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ----------------------------------------------------------
+       JOIN CTA
+       ---------------------------------------------------------- */
+    .join-cta {
+      padding: var(--s-10) 0;
+      background: var(--c-ink);
+      color: var(--c-white);
+      position: relative;
+      overflow: hidden;
+    }
+    .join-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-brand);
+      opacity: 0.9;
+      z-index: 0;
+    }
+    .join-cta::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 30%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 90%);
+      z-index: 0;
+    }
+    .join-cta__inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-7);
+      align-items: center;
+    }
+    @media (min-width: 900px) {
+      .join-cta__inner { grid-template-columns: 1fr 1fr; gap: var(--s-9); }
+    }
+    .join-cta__copy h2 {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(2.25rem, 5vw, 4rem);
+      letter-spacing: -0.03em;
+      color: var(--c-white);
+      margin: var(--s-3) 0 var(--s-4);
+    }
+    .join-cta__copy p {
+      font-size: 1.125rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.85);
+      max-width: 32rem;
+    }
+    .join-panel {
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 18px;
+      padding: var(--s-6);
+    }
+    .cohort-dates {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--s-4);
+    }
+    @media (min-width: 480px) { .cohort-dates { grid-template-columns: repeat(2, 1fr); } }
+    .cohort-dates__item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-3);
+      padding: var(--s-5);
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+    }
+    .cohort-dates__date {
+      display: flex;
+      flex-direction: column;
+      font-family: var(--font-display);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      color: var(--c-white);
+    }
+    .cohort-dates__day {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: var(--s-2);
+    }
+    .cohort-dates__num { font-size: 3rem; letter-spacing: -0.04em; }
+    .cohort-dates__month {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      margin-top: var(--s-1);
+    }
+    .cohort-dates__seats {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.7);
+      padding: var(--s-2) 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .join-panel .btn--primary {
+      background: var(--c-white);
+      color: var(--c-ink);
+      border-color: var(--c-white);
+    }
+    .join-panel .btn--primary:hover {
+      background: var(--c-teal);
+      border-color: var(--c-teal);
+      color: var(--c-ink);
+    }
+    .join-panel .btn--ghost-inverse {
+      background: transparent;
+      color: var(--c-white);
+      border-color: rgba(255,255,255,0.45);
+    }
+    .join-panel .btn--ghost-inverse:hover {
+      background: var(--c-white);
+      color: var(--c-ink);
+      border-color: var(--c-white);
+    }
+    .join-cta__fineprint {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: var(--s-5);
+      padding-top: var(--s-5);
+      border-top: 1px solid rgba(255,255,255,0.12);
+      line-height: 1.5;
+    }
+    .join-cta__fineprint a { color: rgba(255,255,255,0.8); text-decoration: underline; }
+
+    /* ----------------------------------------------------------
+       BUTTON ADDITIONS
+       ---------------------------------------------------------- */
+    .btn--sm { padding: 0.6em 1em; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="index.html" aria-label="Qualtrics Labs home">
+        <!-- ============================================================
+             PLACEHOLDER · LOGO
+             <img src="/assets/Qualtrics_gradient_RGB.svg" alt="Qualtrics" height="22" />
+             Brand asset: Logos/Qualtrics/Qualtrics_logo/svg/Qualtrics_gradient_RGB.svg
+             ============================================================ -->
+        <span class="logo-placeholder" aria-hidden="true">QUALTRICS</span>
+        <span class="site-header__divider" aria-hidden="true">·</span>
+        <span class="site-header__lockup">Labs</span>
+      </a>
+      <nav class="site-header__nav" aria-label="Primary">
+        <a href="#PLACEHOLDER-catalog">Lab Catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#join" class="site-header__cta">Enroll</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================================
+         BREADCRUMB
+         ============================================================ -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <div class="container breadcrumb__inner">
+        <a href="index.html">L0 Start-Up Lab</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <a href="index.html#map">The Map</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <span class="breadcrumb__current" aria-current="page">Level 04 · Power Up</span>
+      </div>
+    </nav>
+
+
+    <!-- ============================================================
+         LIVE SIGNAL BAR
+         ============================================================ -->
+    <div class="live-bar" role="complementary" aria-label="Live session indicator">
+      <div class="container live-bar__inner">
+        <div class="live-bar__left">
+          <span class="live-bar__pulse">
+            <span class="live-bar__dot" aria-hidden="true"></span>
+            Live
+          </span>
+          <span class="live-bar__title">Level 04 · Power Up · 90-minute webinar</span>
+        </div>
+        <div class="live-bar__right">
+          <span class="live-bar__detail">Day 8 · Cohort size: 30</span>
+          <a href="#join" class="btn btn--sm" style="background:var(--gradient-brand);color:var(--c-white);border-color:transparent;padding:0.45em 1.1em;font-size:0.8rem;">
+            Reserve a seat →
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         PREREQUISITE BANNER
+         ============================================================ -->
+    <div class="prereq-banner" role="note" aria-label="Prerequisites for this level">
+      <div class="container prereq-banner__inner">
+        <span class="prereq-banner__label">Bring to this session</span>
+        <div class="prereq-list">
+          <a class="prereq-chip" href="level-03-first-boss-fight.html">
+            <span class="prereq-chip__dot" aria-hidden="true"></span>
+            L03 · Working intake survey
+          </a>
+          <a class="prereq-chip" href="level-03-first-boss-fight.html#outcome">
+            <span class="prereq-chip__dot" aria-hidden="true"></span>
+            L03 side quest · One test response
+          </a>
+          <a class="prereq-chip" href="level-02-pick-your-loadout.html">
+            <span class="prereq-chip__dot" aria-hidden="true"></span>
+            L02 · Loadout sheet
+          </a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         LEVEL INTRO (dark · level--live)
+         ============================================================ -->
+    <section class="level level--live" id="level-intro" aria-labelledby="level-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">04</div>
+        <div class="level__body">
+          <p class="eyebrow" style="color:rgba(255,255,255,0.55);">Level Four · Live webinar · Day 8</p>
+          <span class="badge badge--live">Live</span>
+          <h1 id="level-title" class="level__title">Connect the loop.</h1>
+          <p class="level__sub">Every request becomes a ticket. Every ticket closes.</p>
+
+          <p class="level__copy">
+            Your intake survey collects requests. Now we close the loop — every
+            new request creates a ticket, the ticket carries decision and status
+            fields, and the requestor gets a notification when something changes.
+            By the end, you'll have an end-to-end flow that runs on its own.
+          </p>
+          <p class="level__copy">
+            We'll also walk through the four integration patterns you'll meet
+            again and again: connectors, public APIs, flat files, and event-driven
+            workflows. Honest about where each one breaks.
+          </p>
+
+          <h3 class="level__sub-h">What the cohort leaves with</h3>
+          <ul class="leave-list">
+            <li>A working ticket flow tied to their intake survey</li>
+            <li>Practical fluency in the four integration patterns</li>
+            <li>An end-to-end loop: request → ticket → status → notification</li>
+            <li>A side quest: share the survey with stakeholders before Level 05</li>
+          </ul>
+
+          <dl class="level__meta">
+            <div><dt>Format</dt><dd>Live webinar</dd></div>
+            <div><dt>Time</dt><dd>90 min</dd></div>
+            <div><dt>Output</dt><dd>Ticket system</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         PREP · WHAT TO BRING
+         ============================================================ -->
+    <section class="prep" id="prep" aria-labelledby="prep-title">
+      <div class="container prep__inner">
+        <div class="prep__copy">
+          <p class="eyebrow">Before you join</p>
+          <h2 id="prep-title">Three things. All from Level 03.</h2>
+          <p>
+            Level 04 builds directly on top of what you made in Level 03.
+            The ticket flow connects to your intake survey — not a template,
+            not a demo account. Your actual survey.
+          </p>
+          <p>
+            If you didn't finish the Level 03 side quest, do it before Day 8.
+            You need at least one test response in your survey for Build 1 to
+            make sense.
+          </p>
+
+          <div class="checklist" role="list">
+
+            <div class="checklist__item" role="listitem">
+              <div class="checklist__icon" aria-hidden="true">📋</div>
+              <div class="checklist__text">
+                <span class="checklist__label">Required · From Level 03</span>
+                <span class="checklist__title">Your working intake survey</span>
+                <span class="checklist__desc">
+                  The project intake survey you built in Level 03, live in your
+                  Qualtrics instance. Build 1 creates a ticket workflow that
+                  fires every time this survey gets a new response.
+                </span>
+                <a class="checklist__source" href="level-03-first-boss-fight.html">
+                  Level 03 · First Boss Fight →
+                </a>
+              </div>
+            </div>
+
+            <div class="checklist__item" role="listitem">
+              <div class="checklist__icon" aria-hidden="true">🧪</div>
+              <div class="checklist__text">
+                <span class="checklist__label">Required · Level 03 side quest</span>
+                <span class="checklist__title">At least one test response</span>
+                <span class="checklist__desc">
+                  The Level 03 side quest: test the survey with one teammate.
+                  You need a live response in the system so you can see the
+                  ticket trigger fire in real time during Build 1.
+                </span>
+              </div>
+            </div>
+
+            <div class="checklist__item" role="listitem">
+              <div class="checklist__icon" aria-hidden="true">📄</div>
+              <div class="checklist__text">
+                <span class="checklist__label">Useful · From Level 02</span>
+                <span class="checklist__title">Your loadout sheet</span>
+                <span class="checklist__desc">
+                  You'll use your embedded data field names when you configure
+                  the decision and status fields on the ticket. Having the
+                  names written down saves time mid-build.
+                </span>
+                <a class="checklist__source" href="level-02-pick-your-loadout.html">
+                  Level 02 · Pick Your Loadout →
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- What this level connects -->
+        <aside class="connect-panel" aria-label="What this level connects">
+          <p class="connect-panel__eyebrow">What you're building</p>
+          <h3>The end-to-end loop.</h3>
+          <div class="flow" role="img" aria-label="Flow: request to ticket to status to notification">
+            <div class="flow__node">
+              <span class="flow__icon" aria-hidden="true">📋</span>
+              <div class="flow__text">
+                <strong>Project intake survey</strong>
+                <span>Built in Level 03</span>
+              </div>
+            </div>
+            <div class="flow__arrow" aria-hidden="true">↓ new response submitted</div>
+            <div class="flow__node flow__node--new">
+              <span class="flow__icon" aria-hidden="true">🎫</span>
+              <div class="flow__text">
+                <strong>Ticket created</strong>
+                <span>Decision · Status · Tracking link</span>
+              </div>
+              <span class="flow__new-badge">New</span>
+            </div>
+            <div class="flow__arrow" aria-hidden="true">↓ status changes</div>
+            <div class="flow__node flow__node--new">
+              <span class="flow__icon" aria-hidden="true">📬</span>
+              <div class="flow__text">
+                <strong>Requestor notified</strong>
+                <span>Automated email on update</span>
+              </div>
+              <span class="flow__new-badge">New</span>
+            </div>
+            <div class="flow__arrow" aria-hidden="true">↓ loop closes</div>
+            <div class="flow__node">
+              <span class="flow__icon" aria-hidden="true">✅</span>
+              <div class="flow__text">
+                <strong>Request resolved</strong>
+                <span>Requestor knows the outcome</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         INTEGRATION PATTERNS
+         Customer-facing explainer for the four patterns.
+         The anchor segment covers this in the live session.
+         ============================================================ -->
+    <section class="patterns" id="patterns" aria-labelledby="patterns-title">
+      <div class="container">
+        <div class="patterns__intro">
+          <p class="eyebrow">Before the build · 20-minute anchor</p>
+          <h2 id="patterns-title">The four patterns you'll use for the rest of your time in Qualtrics.</h2>
+          <p>
+            Level 04 opens with a 20-minute primer on integration patterns.
+            Not because integrations are the point — but because you'll hit all
+            four of these within your first year, and knowing which one you're
+            using changes how you troubleshoot when something breaks.
+          </p>
+        </div>
+
+        <div class="pattern-grid">
+
+          <!-- Pattern 1 · Connectors -->
+          <article class="pattern-card">
+            <div class="pattern-card__header">
+              <div class="pattern-card__icon" aria-hidden="true">🔌</div>
+              <div class="pattern-card__title-wrap">
+                <span class="pattern-card__num">Pattern 01</span>
+                <h3 class="pattern-card__title">Connectors</h3>
+              </div>
+            </div>
+            <p class="pattern-card__copy">
+              Pre-built, configuration-only integrations to systems like
+              Salesforce, ServiceNow, Workday, and Slack. No code.
+              Set them up in the Qualtrics interface, map fields,
+              and they run automatically on trigger conditions you define.
+            </p>
+            <div class="pattern-card__when">
+              <small>Best for</small>
+              <strong>
+                When Qualtrics has a native connector to your system and
+                you need standard field-mapping without custom logic.
+              </strong>
+            </div>
+            <div class="pattern-card__breaks">
+              <small>Where it breaks</small>
+              <span>
+                Custom data transformations, non-standard system configurations,
+                or endpoints the native connector doesn't support.
+              </span>
+            </div>
+          </article>
+
+          <!-- Pattern 2 · Public APIs -->
+          <article class="pattern-card">
+            <div class="pattern-card__header">
+              <div class="pattern-card__icon" aria-hidden="true">🔗</div>
+              <div class="pattern-card__title-wrap">
+                <span class="pattern-card__num">Pattern 02</span>
+                <h3 class="pattern-card__title">Public APIs</h3>
+              </div>
+            </div>
+            <p class="pattern-card__copy">
+              REST API calls to the Qualtrics platform — or from Qualtrics
+              to an external system. Flexible and powerful. Requires
+              developer involvement unless your team has API-comfortable
+              admins. The Qualtrics API is well-documented and versioned.
+            </p>
+            <div class="pattern-card__when">
+              <small>Best for</small>
+              <strong>
+                Custom logic, non-native integrations, bulk operations,
+                or pulling Qualtrics data into a data warehouse or BI tool.
+              </strong>
+            </div>
+            <div class="pattern-card__breaks">
+              <small>Where it breaks</small>
+              <span>
+                Rate limits under high submission volumes, and anywhere
+                you need real-time bidirectional sync — latency adds up.
+              </span>
+            </div>
+          </article>
+
+          <!-- Pattern 3 · Flat files -->
+          <article class="pattern-card">
+            <div class="pattern-card__header">
+              <div class="pattern-card__icon" aria-hidden="true">📁</div>
+              <div class="pattern-card__title-wrap">
+                <span class="pattern-card__num">Pattern 03</span>
+                <h3 class="pattern-card__title">Flat files</h3>
+              </div>
+            </div>
+            <p class="pattern-card__copy">
+              CSV or SFTP-based data exchange. Import contact lists,
+              export response data, schedule batch uploads. Slower than
+              API integrations but much simpler to set up and audit.
+              Many HR and CRM systems export to flat files natively.
+            </p>
+            <div class="pattern-card__when">
+              <small>Best for</small>
+              <strong>
+                Bulk contact imports, systems that don't have APIs,
+                or teams that need a human-auditable data trail.
+              </strong>
+            </div>
+            <div class="pattern-card__breaks">
+              <small>Where it breaks</small>
+              <span>
+                High-frequency updates (daily or more), anything requiring
+                near-real-time data, and when files aren't consistently formatted.
+              </span>
+            </div>
+          </article>
+
+          <!-- Pattern 4 · Event-driven -->
+          <article class="pattern-card">
+            <div class="pattern-card__header">
+              <div class="pattern-card__icon" aria-hidden="true">⚡</div>
+              <div class="pattern-card__title-wrap">
+                <span class="pattern-card__num">Pattern 04</span>
+                <h3 class="pattern-card__title">Event-driven workflows</h3>
+              </div>
+            </div>
+            <p class="pattern-card__copy">
+              Triggers in Qualtrics that fire in response to specific events —
+              a survey response submitted, a ticket status changed, a score
+              threshold crossed. The workflow you build in Level 04 uses this
+              pattern: response submitted → ticket created → notification sent.
+            </p>
+            <div class="pattern-card__when">
+              <small>Best for</small>
+              <strong>
+                Automated follow-up, closing the feedback loop, escalation
+                workflows, and anything that needs to happen without a human
+                in the middle.
+              </strong>
+            </div>
+            <div class="pattern-card__breaks">
+              <small>Where it breaks</small>
+              <span>
+                Complex multi-condition logic, high-volume environments
+                where trigger latency compounds, and anywhere you need
+                guaranteed delivery order.
+              </span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         AGENDA · SESSION TIMELINE (customer-facing)
+         ============================================================ -->
+    <section class="agenda" id="agenda" aria-labelledby="agenda-title">
+      <div class="container">
+        <div class="agenda__intro">
+          <p class="eyebrow">The 90 minutes</p>
+          <h2 id="agenda-title">What happens during the build.</h2>
+          <p>
+            Three builds on top of your Level 03 survey. The notification
+            beat at Build 3 is the moment everyone remembers — you'll see
+            the email arrive in real time.
+          </p>
+        </div>
+
+        <div class="timeline" role="list">
+
+          <!-- 0:00 Open -->
+          <div class="timeline__item" role="listitem">
+            <div class="timeline__time" aria-label="Time: 0 minutes">
+              <span class="timeline__min">0:00</span>
+              <span class="timeline__label">open</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Kickoff</p>
+              <h3 class="timeline__title">Who tested their survey? Who broke it?</h3>
+              <p class="timeline__desc">
+                The session opens with a quick poll. Both answers earn
+                applause — testing and breaking are both good. This is
+                the same cohort from Level 03, and the room warms fast
+                because of it.
+              </p>
+              <span class="timeline__note">⏱ 3 min</span>
+            </div>
+          </div>
+
+          <!-- 0:05 Anchor -->
+          <div class="timeline__item" role="listitem">
+            <div class="timeline__time" aria-label="Time: 5 minutes">
+              <span class="timeline__min">0:05</span>
+              <span class="timeline__label">anchor</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Primer</p>
+              <h3 class="timeline__title">The four integration patterns.</h3>
+              <p class="timeline__desc">
+                Twenty minutes. One diagram. The four patterns covered above —
+                connectors, public APIs, flat files, and event-driven workflows.
+                The facilitator is honest about where each breaks. This isn't
+                a sales pitch for any one approach.
+              </p>
+              <span class="timeline__note">⏱ 20 min · Slides + one diagram</span>
+            </div>
+          </div>
+
+          <!-- 0:25 Build 1 -->
+          <div class="timeline__item timeline__item--live" role="listitem">
+            <div class="timeline__time" aria-label="Time: 25 minutes">
+              <span class="timeline__min">0:25</span>
+              <span class="timeline__label">build 1</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">First build · Your instance</p>
+              <h3 class="timeline__title">Ticket on submit — the trigger.</h3>
+              <p class="timeline__desc">
+                Build the core workflow: every new project request creates a
+                ticket. The cohort builds in their own instance alongside the
+                facilitator. Producer watches chat for repeat stuck points.
+              </p>
+              <span class="timeline__note timeline__note--teal">📦 Output: Ticket fires on every new intake response</span>
+            </div>
+          </div>
+
+          <!-- 0:50 Build 2 -->
+          <div class="timeline__item timeline__item--live" role="listitem">
+            <div class="timeline__time" aria-label="Time: 50 minutes">
+              <span class="timeline__min">0:50</span>
+              <span class="timeline__label">build 2</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Second build · Your instance</p>
+              <h3 class="timeline__title">Follow-up fields — decision, status, tracking.</h3>
+              <p class="timeline__desc">
+                Add the three fields every ticket needs: where was the decision
+                made, what's the current status, and where is the work being
+                tracked. The cohort names these from their actual tools — not
+                placeholder values.
+              </p>
+              <span class="timeline__note timeline__note--teal">📦 Output: Ticket with decision + status + tracking fields</span>
+            </div>
+          </div>
+
+          <!-- 1:10 Build 3 · CLIMAX -->
+          <div class="timeline__item timeline__item--climax" role="listitem">
+            <div class="timeline__time" aria-label="Time: 70 minutes">
+              <span class="timeline__min">1:10</span>
+              <span class="timeline__label">build 3</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Third build · The moment</p>
+              <h3 class="timeline__title">Requestor notification — the loop closes.</h3>
+              <p class="timeline__desc">
+                Build the notification trigger: when a ticket status changes,
+                the original requestor gets an email automatically. Then test
+                it by submitting a request to yourself. The room watches the
+                email arrive in real time. This is the moment that makes it real.
+              </p>
+              <span class="timeline__note timeline__note--climax">⚡ The email arrives live — watch for it</span>
+            </div>
+          </div>
+
+          <!-- 1:25 Close -->
+          <div class="timeline__item" role="listitem">
+            <div class="timeline__time" aria-label="Time: 85 minutes">
+              <span class="timeline__min">1:25</span>
+              <span class="timeline__label">close</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Handoff</p>
+              <h3 class="timeline__title">Side quest + preview of Level 05.</h3>
+              <p class="timeline__desc">
+                Side quest: share the survey with stakeholders before Level 05.
+                Real people, real requests. Preview of Level 05: your public
+                commitment and the community post that closes out L0.
+                Level 05 community link drops in chat.
+              </p>
+              <span class="timeline__note">⏱ 5 min · Level 05 community link in chat</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         OUTCOME · LEAVES WITH + SIDE QUEST
+         ============================================================ -->
+    <section class="outcome" id="outcome" aria-labelledby="outcome-title">
+      <div class="container outcome__grid">
+        <div class="outcome__main">
+          <p class="eyebrow">What you leave with</p>
+          <h2 id="outcome-title">An end-to-end loop that runs on its own.</h2>
+
+          <div class="outcome-list" role="list">
+            <div class="outcome-list__item" role="listitem">
+              <div class="outcome-list__check" aria-hidden="true">✓</div>
+              <p class="outcome-list__text">
+                A ticket flow connected to your intake survey — every new request creates a tracked ticket automatically
+              </p>
+            </div>
+            <div class="outcome-list__item" role="listitem">
+              <div class="outcome-list__check" aria-hidden="true">✓</div>
+              <p class="outcome-list__text">
+                Decision, status, and tracking fields on every ticket — the requestor always knows what's happening
+              </p>
+            </div>
+            <div class="outcome-list__item" role="listitem">
+              <div class="outcome-list__check" aria-hidden="true">✓</div>
+              <p class="outcome-list__text">
+                Automated requestor notification when status changes — no manual follow-up required
+              </p>
+            </div>
+            <div class="outcome-list__item" role="listitem">
+              <div class="outcome-list__check" aria-hidden="true">✓</div>
+              <p class="outcome-list__text">
+                Working knowledge of all four integration patterns — and specifically where each one breaks
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side quest -->
+        <aside class="side-quest" aria-labelledby="sidequest-title">
+          <p class="side-quest__eyebrow">Side quest · Before Level 05</p>
+          <h3 id="sidequest-title">Share the survey with stakeholders.</h3>
+          <p>
+            Send the intake survey to the people in your org who would
+            actually use it — the ones who would file project requests.
+            Ask for one real submission.
+          </p>
+          <p>
+            This isn't optional. Level 05 is a public post about what
+            you're building. The credibility of that post comes from
+            whether the platform is actually in use — not just built.
+          </p>
+          <div class="side-quest__reward">
+            <span class="side-quest__reward-icon" aria-hidden="true">🏁</span>
+            <div class="side-quest__reward-text">
+              <strong>L0 completion condition</strong>
+              A platform with real users is the artifact that proves L0 worked.
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         JOIN CTA · Cohort enrollment
+         ============================================================ -->
+    <section class="join-cta" id="join" aria-labelledby="join-title">
+      <div class="container join-cta__inner">
+        <div class="join-cta__copy">
+          <p class="eyebrow eyebrow--inverse">Day 8 · Live webinar</p>
+          <h2 id="join-title">
+            Two levels down.<br />
+            Time to close the loop.
+          </h2>
+          <p>
+            Same cohort, same pace. Pick your start date and the
+            calendar invite for Level 04 lands automatically when
+            you're enrolled in L0.
+          </p>
+        </div>
+
+        <div class="join-panel">
+          <ul class="cohort-dates" role="list">
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with next live cohort date (Day 8 of cohort 1) -->
+                <span class="cohort-dates__day">Sat</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                <!-- PLACEHOLDER · Replace with live seat count from registration system -->
+                [N] of 30 seats open
+              </p>
+              <!-- PLACEHOLDER · Replace with actual cohort 1 registration URL -->
+              <a href="#PLACEHOLDER-cohort-1-l04-signup" class="btn btn--primary btn--block">
+                Reserve a seat
+              </a>
+            </li>
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with second cohort date -->
+                <span class="cohort-dates__day">Sat</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                <!-- PLACEHOLDER · Replace with live seat count from registration system -->
+                [N] of 30 seats open
+              </p>
+              <!-- PLACEHOLDER · Replace with actual cohort 2 registration URL -->
+              <a href="#PLACEHOLDER-cohort-2-l04-signup" class="btn btn--ghost-inverse btn--block">
+                Reserve a seat
+              </a>
+            </li>
+          </ul>
+          <p class="join-cta__fineprint">
+            Already enrolled in L0? Your Level 04 calendar invite was sent after Level 03.
+            <!-- PLACEHOLDER · Replace with actual community/support link -->
+            Can't find it? <a href="#PLACEHOLDER-community-help">Check the community thread →</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       SITE FOOTER
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <!-- PLACEHOLDER · LOGO (footer)
+             <img src="/assets/Qualtrics_black_RGB.svg" alt="Qualtrics" height="20" /> -->
+        <span class="logo-placeholder logo-placeholder--sm" aria-hidden="true">QUALTRICS</span>
+        <p class="site-footer__tagline">Labs · L0 · Level 04</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="Footer">
+        <a href="#PLACEHOLDER-catalog">Lab catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#PLACEHOLDER-support">Support</a>
+        <a href="#PLACEHOLDER-privacy">Privacy</a>
+      </nav>
+      <p class="site-footer__legal">
+        © Qualtrics. Doc ref: L0-ROS-V2.0 · Level 04.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
