@@ -814,6 +814,124 @@
       box-shadow: 0 16px 40px -16px rgba(10,10,15,0.5);
     }
     .toast.is-visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ----------------------------------------------------------
+       L0 COMPLETE BANNER · replaces cohort enrollment on level-05
+       Announces completion and routes back to lab home / catalog
+       ---------------------------------------------------------- */
+    .complete-banner {
+      background: var(--c-ink);
+      color: var(--c-white);
+      padding: var(--s-10) 0;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .complete-banner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gradient-brand);
+    }
+    .complete-banner__inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s-7);
+      align-items: center;
+      justify-content: space-between;
+    }
+    .complete-banner__copy { max-width: 36rem; }
+    .complete-banner__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin: 0 0 var(--s-3);
+    }
+    .complete-banner__title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--c-white);
+      margin: 0 0 var(--s-4);
+    }
+    .complete-banner__desc {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.75);
+      margin: 0;
+    }
+    .complete-banner__actions {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-3);
+      align-items: flex-start;
+    }
+    .btn--complete {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-3);
+      background: var(--gradient-brand);
+      color: var(--c-white);
+      border: none;
+      padding: 0.9em 1.75em;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--dur-fast) var(--ease-out),
+                  box-shadow var(--dur-med) var(--ease-out);
+      white-space: nowrap;
+    }
+    .btn--complete:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -12px rgba(95, 26, 229, 0.55);
+    }
+    .btn--complete__arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      font-size: 0.95rem;
+      transition: transform var(--dur-fast) var(--ease-out);
+    }
+    .btn--complete:hover .btn--complete__arrow { transform: translateX(3px); }
+    .btn--complete-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-2);
+      padding: 0.75em 1.4em;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: border-color var(--dur-fast) var(--ease-out),
+                  color var(--dur-fast) var(--ease-out);
+    }
+    .btn--complete-ghost:hover {
+      border-color: rgba(255,255,255,0.6);
+      color: var(--c-white);
+    }
+    .complete-banner__meta {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.35);
+    }
   </style>
 </head>
 <body>
@@ -836,8 +954,8 @@
       <nav class="site-header__nav" aria-label="Primary">
         <a href="#PLACEHOLDER-catalog" style="color:rgba(255,255,255,0.65);">Lab Catalog</a>
         <a href="https://community.qualtrics.com/" target="_blank" rel="noopener" style="color:rgba(255,255,255,0.65);">Community</a>
-        <!-- PLACEHOLDER · Replace with next lab enrollment URL -->
-        <a href="#PLACEHOLDER-next-lab" class="site-header__cta">Next lab →</a>
+        <!-- PLACEHOLDER · Replace with next lab enrollment URL from lab catalog -->
+        <a href="index.html#cohort" class="site-header__cta">Next lab →</a>
       </nav>
     </div>
   </header>
@@ -1224,6 +1342,40 @@
             </a>
           </div>
 
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         L0 COMPLETE BANNER
+         Final section on the final level. Routes back to lab home
+         and the catalog. Enrollment lives on index.html only.
+         ============================================================ -->
+    <section class="complete-banner" id="l0-complete" aria-labelledby="complete-title">
+      <div class="container complete-banner__inner">
+        <div class="complete-banner__copy">
+          <p class="complete-banner__eyebrow">L0 Start-Up Lab · Complete</p>
+          <h2 id="complete-title" class="complete-banner__title">
+            You cleared L0.<br />
+            The map goes further.
+          </h2>
+          <p class="complete-banner__desc">
+            You built a working platform in two weeks. A project intake survey,
+            a ticket flow, a defined player set, and a public commit. That's
+            the foundation. Browse the catalog for what comes next — or head
+            back to the lab home.
+          </p>
+        </div>
+        <div class="complete-banner__actions">
+          <!-- PLACEHOLDER · Replace href with the Qualtrics Labs catalog URL when available -->
+          <a href="#PLACEHOLDER-labs-catalog-url" class="btn--complete">
+            Browse the lab catalog
+            <span class="btn--complete__arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="index.html" class="btn--complete-ghost">
+            ← Back to L0 Start-Up Lab home
+          </a>
+          <span class="complete-banner__meta">Doc ref: L0-ROS-V2.0 · Level 05</span>
         </div>
       </div>
     </section>

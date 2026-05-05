@@ -889,6 +889,102 @@
        BUTTON ADDITIONS
        ---------------------------------------------------------- */
     .btn--sm { padding: 0.6em 1em; font-size: 0.85rem; }
+
+    /* ----------------------------------------------------------
+       NEXT LEVEL CTA · replaces cohort enrollment on level pages
+       ---------------------------------------------------------- */
+    .next-level-cta {
+      background: var(--c-ink);
+      color: var(--c-white);
+      padding: var(--s-10) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .next-level-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gradient-brand);
+    }
+    .next-level-cta__inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s-7);
+      align-items: center;
+      justify-content: space-between;
+    }
+    .next-level-cta__copy { max-width: 36rem; }
+    .next-level-cta__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin: 0 0 var(--s-3);
+    }
+    .next-level-cta__title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--c-white);
+      margin: 0 0 var(--s-4);
+    }
+    .next-level-cta__desc {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.75);
+      margin: 0;
+    }
+    .next-level-cta__action {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-3);
+      align-items: flex-start;
+    }
+    .btn--next-level {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-3);
+      background: var(--gradient-brand);
+      color: var(--c-white);
+      border: none;
+      padding: 0.9em 1.75em;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--dur-fast) var(--ease-out),
+                  box-shadow var(--dur-med) var(--ease-out);
+      white-space: nowrap;
+    }
+    .btn--next-level:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -12px rgba(95, 26, 229, 0.55);
+    }
+    .btn--next-level .next-level-cta__arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      font-size: 0.95rem;
+      transition: transform var(--dur-fast) var(--ease-out);
+    }
+    .btn--next-level:hover .next-level-cta__arrow { transform: translateX(3px); }
+    .next-level-cta__meta {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+    }
   </style>
 </head>
 <body>
@@ -911,7 +1007,7 @@
       <nav class="site-header__nav" aria-label="Primary">
         <a href="#PLACEHOLDER-catalog">Lab Catalog</a>
         <a href="#PLACEHOLDER-community">Community</a>
-        <a href="#join" class="site-header__cta">Enroll</a>
+        <a href="index.html#cohort" class="site-header__cta">Enroll</a>
       </nav>
     </div>
   </header>
@@ -1483,63 +1579,30 @@
 
 
     <!-- ============================================================
-         JOIN CTA · Cohort enrollment
+         NEXT LEVEL CTA · Continue to Level 05
+         Enrollment lives on index.html only. Subsequent levels
+         invite the user to continue, not re-enroll.
          ============================================================ -->
-    <section class="join-cta" id="join" aria-labelledby="join-title">
-      <div class="container join-cta__inner">
-        <div class="join-cta__copy">
-          <p class="eyebrow eyebrow--inverse">Day 8 · Live webinar</p>
-          <h2 id="join-title">
-            Two levels down.<br />
-            Time to close the loop.
+    <section class="next-level-cta" id="next-level" aria-labelledby="next-level-title">
+      <div class="container next-level-cta__inner">
+        <div class="next-level-cta__copy">
+          <p class="next-level-cta__eyebrow">Level 04 complete · Last stop</p>
+          <h2 id="next-level-title" class="next-level-cta__title">
+            Loop closed.<br />
+            Time to join the party.
           </h2>
-          <p>
-            Same cohort, same pace. Pick your start date and the
-            calendar invite for Level 04 lands automatically when
-            you're enrolled in L0.
+          <p class="next-level-cta__desc">
+            Level 05 is the post-game. Two things: introduce yourself to
+            the community and sign up for at least two more labs. Short
+            by design. Day 10 · ~30 minutes.
           </p>
         </div>
-
-        <div class="join-panel">
-          <ul class="cohort-dates" role="list">
-            <li class="cohort-dates__item">
-              <p class="cohort-dates__date">
-                <!-- PLACEHOLDER · Replace with next live cohort date (Day 8 of cohort 1) -->
-                <span class="cohort-dates__day">Sat</span>
-                <span class="cohort-dates__num">[DATE]</span>
-                <span class="cohort-dates__month">[MONTH]</span>
-              </p>
-              <p class="cohort-dates__seats">
-                <!-- PLACEHOLDER · Replace with live seat count from registration system -->
-                [N] of 30 seats open
-              </p>
-              <!-- PLACEHOLDER · Replace with actual cohort 1 registration URL -->
-              <a href="#PLACEHOLDER-cohort-1-l04-signup" class="btn btn--primary btn--block">
-                Reserve a seat
-              </a>
-            </li>
-            <li class="cohort-dates__item">
-              <p class="cohort-dates__date">
-                <!-- PLACEHOLDER · Replace with second cohort date -->
-                <span class="cohort-dates__day">Sat</span>
-                <span class="cohort-dates__num">[DATE]</span>
-                <span class="cohort-dates__month">[MONTH]</span>
-              </p>
-              <p class="cohort-dates__seats">
-                <!-- PLACEHOLDER · Replace with live seat count from registration system -->
-                [N] of 30 seats open
-              </p>
-              <!-- PLACEHOLDER · Replace with actual cohort 2 registration URL -->
-              <a href="#PLACEHOLDER-cohort-2-l04-signup" class="btn btn--ghost-inverse btn--block">
-                Reserve a seat
-              </a>
-            </li>
-          </ul>
-          <p class="join-cta__fineprint">
-            Already enrolled in L0? Your Level 04 calendar invite was sent after Level 03.
-            <!-- PLACEHOLDER · Replace with actual community/support link -->
-            Can't find it? <a href="#PLACEHOLDER-community-help">Check the community thread →</a>
-          </p>
+        <div class="next-level-cta__action">
+          <a href="level-05-join-the-party.html" class="btn--next-level">
+            Continue to Level 05
+            <span class="next-level-cta__arrow" aria-hidden="true">→</span>
+          </a>
+          <span class="next-level-cta__meta">Day 10 · Community · ~30 min</span>
         </div>
       </div>
     </section>

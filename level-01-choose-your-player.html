@@ -663,6 +663,70 @@
     }
 
     /* ----------------------------------------------------------
+       FIELD ERROR STATES · inline validation feedback
+       ---------------------------------------------------------- */
+    .field--error label {
+      color: #B91C1C;
+    }
+    .field--error input,
+    .field--error textarea,
+    .field--error select {
+      border-color: #EF4444;
+      background: #FFF5F5;
+    }
+    .field--error input:focus,
+    .field--error textarea:focus,
+    .field--error select:focus {
+      border-color: #DC2626;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+    }
+    .field__error-msg {
+      display: none;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      color: #B91C1C;
+      margin-top: -2px;
+    }
+    .field--error .field__error-msg { display: block; }
+
+    /* Card-level error banner */
+    .player-card--error {
+      border-color: #EF4444;
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+    }
+    .player-card--error::before { background: #EF4444; }
+
+    /* Shake animation for the "complete" button on failed validation */
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    .btn--shake { animation: shake 0.4s var(--ease-out); }
+
+    /* Validation summary notice */
+    .validation-notice {
+      display: none;
+      align-items: center;
+      gap: var(--s-3);
+      padding: var(--s-3) var(--s-4);
+      background: #FEF2F2;
+      border: 1px solid #FECACA;
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      color: #B91C1C;
+      margin-top: var(--s-4);
+    }
+    .validation-notice.is-visible { display: flex; }
+    .validation-notice__icon { flex-shrink: 0; font-size: 1rem; }
+
+    /* ----------------------------------------------------------
        TOAST · ephemeral confirmation chip
        ---------------------------------------------------------- */
     .toast {
@@ -691,8 +755,104 @@
     }
 
     /* ----------------------------------------------------------
-       PRINT STYLESHEET · "Print Your Party"
-       Hides everything except the player-card preview.
+       NEXT LEVEL CTA · replaces cohort enrollment on level pages
+       ---------------------------------------------------------- */
+    .next-level-cta {
+      background: var(--c-ink);
+      color: var(--c-white);
+      padding: var(--s-10) 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .next-level-cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gradient-brand);
+    }
+    .next-level-cta__inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s-7);
+      align-items: center;
+      justify-content: space-between;
+    }
+    .next-level-cta__copy { max-width: 36rem; }
+    .next-level-cta__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin: 0 0 var(--s-3);
+    }
+    .next-level-cta__title {
+      font-family: var(--font-display);
+      font-weight: 400;
+      font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      color: var(--c-white);
+      margin: 0 0 var(--s-4);
+    }
+    .next-level-cta__desc {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.75);
+      margin: 0;
+    }
+    .next-level-cta__action {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s-3);
+      align-items: flex-start;
+    }
+    .btn--next-level {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--s-3);
+      background: var(--gradient-brand);
+      color: var(--c-white);
+      border: none;
+      padding: 0.9em 1.75em;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform var(--dur-fast) var(--ease-out),
+                  box-shadow var(--dur-med) var(--ease-out);
+      white-space: nowrap;
+    }
+    .btn--next-level:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -12px rgba(95, 26, 229, 0.55);
+    }
+    .btn--next-level .next-level-cta__arrow {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      font-size: 0.95rem;
+      transition: transform var(--dur-fast) var(--ease-out);
+    }
+    .btn--next-level:hover .next-level-cta__arrow { transform: translateX(3px); }
+    .next-level-cta__meta {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.45);
+    }
+
+    @media print {
+      .next-level-cta { display: none !important; }
+    }
        ---------------------------------------------------------- */
     @media print {
       body { background: var(--c-white); font-size: 10.5pt; }
@@ -741,7 +901,7 @@
         <!-- PLACEHOLDER LINKS · Replace with real Labs IA when available -->
         <a href="#PLACEHOLDER-catalog">Lab Catalog</a>
         <a href="#PLACEHOLDER-community">Community</a>
-        <a href="#cohort" class="site-header__cta">Enroll</a>
+        <a href="index.html#cohort" class="site-header__cta">Enroll</a>
       </nav>
     </div>
   </header>
@@ -1000,6 +1160,11 @@
             Start over
           </button>
         </div>
+        <!-- Validation notice — shown when user tries to advance with incomplete cards -->
+        <div class="validation-notice" id="validation-notice" role="alert" aria-live="assertive">
+          <span class="validation-notice__icon" aria-hidden="true">⚠</span>
+          <span id="validation-message">Each player card needs a name and a goal before you can move on.</span>
+        </div>
       </div>
     </section>
 
@@ -1071,62 +1236,31 @@
 
 
     <!-- ============================================================
-         COHORT CTA · Enrollment
-         Buttons link to the URLs supplied by the requester.
-         Reuses the .cohort pattern from styles.css.
+         NEXT LEVEL CTA · Continue to Level 02
+         Enrollment lives on index.html only. Subsequent levels
+         invite the user to continue, not re-enroll.
          ============================================================ -->
-    <section class="cohort" id="cohort" aria-labelledby="cohort-title">
-      <div class="container cohort__inner">
-        <div class="cohort__copy">
-          <p class="eyebrow eyebrow--inverse">Next cohort · Levels 03 &amp; 04</p>
-          <h2 id="cohort-title" class="cohort__title">
-            You finished Level 01.<br />
-            Lock in your seat.
+    <section class="next-level-cta" id="next-level" aria-labelledby="next-level-title">
+      <div class="container next-level-cta__inner">
+        <div class="next-level-cta__copy">
+          <p class="next-level-cta__eyebrow">Level 01 complete · Up next</p>
+          <h2 id="next-level-title" class="next-level-cta__title">
+            Ready for Level 02?<br />
+            Pick your loadout.
           </h2>
-          <p class="cohort__lede">
-            Cohorts cap at 30. Past that, the build pace breaks down.
-            Pick a start date and we'll send the calendar invites for
-            the live levels.
+          <p class="next-level-cta__desc">
+            You've named your players. Level 02 locks in the data and
+            identifiers you'll carry into every project — embedded data
+            fields, directory fields, and the one identifier that ties
+            everything together. Day 3 · ~60 minutes.
           </p>
         </div>
-
-        <div class="cohort__panel">
-          <ul class="cohort-dates" role="list">
-            <li class="cohort-dates__item">
-              <p class="cohort-dates__date">
-                <!-- PLACEHOLDER · Replace with next live cohort start date -->
-                <span class="cohort-dates__day">Mon</span>
-                <span class="cohort-dates__num">[DATE]</span>
-                <span class="cohort-dates__month">[MONTH]</span>
-              </p>
-              <p class="cohort-dates__seats">
-                <!-- PLACEHOLDER · Replace with seat count from registration system -->
-                [N] of 30 seats open
-              </p>
-              <a href="https://frederickcgit.github.io/#PLACEHOLDER-cohort-1-signup" class="btn btn--primary btn--block">
-                Reserve a seat
-              </a>
-            </li>
-            <li class="cohort-dates__item">
-              <p class="cohort-dates__date">
-                <!-- PLACEHOLDER · Replace with second cohort start date -->
-                <span class="cohort-dates__day">Mon</span>
-                <span class="cohort-dates__num">[DATE]</span>
-                <span class="cohort-dates__month">[MONTH]</span>
-              </p>
-              <p class="cohort-dates__seats">
-                <!-- PLACEHOLDER · Replace with seat count from registration system -->
-                [N] of 30 seats open
-              </p>
-              <a href="https://frederickcgit.github.io/#PLACEHOLDER-cohort-2-signup" class="btn btn--ghost-inverse btn--block">
-                Reserve a seat
-              </a>
-            </li>
-          </ul>
-          <p class="cohort__fineprint">
-            Levels 01, 02, 05 unlock on the dates above. Levels 03 and 04
-            run live — calendar invites land in your inbox after sign-up.
-          </p>
+        <div class="next-level-cta__action">
+          <a href="level-02-pick-your-loadout.html" class="btn--next-level">
+            Continue to Level 02
+            <span class="next-level-cta__arrow" aria-hidden="true">→</span>
+          </a>
+          <span class="next-level-cta__meta">Day 3 · Self-paced · ~60 min</span>
         </div>
       </div>
     </section>
@@ -1237,13 +1371,14 @@
                 ? `<button type="button" class="player-card__remove" data-remove="${idx}" aria-label="Remove player ${idx + 1}">Remove</button>`
                 : ''}
             </div>
-            <div class="field">
-              <label for="name-${idx}">Name or role</label>
+            <div class="field" id="field-name-${idx}">
+              <label for="name-${idx}">Name or role <span style="color:#EF4444;" aria-hidden="true">*</span></label>
               <input id="name-${idx}" type="text" data-field="name" data-idx="${idx}"
                      placeholder="e.g., Sarah from Ops"
                      value="${escapeHtml(card.name)}" />
+              <span class="field__error-msg" id="err-name-${idx}">Name is required.</span>
             </div>
-            <div class="field">
+            <div class="field" id="field-role-${idx}">
               <label for="role-${idx}">Archetype</label>
               <select id="role-${idx}" data-field="role" data-idx="${idx}">
                 <option value="">Pick one…</option>
@@ -1252,12 +1387,13 @@
                 `).join('')}
               </select>
             </div>
-            <div class="field">
-              <label for="goal-${idx}">What are they trying to do?</label>
+            <div class="field" id="field-goal-${idx}">
+              <label for="goal-${idx}">What are they trying to do? <span style="color:#EF4444;" aria-hidden="true">*</span></label>
               <textarea id="goal-${idx}" data-field="goal" data-idx="${idx}"
                         placeholder="One sentence. Ends in a verb they actually do.">${escapeHtml(card.goal)}</textarea>
+              <span class="field__error-msg" id="err-goal-${idx}">A goal is required.</span>
             </div>
-            <div class="field">
+            <div class="field" id="field-id-${idx}">
               <label for="id-${idx}">Unique identifier</label>
               <select id="id-${idx}" data-field="identifier" data-idx="${idx}">
                 ${ID_OPTIONS.map(o => `
@@ -1285,9 +1421,41 @@
         updateBeat2Gate();
       }
 
+      // ---- Validate and mark error states on all cards ----
+      // Returns the number of invalid cards
+      function validateAndMarkCards() {
+        let invalidCount = 0;
+        state.cards.forEach((card, idx) => {
+          const cardEl = cardGrid.querySelector(`article.player-card:nth-child(${idx + 1})`);
+          const nameField = document.getElementById(`field-name-${idx}`);
+          const goalField = document.getElementById(`field-goal-${idx}`);
+          const nameEmpty = !card.name.trim();
+          const goalEmpty = !card.goal.trim();
+
+          if (nameField) nameField.classList.toggle('field--error', nameEmpty);
+          if (goalField) goalField.classList.toggle('field--error', goalEmpty);
+          if (cardEl) cardEl.classList.toggle('player-card--error', nameEmpty || goalEmpty);
+
+          if (nameEmpty || goalEmpty) invalidCount++;
+        });
+        return invalidCount;
+      }
+
+      // ---- Clear error state on a specific field when user types ----
+      function clearFieldError(idx, field) {
+        const fieldEl = document.getElementById(`field-${field}-${idx}`);
+        if (fieldEl) fieldEl.classList.remove('field--error');
+        // If both name and goal are now valid, remove card-level error too
+        const card = state.cards[idx];
+        if (card && card.name.trim() && card.goal.trim()) {
+          const cardEl = cardGrid.querySelector(`article.player-card:nth-child(${idx + 1})`);
+          if (cardEl) cardEl.classList.remove('player-card--error');
+        }
+      }
+
       // ---- Preview render ----
       function updatePreview() {
-        const filled = state.cards.filter(c => (c.name || c.role) && c.goal);
+        const filled = state.cards.filter(c => c.name.trim() && c.goal.trim());
         previewGrid.innerHTML = '';
 
         if (filled.length === 0) {
@@ -1319,7 +1487,8 @@
       }
 
       function updateBeat2Gate() {
-        const validCards = state.cards.filter(c => (c.name || c.role) && c.goal).length;
+        // A valid card requires BOTH name AND goal (name must not be empty for printing)
+        const validCards = state.cards.filter(c => c.name.trim() && c.goal.trim()).length;
         completeBeat2Btn.disabled = validCards < MIN_CARDS;
       }
 
@@ -1344,6 +1513,34 @@
       }
 
       function completeBeat2() {
+        // Run validation — block if any card is missing name or goal
+        const invalidCount = validateAndMarkCards();
+        const validationNotice = document.getElementById('validation-notice');
+        const validationMsg = document.getElementById('validation-message');
+        if (invalidCount > 0) {
+          // Show the validation notice
+          if (validationNotice) {
+            const missingFields = [];
+            state.cards.forEach((card, idx) => {
+              if (!card.name.trim()) missingFields.push(`Player ${idx + 1} needs a name`);
+              if (!card.goal.trim()) missingFields.push(`Player ${idx + 1} needs a goal`);
+            });
+            if (validationMsg) validationMsg.textContent = missingFields.join(' · ') + '.';
+            validationNotice.classList.add('is-visible');
+          }
+          // Shake the button
+          completeBeat2Btn.classList.add('btn--shake');
+          completeBeat2Btn.addEventListener('animationend', () => {
+            completeBeat2Btn.classList.remove('btn--shake');
+          }, { once: true });
+          // Scroll to first invalid card
+          const firstInvalid = cardGrid.querySelector('.player-card--error');
+          if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          return;
+        }
+        // Hide validation notice on success
+        if (validationNotice) validationNotice.classList.remove('is-visible');
+
         if (state.beat2Done) return;
         state.beat2Done = true;
         setStepState(2, 'done');
@@ -1357,7 +1554,12 @@
         if (state.beat3Done) return;
         state.beat3Done = true;
         setStepState(3, 'done');
-        showToast('Level 01 complete. Level 02 unlocks Day 3.');
+        showToast('Level 01 complete. Head to Level 02.');
+        // Smooth scroll to the next-level CTA
+        const nextLevelCta = document.getElementById('next-level');
+        if (nextLevelCta) {
+          setTimeout(() => nextLevelCta.scrollIntoView({ behavior: 'smooth', block: 'start' }), 600);
+        }
       }
 
       // ---- Helpers ----
@@ -1409,6 +1611,16 @@
         const idx = t.dataset.idx;
         if (field !== undefined && idx !== undefined) {
           state.cards[parseInt(idx, 10)][field] = t.value;
+          // Clear error state on this field as user types
+          if (field === 'name' || field === 'goal') {
+            clearFieldError(parseInt(idx, 10), field);
+            // Hide the validation notice if all cards are now valid
+            const validCards = state.cards.filter(c => c.name.trim() && c.goal.trim()).length;
+            if (validCards === state.cards.length) {
+              const notice = document.getElementById('validation-notice');
+              if (notice) notice.classList.remove('is-visible');
+            }
+          }
           updatePreview();
           updateBeat2Gate();
         }
