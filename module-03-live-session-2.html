@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 03 · Live Session 2 · Qualtrics → Salesforce — 200 Level · Salesforce Integration Lab</title>
+  <meta name="description" content="90-minute live build session. Event-driven workflow, decision step, write-back to Salesforce. The closing loop of the 200 Level Salesforce Integration Lab." />
+
+  <!-- PLACEHOLDER · FAVICON · Brand asset: Q_Favicon_32x32.svg -->
+  <!-- <link rel="icon" type="image/svg+xml" href="/assets/Q_Favicon_32x32.svg" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Shared Labs styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Page-local: only the breadcrumb pattern is page-scoped in this project. -->
+  <style>
+    .breadcrumb { padding: var(--s-5) 0 0; }
+    .breadcrumb__inner {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--c-ink-soft);
+    }
+    .breadcrumb__inner a {
+      color: var(--c-ink-soft);
+      border-bottom: 1px solid transparent;
+      transition: color var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
+    }
+    .breadcrumb__inner a:hover {
+      color: var(--c-cobalt);
+      border-bottom-color: currentColor;
+    }
+    .breadcrumb__sep { opacity: 0.4; }
+    .breadcrumb__current { color: var(--c-ink); }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="200-level-salesforce-integration.html" aria-label="Qualtrics Labs home">
+        <!-- PLACEHOLDER · LOGO — Qualtrics_gradient_RGB.svg -->
+        <span class="logo-placeholder" aria-hidden="true">QUALTRICS</span>
+        <span class="site-header__divider" aria-hidden="true">·</span>
+        <span class="site-header__lockup">Labs</span>
+      </a>
+      <nav class="site-header__nav" aria-label="Primary">
+        <!-- PLACEHOLDER LINKS · Replace with real Labs IA when available -->
+        <a href="#PLACEHOLDER-catalog">Lab Catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="200-level-salesforce-integration.html#cohort" class="site-header__cta">Enroll</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================================
+         BREADCRUMB
+         ============================================================ -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <div class="container breadcrumb__inner">
+        <a href="200-level-salesforce-integration.html">200 Level · Salesforce Integration Lab</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <a href="200-level-salesforce-integration.html#map">The Map</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <span class="breadcrumb__current" aria-current="page">Module 03 · Live Session 2</span>
+      </div>
+    </nav>
+
+
+    <!-- ============================================================
+         LEVEL INTRO — live webinar header
+         Source: Build Plan §M03 (Live Session 2) "what the customer reads".
+         Uses level--live + level--alt for the darker variant — this is the
+         closing session and earns the visual emphasis.
+         ============================================================ -->
+    <section class="level level--live level--alt" id="module-intro" aria-labelledby="module-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">03</div>
+        <div class="level__body">
+          <p class="eyebrow">Module Three · Live webinar · Day 9</p>
+          <span class="badge badge--live">Live</span>
+          <h1 id="module-title" class="level__title">Close the loop.</h1>
+          <p class="level__sub">Qualtrics → Salesforce. 90 minutes. The integration runs both ways by the end.</p>
+
+          <p class="level__copy">
+            Live Session 1 sent data one direction. Live Session 2 sends it
+            back. You'll build an event-driven workflow that fires when a
+            survey response comes in, evaluates the response with a decision
+            step, and writes a field back to the original Salesforce record.
+          </p>
+          <p class="level__copy">
+            By the end, the loop runs both ways — Salesforce ships the
+            request, Qualtrics handles the response, and Salesforce sees
+            the update. You'll watch the field change on-screen.
+          </p>
+          <p class="level__copy">
+            Bring the test survey response from your side quest. If you
+            completed the survey by accident, take it again — we need an
+            unfinished response to demo against.
+          </p>
+          <p class="level__copy">
+            <em>Same cohort as Live Session 1. The room moves faster the second time.</em>
+          </p>
+
+          <h3 class="level__sub-h">What the cohort leaves with</h3>
+          <ul class="leave-list">
+            <li>An event-driven workflow firing on survey response in your own instance</li>
+            <li>A working decision step that gates write-backs — not every response triggers an update</li>
+            <li>A configured Salesforce update task with Object ID lookup and field mapping</li>
+            <li>A verified end-to-end loop — submitted survey, embedded data captured, Salesforce updated</li>
+            <li>A documented path to production: credentials, cadence, monitoring</li>
+          </ul>
+
+          <dl class="level__meta">
+            <div><dt>Format</dt><dd>Live webinar</dd></div>
+            <div><dt>Time</dt><dd>90 min</dd></div>
+            <div><dt>Output</dt><dd>Closed loop · Verified write-back</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         PREP · WHAT TO BRING
+         Source: Build Plan §M03 prep + side quest from M02.
+         ============================================================ -->
+    <section class="prep" id="prep" aria-labelledby="prep-title">
+      <div class="container prep__inner">
+        <div class="prep__copy">
+          <p class="eyebrow">Before you join</p>
+          <h2 id="prep-title">Bring an open survey response.</h2>
+          <p>
+            The whole session writes back from one survey response — yours.
+            If you completed the survey at Live 1, take it again. We need
+            it open and unfinished.
+          </p>
+
+          <div class="checklist" role="list">
+
+            <div class="checklist__item" role="listitem">
+              <div class="checklist__icon" aria-hidden="true">📬</div>
+              <div class="checklist__text">
+                <span class="checklist__label">From the side quest</span>
+                <span class="checklist__title">A test email from your Live 1 workflow</span>
+                <span class="checklist__desc">
+                  Re-run the workflow if you need to — it sends a fresh email.
+                  The survey link in that email is what we'll work against.
+                </span>
+                <a class="checklist__source" href="module-02-live-session-1.html#outcome">
+                  Module 02 · Side quest →
+                </a>
+              </div>
+            </div>
+
+            <div class="checklist__item" role="listitem">
+              <div class="checklist__icon" aria-hidden="true">🔗</div>
+              <div class="checklist__text">
+                <span class="checklist__label">From Live 1</span>
+                <span class="checklist__title">Your survey + workflow from Day 5</span>
+                <span class="checklist__desc">
+                  Confirm the survey is still published. Confirm the embedded
+                  data block on the survey flow still carries the Salesforce
+                  Object ID — that's the field everything pivots on.
+                </span>
+              </div>
+            </div>
+
+            <div class="checklist__item" role="listitem">
+              <div class="checklist__icon" aria-hidden="true">🔑</div>
+              <div class="checklist__text">
+                <span class="checklist__label">In Qualtrics</span>
+                <span class="checklist__title">Salesforce credentials still authorized</span>
+                <span class="checklist__desc">
+                  Same credentials you used in Live 1. If they've rotated
+                  between sessions, re-authorize before Day 9 — Build 4
+                  loads them and can't pause to fix expired access.
+                </span>
+              </div>
+            </div>
+
+            <div class="checklist__item" role="listitem">
+              <div class="checklist__icon" aria-hidden="true">📓</div>
+              <div class="checklist__text">
+                <span class="checklist__label">Optional</span>
+                <span class="checklist__title">A note about what you'd write back to in production</span>
+                <span class="checklist__desc">
+                  We'll write to one field in lab (e.g., LastSurveyScore__c
+                  or a notes field). In production, you might write to several.
+                  Bring a quick list — we'll talk through it at the close.
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Rules of the room -->
+        <aside class="rules-panel" aria-label="Rules of the room">
+          <p class="rules-panel__eyebrow">Rules of the room</p>
+          <h3>Four things that make this work.</h3>
+          <ol class="rules-list" role="list">
+            <li class="rules-list__item">
+              <span class="rules-list__num" aria-hidden="true">1</span>
+              <span>
+                <strong>Object ID is the deliverable.</strong>
+                Build 4 is the most consequential build of the session.
+                If the Object ID isn't mapped, the write-back has nothing
+                to find. We slow down there.
+              </span>
+            </li>
+            <li class="rules-list__item">
+              <span class="rules-list__num" aria-hidden="true">2</span>
+              <span>
+                <strong>The decision step is editorial.</strong>
+                Not every response should write back. The decision step
+                turns the integration from a firehose into a signal.
+                You'll set your own threshold.
+              </span>
+            </li>
+            <li class="rules-list__item">
+              <span class="rules-list__num" aria-hidden="true">3</span>
+              <span>
+                <strong>Stage the verification beat.</strong>
+                When the field updates on-screen in Salesforce, take the
+                pause. It's the closing win of the entire lab — don't
+                rush past it.
+              </span>
+            </li>
+            <li class="rules-list__item">
+              <span class="rules-list__num" aria-hidden="true">4</span>
+              <span>
+                <strong>Workflows that ship are workflows that are active.</strong>
+                A surprising number of customers leave workflows in draft.
+                Build 5 is "save and arm" for a reason — confirm out loud.
+              </span>
+            </li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         AGENDA · SESSION TIMELINE (customer-facing)
+         Source: Build Plan §M03 run of show.
+         ============================================================ -->
+    <section class="agenda" id="agenda" aria-labelledby="agenda-title">
+      <div class="container">
+        <div class="agenda__intro">
+          <p class="eyebrow">The 90 minutes</p>
+          <h2 id="agenda-title">What happens during the build.</h2>
+          <p>
+            Five builds, two verifications, one closing path-to-production
+            conversation. The verification beat in Salesforce is the moment
+            the lab snaps into focus.
+          </p>
+        </div>
+
+        <div class="timeline" role="list">
+
+          <!-- 0:00 Open -->
+          <div class="timeline__item" role="listitem">
+            <div class="timeline__time" aria-label="Time: 0 minutes">
+              <span class="timeline__min">0:00</span>
+              <span class="timeline__label">open</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Kickoff · Chat poll</p>
+              <h3 class="timeline__title">Who completed the side quest? Who accidentally took the survey?</h3>
+              <p class="timeline__desc">
+                Both answers earn applause. Producer notes who needs a fresh
+                distribution link in the first ten minutes.
+              </p>
+              <span class="timeline__note">⏱ 3 min</span>
+            </div>
+          </div>
+
+          <!-- 0:03 Anchor -->
+          <div class="timeline__item" role="listitem">
+            <div class="timeline__time" aria-label="Time: 3 minutes">
+              <span class="timeline__min">0:03</span>
+              <span class="timeline__label">anchor</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Context</p>
+              <h3 class="timeline__title">Event-driven versus scheduled.</h3>
+              <p class="timeline__desc">
+                Live 1 was scheduled — workflow runs on a clock. Live 2 is
+                event-driven — workflow runs on a trigger. Same architecture,
+                opposite cadence.
+              </p>
+              <span class="timeline__note">⏱ 5 min</span>
+            </div>
+          </div>
+
+          <!-- 0:08 Build 1 -->
+          <div class="timeline__item timeline__item--live" role="listitem">
+            <div class="timeline__time" aria-label="Time: 8 minutes">
+              <span class="timeline__min">0:08</span>
+              <span class="timeline__label">build 1</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">In your survey</p>
+              <h3 class="timeline__title">Confirm the Object ID is in the survey flow.</h3>
+              <p class="timeline__desc">
+                Open the survey from Live 1 and review the embedded data block.
+                The Salesforce Object ID must be present — it's the single most
+                important field. If it's missing for anyone, we fix it before
+                moving on.
+              </p>
+              <span class="timeline__note">⏱ 7 min</span>
+            </div>
+          </div>
+
+          <!-- 0:15 Build 2 -->
+          <div class="timeline__item timeline__item--live" role="listitem">
+            <div class="timeline__time" aria-label="Time: 15 minutes">
+              <span class="timeline__min">0:15</span>
+              <span class="timeline__label">build 2</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">In Global Workflows</p>
+              <h3 class="timeline__title">Create the trigger workflow.</h3>
+              <p class="timeline__desc">
+                A new workflow with a survey-response trigger. Pick the survey
+                from Live 1. Name it clearly — naming conventions matter at
+                scale. Something like "200-Level-WB-SFDC-CSAT-Response."
+              </p>
+              <span class="timeline__note">⏱ 10 min</span>
+            </div>
+          </div>
+
+          <!-- 0:25 Build 3 -->
+          <div class="timeline__item timeline__item--live" role="listitem">
+            <div class="timeline__time" aria-label="Time: 25 minutes">
+              <span class="timeline__min">0:25</span>
+              <span class="timeline__label">build 3</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Workflow step · 1 of 2</p>
+              <h3 class="timeline__title">Add the decision step.</h3>
+              <p class="timeline__desc">
+                One condition: only write back if a specific question (CSAT
+                score, for example) is below a threshold. You pick the
+                threshold — picking it is the learning. Without the gate,
+                every response writes back and floods the record with noise.
+              </p>
+              <span class="timeline__note">⏱ 15 min</span>
+            </div>
+          </div>
+
+          <!-- 0:40 Build 4 — THE deliverable -->
+          <div class="timeline__item timeline__item--live" role="listitem">
+            <div class="timeline__time" aria-label="Time: 40 minutes">
+              <span class="timeline__min">0:40</span>
+              <span class="timeline__label">build 4</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Workflow step · 2 of 2 · The key deliverable</p>
+              <h3 class="timeline__title">Add the Salesforce update task.</h3>
+              <p class="timeline__desc">
+                Choose "Update object." Load credentials. Pick the object
+                (Contact, in most cases). Map the Salesforce Object ID from
+                the survey flow into the lookup field. Pick one field to write
+                back. Slow down here — this is where customers stall in production.
+              </p>
+              <span class="timeline__note">⏱ 15 min</span>
+            </div>
+          </div>
+
+          <!-- 0:55 Build 5 -->
+          <div class="timeline__item timeline__item--live" role="listitem">
+            <div class="timeline__time" aria-label="Time: 55 minutes">
+              <span class="timeline__min">0:55</span>
+              <span class="timeline__label">build 5</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Save the work</p>
+              <h3 class="timeline__title">Save and arm the workflow.</h3>
+              <p class="timeline__desc">
+                Save it. Then confirm the workflow status reads "active" —
+                not draft. Facilitator screen-shares the active state so the
+                whole cohort knows what to look for.
+              </p>
+              <span class="timeline__note">⏱ 10 min</span>
+            </div>
+          </div>
+
+          <!-- 1:05 Test -->
+          <div class="timeline__item" role="listitem">
+            <div class="timeline__time" aria-label="Time: 65 minutes">
+              <span class="timeline__min">1:05</span>
+              <span class="timeline__label">test</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Run it</p>
+              <h3 class="timeline__title">Take the survey.</h3>
+              <p class="timeline__desc">
+                Open the test email from Live 1. Complete the survey. Pick
+                an answer that satisfies the decision condition you set in
+                Build 3. Submit.
+              </p>
+              <span class="timeline__note">⏱ 7 min</span>
+            </div>
+          </div>
+
+          <!-- 1:12 Verify part 1 -->
+          <div class="timeline__item" role="listitem">
+            <div class="timeline__time" aria-label="Time: 72 minutes">
+              <span class="timeline__min">1:12</span>
+              <span class="timeline__label">verify · 1</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Easy verification</p>
+              <h3 class="timeline__title">Check Data and Analysis.</h3>
+              <p class="timeline__desc">
+                Confirm the response is captured and that the embedded data —
+                including the Salesforce Object ID — is on the row. This is
+                the easy verification. The next one is the hard one.
+              </p>
+              <span class="timeline__note">⏱ 6 min</span>
+            </div>
+          </div>
+
+          <!-- 1:18 Verify part 2 — THE moment -->
+          <div class="timeline__item timeline__item--live" role="listitem">
+            <div class="timeline__time" aria-label="Time: 78 minutes">
+              <span class="timeline__min">1:18</span>
+              <span class="timeline__label">verify · 2</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">The closing beat</p>
+              <h3 class="timeline__title">Check Salesforce. Watch the field change.</h3>
+              <p class="timeline__desc">
+                Open Salesforce. Navigate to the original contact record.
+                Confirm the field has been updated. The room watches the value
+                change on-screen. This is the ah-ha moment for the whole lab —
+                we'll take the silence.
+              </p>
+              <span class="timeline__note">⏱ 7 min</span>
+            </div>
+          </div>
+
+          <!-- 1:25 Close -->
+          <div class="timeline__item" role="listitem">
+            <div class="timeline__time" aria-label="Time: 85 minutes">
+              <span class="timeline__min">1:25</span>
+              <span class="timeline__label">close</span>
+            </div>
+            <div class="timeline__body">
+              <p class="timeline__segment">Path to production</p>
+              <h3 class="timeline__title">From sandbox to live.</h3>
+              <p class="timeline__desc">
+                Switch credentials. Switch to your production list. Increase
+                the schedule cadence. Monitor for the first week. Side quest:
+                document the build in your internal runbook — Module 04
+                gives you the template.
+              </p>
+              <span class="timeline__note">⏱ 5 min</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         OUTCOME + PATH-TO-PRODUCTION ASIDE
+         Source: Build Plan §M03 "What the cohort leaves with".
+         ============================================================ -->
+    <section class="outcome" id="outcome" aria-labelledby="outcome-title">
+      <div class="container outcome__grid">
+        <div class="outcome__main">
+          <p class="eyebrow">What you leave with</p>
+          <h2 id="outcome-title">A bidirectional integration. In your own instance.</h2>
+
+          <div class="outcome-list" role="list">
+            <div class="outcome-list__item" role="listitem">
+              <div class="outcome-list__check" aria-hidden="true">✓</div>
+              <p class="outcome-list__text">
+                An event-driven workflow firing on survey response — not a
+                demo, not a copy of someone else's build
+              </p>
+            </div>
+            <div class="outcome-list__item" role="listitem">
+              <div class="outcome-list__check" aria-hidden="true">✓</div>
+              <p class="outcome-list__text">
+                A working decision step that gates write-backs — signal,
+                not firehose
+              </p>
+            </div>
+            <div class="outcome-list__item" role="listitem">
+              <div class="outcome-list__check" aria-hidden="true">✓</div>
+              <p class="outcome-list__text">
+                A configured Salesforce update task with Object ID lookup
+                and field mapping — the mapping survives Day 9
+              </p>
+            </div>
+            <div class="outcome-list__item" role="listitem">
+              <div class="outcome-list__check" aria-hidden="true">✓</div>
+              <p class="outcome-list__text">
+                A verified end-to-end loop — submitted survey, embedded
+                data captured, Salesforce updated. You watched it happen.
+              </p>
+            </div>
+            <div class="outcome-list__item" role="listitem">
+              <div class="outcome-list__check" aria-hidden="true">✓</div>
+              <p class="outcome-list__text">
+                A documented path to production — credentials, cadence,
+                monitoring. The build runs in production the next morning.
+              </p>
+            </div>
+          </div>
+
+          <!-- ============================================================
+               PLACEHOLDER · IMAGE 5 · End State
+               Source: skeleton run of show, "image5". Shows a Salesforce
+               contact record with the updated field highlighted, alongside
+               the corresponding Qualtrics response in Data and Analysis.
+               Used as the closing visual on the verification beat at 1:18.
+               Re-capture against current Workflows + Salesforce UI before
+               first cohort (Build Plan §10, image refresh open question).
+               ============================================================ -->
+          <!-- <img src="/assets/m03-end-state.png" alt="Salesforce contact record with updated field highlighted alongside Qualtrics response" /> -->
+        </div>
+
+        <!-- Side quest = Path to production -->
+        <aside class="side-quest" aria-labelledby="sidequest-title">
+          <p class="side-quest__eyebrow">Side quest · Days 10–14</p>
+          <h3 id="sidequest-title">Document the build. Move it to production.</h3>
+          <p>
+            The lab outcome is a working integration. Your actual outcome
+            is taking it to production. Module 04 gives you a runbook template
+            with three sections — credentials and access, schedule and cadence,
+            monitoring and alerts.
+          </p>
+          <p>
+            Writing the runbook forces you to confront the parts you didn't
+            fully understand. That's the value — not the document, the writing.
+          </p>
+          <div class="side-quest__reward">
+            <span class="side-quest__reward-icon" aria-hidden="true">🚀</span>
+            <div class="side-quest__reward-text">
+              <strong>The metric that matters</strong>
+              Integration in production within 30 days of Live 2 close.
+              We'll check in via post-lab survey at Day 30 and Day 60.
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         JOIN CTA · Live Session 2 enrollment
+         Note: Live 2 is part of the same cohort as Live 1 — the calendar
+         invite lands once Live 1 is on the books. Surface that explicitly.
+         ============================================================ -->
+    <section class="join-cta" id="join" aria-labelledby="join-title">
+      <div class="container join-cta__inner">
+        <div class="join-cta__copy">
+          <p class="eyebrow eyebrow--inverse">Day 9 · Live webinar · 90 min</p>
+          <h2 id="join-title">
+            Ready to close the loop?<br />
+            Lock in your seat.
+          </h2>
+          <p>
+            Live 2 is part of the same cohort as Live 1 — when you reserve
+            Live 1, the Live 2 calendar invite comes with it. Same room,
+            same facilitator, four days later.
+          </p>
+        </div>
+
+        <div class="join-panel">
+          <ul class="cohort-dates" role="list">
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with next cohort Live 2 date -->
+                <span class="cohort-dates__day">Fri</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                <!-- PLACEHOLDER · Replace with state from registration system -->
+                Bundled with Live Session 1 enrollment
+              </p>
+              <!-- ============================================================
+                   PLACEHOLDER · LINK · Routes back to the landing-page
+                   cohort enrollment, since Live 2 is bundled with Live 1.
+                   Same endpoint:
+                     /labs/enroll?lab=200-Level-TXN-SFDC&cohort=1
+                   ============================================================ -->
+              <a href="200-level-salesforce-integration.html#cohort" class="btn btn--primary btn--block">
+                Enroll in the next cohort
+              </a>
+            </li>
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with second cohort Live 2 date -->
+                <span class="cohort-dates__day">Fri</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                Already in this cohort?
+              </p>
+              <!-- PLACEHOLDER · LINK · Community help thread for the cohort -->
+              <a href="#PLACEHOLDER-community-help" class="btn btn--ghost-inverse btn--block">
+                Check the community thread
+              </a>
+            </li>
+          </ul>
+          <p class="join-cta__fineprint">
+            After Live 2 closes, Module 04 unlocks in community — the public
+            commit, the runbook upload, and the next-lab catalog. The post-lab
+            survey lands in your inbox 24 hours later.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       SITE FOOTER
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <!-- PLACEHOLDER · LOGO (footer) — Qualtrics_black_RGB.svg -->
+        <span class="logo-placeholder logo-placeholder--sm" aria-hidden="true">QUALTRICS</span>
+        <p class="site-footer__tagline">Labs · 200 Level · Module 03</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="Footer">
+        <a href="#PLACEHOLDER-catalog">Lab catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#PLACEHOLDER-support">Support</a>
+        <a href="#PLACEHOLDER-privacy">Privacy</a>
+      </nav>
+      <p class="site-footer__legal">
+        © Qualtrics. Doc ref: 200-Level-TXN-SFDC-M03.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

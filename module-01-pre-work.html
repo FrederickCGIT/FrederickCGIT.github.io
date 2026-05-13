@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 01 · Pre-work — 200 Level · Salesforce Integration Lab</title>
+  <meta name="description" content="Async pre-work for the 200 Level Salesforce Integration Lab. Quiz, checklist, and the four-pattern primer. ~4 hours over Days 1–4." />
+
+  <!-- ============================================================
+       PLACEHOLDER · FAVICON
+       Replace with the Qualtrics 32×32 favicon SVG when deployed.
+       Brand asset: Logos/Qualtrics/Qualtrics_favicon/svg/Q_Favicon_32x32.svg
+       ============================================================ -->
+  <!-- <link rel="icon" type="image/svg+xml" href="/assets/Q_Favicon_32x32.svg" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Shared Labs styles (tokens, header, level pattern, buttons, cohort, footer) -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- ============================================================
+       Page-specific styles only.
+       Breadcrumb is page-local convention in this project; everything
+       else comes from styles.css.
+       ============================================================ -->
+  <style>
+    .breadcrumb { padding: var(--s-5) 0 0; }
+    .breadcrumb__inner {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--c-ink-soft);
+    }
+    .breadcrumb__inner a {
+      color: var(--c-ink-soft);
+      border-bottom: 1px solid transparent;
+      transition: color var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
+    }
+    .breadcrumb__inner a:hover {
+      color: var(--c-cobalt);
+      border-bottom-color: currentColor;
+    }
+    .breadcrumb__sep { opacity: 0.4; }
+    .breadcrumb__current { color: var(--c-ink); }
+
+    /* Quiz item — uses the same visual cadence as .leave-list,
+       but each item is a numbered question with an answer set. */
+    .quiz-list { display: flex; flex-direction: column; gap: var(--s-5); margin-top: var(--s-5); }
+    .quiz-item {
+      border: 1px solid var(--c-rule);
+      border-radius: 10px;
+      padding: var(--s-5);
+      background: var(--c-white);
+    }
+    .quiz-item__num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--c-cobalt);
+      text-transform: uppercase;
+    }
+    .quiz-item__q {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      line-height: 1.3;
+      margin: var(--s-2) 0 var(--s-3);
+      color: var(--c-ink);
+    }
+    .quiz-item__options {
+      display: flex; flex-wrap: wrap; gap: var(--s-2);
+      margin: 0 0 var(--s-3); padding: 0; list-style: none;
+    }
+    .quiz-item__options li {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      padding: 4px 10px;
+      border: 1px solid var(--c-rule);
+      border-radius: 999px;
+      color: var(--c-ink-soft);
+    }
+    .quiz-item__hint {
+      font-size: 0.92rem;
+      color: var(--c-ink-soft);
+      margin: 0;
+    }
+
+    /* Glossary — two-column key/value */
+    .glossary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--s-4) var(--s-6);
+      margin-top: var(--s-5);
+    }
+    @media (max-width: 720px) { .glossary { grid-template-columns: 1fr; } }
+    .glossary dt {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      color: var(--c-cobalt);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .glossary dd { margin: 0 0 var(--s-3); color: var(--c-ink); }
+
+    /* Gate callout — visual emphasis on the unlock condition */
+    .gate-callout {
+      margin-top: var(--s-6);
+      padding: var(--s-5);
+      border-radius: 12px;
+      background: var(--gradient-soft, var(--c-bg-alt));
+      border: 1px solid var(--c-rule);
+    }
+    .gate-callout__label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-cobalt);
+      margin: 0 0 var(--s-2);
+    }
+    .gate-callout__title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      margin: 0 0 var(--s-2);
+      color: var(--c-ink);
+    }
+    .gate-callout p { margin: 0 0 var(--s-3); color: var(--c-ink-soft); }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="200-level-salesforce-integration.html" aria-label="Qualtrics Labs home">
+        <!-- PLACEHOLDER · LOGO
+             Replace with Qualtrics gradient wordmark SVG.
+             Brand asset: Logos/Qualtrics/Qualtrics_logo/svg/Qualtrics_gradient_RGB.svg -->
+        <span class="logo-placeholder" aria-hidden="true">QUALTRICS</span>
+        <span class="site-header__divider" aria-hidden="true">·</span>
+        <span class="site-header__lockup">Labs</span>
+      </a>
+      <nav class="site-header__nav" aria-label="Primary">
+        <!-- PLACEHOLDER LINKS · Replace with real Labs IA when available -->
+        <a href="#PLACEHOLDER-catalog">Lab Catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="200-level-salesforce-integration.html#cohort" class="site-header__cta">Enroll</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================================
+         BREADCRUMB
+         ============================================================ -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <div class="container breadcrumb__inner">
+        <a href="200-level-salesforce-integration.html">200 Level · Salesforce Integration Lab</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <a href="200-level-salesforce-integration.html#map">The Map</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <span class="breadcrumb__current" aria-current="page">Module 01 · Pre-work</span>
+      </div>
+    </nav>
+
+
+    <!-- ============================================================
+         LEVEL INTRO — customer-facing intro
+         Source: Build Plan §M01 (Pre-work).
+         ============================================================ -->
+    <section class="level" id="module-intro" aria-labelledby="module-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">01</div>
+        <div class="level__body">
+          <p class="eyebrow">Module One · Async · Days 1–4</p>
+          <h1 id="module-title" class="level__title">Load your environment.</h1>
+          <p class="level__sub">Four hours of pre-work, spread across four days. The live sessions start where this finishes.</p>
+
+          <p class="level__copy">
+            Live Session 1 starts on Day 5 with the assumption that you've got
+            credentials in hand, a survey ready, and ten test contacts created.
+            That's what this module is for. You'll spend about an hour on the
+            integration primer, an hour on the quiz, and two hours on the
+            checklist — at your own pace.
+          </p>
+          <p class="level__copy">
+            Pre-work is gated. You can't join Live Session 1 until the quiz
+            is submitted and the checklist clears. We keep it gated because
+            the cohort runs better when everyone arrives at the same starting line.
+          </p>
+
+          <dl class="level__meta">
+            <div><dt>Format</dt><dd>Async · Self-paced</dd></div>
+            <div><dt>Time</dt><dd>~4 hours total</dd></div>
+            <div><dt>Output</dt><dd>Quiz passed · Checklist submitted</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         LESSON 1 · INTEGRATION BASICS
+         Source: Build Plan §M01.2.
+         ============================================================ -->
+    <section class="level level--alt" id="lesson-1" aria-labelledby="lesson-1-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">L1</div>
+        <div class="level__body">
+          <p class="eyebrow">Lesson 1 · ~15 min read</p>
+          <h2 id="lesson-1-title" class="level__title">Integration basics.</h2>
+          <p class="level__sub">Why we integrate, the four patterns, and where ETL fits.</p>
+
+          <p class="level__copy">
+            Experience data without operational data is half a picture.
+            The integration is what makes the feedback loop close. You'll
+            wire Salesforce to Qualtrics in both directions — request goes
+            one way, response goes back the other.
+          </p>
+          <p class="level__copy">
+            There are four integration patterns you'll meet again and again:
+            <strong>connectors</strong>, <strong>public APIs</strong>,
+            <strong>flat files</strong>, and <strong>event-driven workflows</strong>.
+            If you cleared L0, you've already seen these. The 200 Level adds
+            depth on one of them — the ETL pattern — because that's what the
+            Salesforce build runs on.
+          </p>
+
+          <h3 class="level__sub-h">ETL in one sentence</h3>
+          <p class="level__copy">
+            <strong>Extract</strong> data from Salesforce.
+            <strong>Transform</strong> the fields so they map cleanly.
+            <strong>Load</strong> the contacts into XM Directory. That's the whole pattern.
+            Live Session 1 builds it. Live Session 2 closes the loop the other way.
+          </p>
+
+          <!-- ============================================================
+               PLACEHOLDER · IMAGE · ETL flow diagram
+               Three boxes (Extract → Transform → Load), one arrow each.
+               Match visual language of the L0 Level 04 four-pattern diagram.
+               Brand asset folder: /Brand/2026/Illustrations/
+               ============================================================ -->
+          <!-- <img src="/assets/etl-flow.svg" alt="Extract from Salesforce report, transform fields, load into XM Directory" /> -->
+
+          <h3 class="level__sub-h">What Salesforce gives you to pull from</h3>
+          <p class="level__copy">
+            Three options: <strong>Contact</strong>, <strong>Account/Case</strong>,
+            or <strong>Report</strong>. The recommendation is Report. Reports
+            are flexible and you own them — you can change the columns without
+            raising a ticket against your Salesforce admin. We'll use a report
+            for the lab build.
+          </p>
+
+          <h3 class="level__sub-h">Three transactional use cases worth knowing</h3>
+          <ul class="leave-list">
+            <li>CSAT survey triggered off case close</li>
+            <li>Renewal NPS triggered off contract anniversary</li>
+            <li>Onboarding pulse triggered off account creation</li>
+          </ul>
+
+          <p class="level__copy" style="margin-top: var(--s-5);">
+            Want the foundational version of the four patterns?
+            <!-- ============================================================
+                 PLACEHOLDER · LINK · L0 Level 04 Power Up page.
+                 Wire to level-04-power-up.html (already exists in project).
+                 ============================================================ -->
+            <a href="level-04-power-up.html">Revisit the L0 Level 04 page →</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         THE QUIZ · LESSON 2 (gating mechanism)
+         Source: Build Plan §M01.3.
+         ============================================================ -->
+    <section class="level" id="quiz" aria-labelledby="quiz-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">Q</div>
+        <div class="level__body">
+          <p class="eyebrow">Lesson 2 · The quiz · 4 questions</p>
+          <h2 id="quiz-title" class="level__title">Tell us how you'll build.</h2>
+          <p class="level__sub">There are no wrong answers — only decisions. The quiz captures yours and pre-loads the right materials for your cohort.</p>
+
+          <p class="level__copy">
+            All four questions must be answered before Live Session 1 unlocks.
+            Pick the option that fits your environment. If you're unsure, pick
+            the recommended one — it's recommended for a reason.
+          </p>
+
+          <ol class="quiz-list">
+
+            <li class="quiz-item">
+              <p class="quiz-item__num">Q1</p>
+              <p class="quiz-item__q">Which Salesforce object will you use?</p>
+              <ul class="quiz-item__options">
+                <li>Contact</li>
+                <li>Account</li>
+                <li>Case</li>
+                <li>Report <strong style="color:var(--c-cobalt);">· recommended</strong></li>
+              </ul>
+              <p class="quiz-item__hint">
+                Reports give you the most leverage with the smallest dependency.
+                Pick something else if you have a clear reason — we won't block you.
+              </p>
+            </li>
+
+            <li class="quiz-item">
+              <p class="quiz-item__num">Q2</p>
+              <p class="quiz-item__q">Do you have a survey ready to use?</p>
+              <ul class="quiz-item__options">
+                <li>Yes</li>
+                <li>No</li>
+              </ul>
+              <p class="quiz-item__hint">
+                If yes, make a copy and tag it for the lab. If no, grab the
+                sample transactional survey here:
+                <!-- ============================================================
+                     PLACEHOLDER · LINK · Sample transactional survey download.
+                     Skeleton referenced:
+                       https://basecampdev.qualtrics.com/ControlPanel/File.php?F=F_UFGzcs31V2iyUGQ&download=1
+                     Open question · confirm this is the current production
+                     location or request a permanent Qualtrics-hosted asset
+                     from the curriculum team. (Build Plan §10)
+                     ============================================================ -->
+                <a href="#PLACEHOLDER-sample-survey">Download the sample survey →</a>
+              </p>
+            </li>
+
+            <li class="quiz-item">
+              <p class="quiz-item__num">Q3</p>
+              <p class="quiz-item__q">Do you have Salesforce credentials with report access and export permissions?</p>
+              <ul class="quiz-item__options">
+                <li>Yes, sandbox <strong style="color:var(--c-cobalt);">· recommended</strong></li>
+                <li>Yes, production</li>
+                <li>Not yet</li>
+              </ul>
+              <p class="quiz-item__hint">
+                Sandbox is strongly preferred — test in safety first. If
+                "Not yet," request access from your Salesforce admin now.
+                The lab can't run without it.
+              </p>
+            </li>
+
+            <li class="quiz-item">
+              <p class="quiz-item__num">Q4</p>
+              <p class="quiz-item__q">Have you created ten test contacts with internal email addresses?</p>
+              <ul class="quiz-item__options">
+                <li>Yes</li>
+                <li>Not yet</li>
+              </ul>
+              <p class="quiz-item__hint">
+                Need a shortcut? Use plus-aliasing on your own email
+                (you+test1@example.com, you+test2@example.com…). All ten land
+                in your inbox.
+                <!-- ============================================================
+                     PLACEHOLDER · LINK · Plus-aliasing quick-tip.
+                     Skeleton referenced:
+                       https://roadtoalm.com/2025/07/18/the-secret-power-of-the-in-live-outlook-or-hotmail-addresses
+                     Open question · replace with a Qualtrics-authored quick-tip
+                     for permanence (Build Plan §10).
+                     ============================================================ -->
+                <a href="#PLACEHOLDER-plus-aliasing">See the plus-aliasing trick →</a>
+              </p>
+            </li>
+
+          </ol>
+
+          <!-- ============================================================
+               PLACEHOLDER · FORM · Real quiz form.
+               Build the quiz as a Qualtrics survey itself — Producer Note
+               in §M01.3 calls this out explicitly ("meta-moment"). On submit,
+               the customer is added to the cohort roster.
+               Endpoint: confirm with platform team. Suggested:
+                 /labs/quiz/submit?lab=200-Level-TXN-SFDC
+               ============================================================ -->
+          <div style="margin-top: var(--s-6);">
+            <a href="#PLACEHOLDER-quiz-submit" class="btn btn--primary">
+              Submit your answers
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         THE CHECKLIST · what to confirm before Live 1
+         Source: Build Plan §M01.3 "THE CHECKLIST".
+         ============================================================ -->
+    <section class="level level--alt" id="checklist" aria-labelledby="checklist-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">✓</div>
+        <div class="level__body">
+          <p class="eyebrow">The checklist · 5 items</p>
+          <h2 id="checklist-title" class="level__title">Confirm before Day 5.</h2>
+          <p class="level__sub">Submitting the checklist is the trigger that adds you to the cohort roster.</p>
+
+          <p class="level__copy">
+            The quiz captures decisions. The checklist captures state. We need
+            both before Live Session 1 — when 90 minutes are on the clock, the
+            session can't pause to fix missing credentials or a survey that
+            isn't there yet.
+          </p>
+
+          <h3 class="level__sub-h">What you'll confirm</h3>
+          <ul class="leave-list">
+            <li>Salesforce login credentials saved in the Qualtrics workflow credential store, or accessible during the lab</li>
+            <li>Ten test contacts created with internal email addresses that all route to you</li>
+            <li>At least ten cases or a single report containing at least ten contacts available for distribution testing</li>
+            <li>A transactional survey copied (or imported) and ready to wire up</li>
+            <li>A second monitor available — recommended, not required. The live sessions are screen-heavy.</li>
+          </ul>
+
+          <div class="gate-callout">
+            <p class="gate-callout__label">⏳ Unlock condition for Live Session 1</p>
+            <p class="gate-callout__title">Quiz submitted. Checklist cleared.</p>
+            <p>
+              Once both are in, your seat in Live Session 1 is confirmed and
+              the calendar invite lands in your inbox. If a checklist item
+              isn't ready by Day 4, your facilitator will reach out before the
+              cohort starts — we'd rather defer a session than have someone
+              join unprepared.
+            </p>
+            <!-- ============================================================
+                 PLACEHOLDER · LINK · Checklist submission endpoint.
+                 Build as a Qualtrics survey (Producer Note §M01.3).
+                 ============================================================ -->
+            <a href="#PLACEHOLDER-checklist-submit" class="btn btn--primary">
+              Submit your checklist
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         GLOSSARY · 8 terms
+         Source: Build Plan §M01.2 (Glossary).
+         ============================================================ -->
+    <section class="level" id="glossary" aria-labelledby="glossary-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">A–Z</div>
+        <div class="level__body">
+          <p class="eyebrow">Reference · Glossary</p>
+          <h2 id="glossary-title" class="level__title">Eight terms, plain.</h2>
+          <p class="level__sub">If you've cleared L0, most of these will be review. Worth a skim regardless.</p>
+
+          <dl class="glossary">
+            <div>
+              <dt>XMD</dt>
+              <dd>XM Directory — the contact list that holds the people you'll survey. Where Salesforce contacts land after the workflow runs.</dd>
+            </div>
+            <div>
+              <dt>Embedded Data</dt>
+              <dd>Fields that travel with a respondent through a survey without being asked as questions. The Salesforce Object ID rides here.</dd>
+            </div>
+            <div>
+              <dt>ETL</dt>
+              <dd>Extract, Transform, Load. The shape every Salesforce-to-Qualtrics integration follows, whether anyone names it that way.</dd>
+            </div>
+            <div>
+              <dt>Workflow</dt>
+              <dd>A sequence of automated tasks in Qualtrics. Lives in Global Workflows. Scheduled (clock) or event-driven (trigger).</dd>
+            </div>
+            <div>
+              <dt>Trigger</dt>
+              <dd>The thing that starts a workflow. For Live 1 it's a schedule. For Live 2 it's a survey response.</dd>
+            </div>
+            <div>
+              <dt>Extractor</dt>
+              <dd>The workflow task that pulls data out of Salesforce. Specifically: the <em>Salesforce Extractor</em> with "Pull from report" — not the generic Report Extractor.</dd>
+            </div>
+            <div>
+              <dt>Task</dt>
+              <dd>One step inside a workflow. Extract, distribute, update, decide — each is a task. Order matters.</dd>
+            </div>
+            <div>
+              <dt>Object ID</dt>
+              <dd>Salesforce's unique identifier for a record. The single most important field in this lab — without it, the write-back has nothing to find.</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         WHAT'S NEXT · CTA to Live Session 1
+         ============================================================ -->
+    <section class="cohort" id="next" aria-labelledby="next-title">
+      <div class="container cohort__inner">
+        <div class="cohort__copy">
+          <p class="eyebrow eyebrow--inverse">Once pre-work clears</p>
+          <h2 id="next-title" class="cohort__title">
+            Live Session 1 · Day 5.
+          </h2>
+          <p class="cohort__lede">
+            Salesforce to Qualtrics. 90 minutes. Build alongside the cohort —
+            pull a real report, map the fields, send the survey. By the end,
+            a test email is sitting in your inbox.
+          </p>
+        </div>
+
+        <div class="cohort__panel">
+          <ul class="cohort-dates" role="list">
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with your cohort's Live 1 date -->
+                <span class="cohort-dates__day">Mon</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                <!-- PLACEHOLDER · Replace with calendar/join state from registration system -->
+                Calendar invite arrives after checklist clears
+              </p>
+              <!-- ============================================================
+                   PLACEHOLDER · LINK · Module 02 (Live Session 1) page.
+                   Wire to module-02-live-session-1.html when produced.
+                   ============================================================ -->
+              <a href="module-02-live-session-1.html" class="btn btn--primary btn--block">
+                Preview Live Session 1
+              </a>
+            </li>
+          </ul>
+          <p class="cohort__fineprint">
+            Need to step away? Pre-work saves your progress automatically.
+            Come back any time before Day 4.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       SITE FOOTER
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <!-- PLACEHOLDER · LOGO (footer)
+             Replace with Qualtrics_black_RGB.svg or gradient SVG -->
+        <span class="logo-placeholder logo-placeholder--sm" aria-hidden="true">QUALTRICS</span>
+        <p class="site-footer__tagline">Labs · 200 Level · Module 01</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="Footer">
+        <a href="#PLACEHOLDER-catalog">Lab catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#PLACEHOLDER-support">Support</a>
+        <a href="#PLACEHOLDER-privacy">Privacy</a>
+      </nav>
+      <p class="site-footer__legal">
+        © Qualtrics. Doc ref: 200-Level-TXN-SFDC-M01.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

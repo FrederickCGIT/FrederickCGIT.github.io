@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Module 04 · Make it ship — 200 Level · Salesforce Integration Lab</title>
+  <meta name="description" content="The closing module of the 200 Level Salesforce Integration Lab. Post your commit, document the build, pick your next lab. Days 10–14 in community." />
+
+  <!-- PLACEHOLDER · FAVICON · Brand asset: Q_Favicon_32x32.svg -->
+  <!-- <link rel="icon" type="image/svg+xml" href="/assets/Q_Favicon_32x32.svg" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Shared Labs styles (tokens, header, level pattern, buttons, map-grid, cohort, footer) -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- ============================================================
+       Page-local styles ONLY.
+       Breadcrumb is project convention.
+       The closing module gets two additional patterns:
+         · .template-card  — for the post / runbook templates
+         · .deadline-bar   — for the 30/60-day production deadline challenge
+       Everything else comes from styles.css.
+       ============================================================ -->
+  <style>
+    .breadcrumb { padding: var(--s-5) 0 0; }
+    .breadcrumb__inner {
+      display: flex; flex-wrap: wrap; align-items: center;
+      gap: var(--s-2);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--c-ink-soft);
+    }
+    .breadcrumb__inner a {
+      color: var(--c-ink-soft);
+      border-bottom: 1px solid transparent;
+      transition: color var(--dur-fast) var(--ease-out),
+                  border-color var(--dur-fast) var(--ease-out);
+    }
+    .breadcrumb__inner a:hover {
+      color: var(--c-cobalt);
+      border-bottom-color: currentColor;
+    }
+    .breadcrumb__sep { opacity: 0.4; }
+    .breadcrumb__current { color: var(--c-ink); }
+
+    /* Template card — the visual rendering of the four-sentence post
+       template and the runbook template. Uses styles.css tokens only. */
+    .template-card {
+      margin-top: var(--s-5);
+      padding: var(--s-5);
+      border-radius: 12px;
+      border: 1px dashed var(--c-rule);
+      background: var(--c-bg);
+    }
+    .template-card__label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--c-cobalt);
+      margin: 0 0 var(--s-3);
+    }
+    .template-card__body p {
+      margin: 0 0 var(--s-2);
+      color: var(--c-ink);
+      line-height: 1.55;
+    }
+    .template-card__body p:last-child { margin-bottom: 0; }
+    .template-card__slot {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      padding: 2px 8px;
+      background: var(--c-white);
+      border: 1px solid var(--c-rule);
+      border-radius: 4px;
+      color: var(--c-cobalt);
+    }
+    .template-card__actions {
+      margin-top: var(--s-4);
+      display: flex; flex-wrap: wrap; gap: var(--s-3);
+    }
+
+    /* Runbook beats — three sub-sections inside the runbook template */
+    .runbook-beats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--s-4);
+      margin: var(--s-5) 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    @media (max-width: 760px) { .runbook-beats { grid-template-columns: 1fr; } }
+    .runbook-beats li {
+      padding: var(--s-4);
+      background: var(--c-white);
+      border: 1px solid var(--c-rule);
+      border-radius: 10px;
+    }
+    .runbook-beats__num {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      color: var(--c-cobalt);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: var(--s-2);
+    }
+    .runbook-beats__title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--c-ink);
+      margin: 0 0 var(--s-2);
+    }
+    .runbook-beats li p {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--c-ink-soft);
+      line-height: 1.5;
+    }
+
+    /* Deadline bar — the 30/60-day production challenge.
+       Uses the brand gradient surface to make the deadline feel real. */
+    .deadline-bar {
+      margin-top: var(--s-7);
+      padding: var(--s-6);
+      border-radius: 14px;
+      background: var(--gradient-brand);
+      color: var(--c-white);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--s-5);
+      align-items: center;
+    }
+    @media (max-width: 720px) { .deadline-bar { grid-template-columns: 1fr; } }
+    .deadline-bar__label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+      margin: 0 0 var(--s-2);
+    }
+    .deadline-bar__title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      line-height: 1.15;
+      margin: 0 0 var(--s-3);
+      color: var(--c-white);
+    }
+    .deadline-bar p {
+      margin: 0;
+      color: rgba(255,255,255,0.92);
+      max-width: 38rem;
+    }
+    .deadline-bar__counts {
+      display: flex;
+      gap: var(--s-5);
+      align-items: center;
+    }
+    .deadline-bar__count {
+      text-align: center;
+      padding: var(--s-3) var(--s-4);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 8px;
+    }
+    .deadline-bar__count-num {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      line-height: 1;
+      color: var(--c-white);
+    }
+    .deadline-bar__count-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.78);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER · uses ink background to carry the closing tone
+       (same treatment as L0 Level 05).
+       ============================================================ -->
+  <header
+    class="site-header"
+    role="banner"
+    style="background:var(--c-ink);border-bottom:1px solid rgba(255,255,255,0.08);">
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="200-level-salesforce-integration.html" aria-label="Qualtrics Labs home" style="color:var(--c-white);">
+        <!-- PLACEHOLDER · LOGO — Qualtrics_white_RGB.svg (use white variant on dark) -->
+        <span class="logo-placeholder" aria-hidden="true" style="color:var(--c-white);">QUALTRICS</span>
+        <span class="site-header__divider" aria-hidden="true" style="color:rgba(255,255,255,0.4);">·</span>
+        <span class="site-header__lockup" style="color:var(--c-white);">Labs</span>
+      </a>
+      <nav class="site-header__nav" aria-label="Primary" style="color:var(--c-white);">
+        <!-- PLACEHOLDER LINKS · Replace with real Labs IA when available -->
+        <a href="#PLACEHOLDER-catalog" style="color:rgba(255,255,255,0.85);">Lab Catalog</a>
+        <a href="#PLACEHOLDER-community" style="color:rgba(255,255,255,0.85);">Community</a>
+        <a href="200-level-salesforce-integration.html#cohort" class="site-header__cta">Enroll</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================================
+         BREADCRUMB
+         ============================================================ -->
+    <nav class="breadcrumb" aria-label="Breadcrumb" style="background:var(--c-ink);">
+      <div class="container breadcrumb__inner" style="color:rgba(255,255,255,0.6);">
+        <a href="200-level-salesforce-integration.html" style="color:rgba(255,255,255,0.7);">200 Level · Salesforce Integration Lab</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <a href="200-level-salesforce-integration.html#map" style="color:rgba(255,255,255,0.7);">The Map</a>
+        <span class="breadcrumb__sep" aria-hidden="true">›</span>
+        <span class="breadcrumb__current" aria-current="page" style="color:var(--c-white);">Module 04 · Make it ship</span>
+      </div>
+    </nav>
+
+
+    <!-- ============================================================
+         HERO · CLOSING MODULE
+         Acknowledges completion, immediately pivots to challenge.
+         Source voice: Build Plan §M04 + §09 voice guide.
+         ============================================================ -->
+    <section class="level level--live" id="module-intro" aria-labelledby="module-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">04</div>
+        <div class="level__body">
+          <p class="eyebrow">Module Four · Community · Days 10–14</p>
+          <h1 id="module-title" class="level__title">Make it ship.</h1>
+          <p class="level__sub">You built the integration. Now move it into production.</p>
+
+          <p class="level__copy">
+            The lab outcome was a working integration in your sandbox. Your
+            outcome is the integration running in production — feeding real
+            surveys to real customers and writing real responses back.
+            That's the metric that matters. Module 04 is what gets you there.
+          </p>
+          <p class="level__copy">
+            Three moves, all in community, ~45 minutes total. Short by
+            design. Each one is small. Each one makes the build harder
+            to walk away from.
+          </p>
+
+          <dl class="level__meta">
+            <div><dt>Format</dt><dd>Community · Async</dd></div>
+            <div><dt>Time</dt><dd>~45 min total</dd></div>
+            <div><dt>Output</dt><dd>Public commit · Runbook · Next lab</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · RECAP
+         What you built across Modules 01–03. Visible proof before
+         the customer is asked to commit to more.
+         ============================================================ -->
+    <section class="level level--alt" id="recap" aria-labelledby="recap-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">✓</div>
+        <div class="level__body">
+          <p class="eyebrow">What you built</p>
+          <h2 id="recap-title" class="level__title">Five artifacts. One closed loop.</h2>
+          <p class="level__sub">Live in your own instance — verified, not self-reported.</p>
+
+          <ul class="leave-list">
+            <li><strong>An ETL workflow</strong> · pulling a Salesforce report on schedule</li>
+            <li><strong>An XM Directory list</strong> · with deduplication and frequency rules configured</li>
+            <li><strong>A transactional survey</strong> · wired to embedded data from Salesforce, including the Object ID</li>
+            <li><strong>An event-driven workflow</strong> · firing on survey response with a decision step that gates write-backs</li>
+            <li><strong>A verified write-back</strong> · the field changed on-screen in Salesforce. You watched it happen.</li>
+          </ul>
+
+          <p class="level__copy" style="margin-top: var(--s-5);">
+            That's a real integration. Nothing about it is a demo. The only
+            thing standing between this build and production use is the work
+            in this module.
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         BEAT 1 · THE PUBLIC COMMIT
+         Source: Build Plan §M04 "Beat 1".
+         Four-sentence templated community post. The constraint is the feature.
+         ============================================================ -->
+    <section class="level" id="commit" aria-labelledby="commit-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">01</div>
+        <div class="level__body">
+          <p class="eyebrow">Move one · ~10 min</p>
+          <h2 id="commit-title" class="level__title">Post a public commit.</h2>
+          <p class="level__sub">Four sentences in community. Naming the date makes the deadline real.</p>
+
+          <p class="level__copy">
+            Tell the cohort who you are, what the integration is for, and
+            when it's going live. Four sentences max — the constraint is
+            the feature. Once it's posted, the deadline is no longer private,
+            and that changes how the next two weeks of work get prioritized.
+          </p>
+
+          <!-- ============================================================
+               PUBLIC COMMIT TEMPLATE
+               Pre-fills slots the community composer should render as
+               editable fields. Build as a Qualtrics survey or a community
+               post composer (Page Mechanics §M04).
+               ============================================================ -->
+          <div class="template-card" aria-label="Public commit post template">
+            <p class="template-card__label">📝 The template · 4 sentences</p>
+            <div class="template-card__body">
+              <p>
+                I'm <span class="template-card__slot">[your name]</span>,
+                <span class="template-card__slot">[your role]</span> at
+                <span class="template-card__slot">[your company]</span>.
+              </p>
+              <p>
+                I just cleared the 200 Level Salesforce Integration Lab.
+              </p>
+              <p>
+                In production, this integration will
+                <span class="template-card__slot">[what the integration is for — one sentence]</span>.
+              </p>
+              <p>
+                Target go-live:
+                <span class="template-card__slot">[YYYY-MM-DD]</span>.
+              </p>
+            </div>
+
+            <div class="template-card__actions">
+              <!-- ============================================================
+                   PLACEHOLDER · LINK · Embedded community post composer.
+                   Page Mechanics §M04 — composer pre-fills the four-sentence
+                   template; submission triggers the alumni newsletter opt-in
+                   and adds the completion mark to the user's community profile.
+                   Endpoint: confirm with platform team.
+                     Suggested: /community/post/new?template=200-Level-TXN-SFDC-commit
+                   ============================================================ -->
+              <a href="#PLACEHOLDER-community-composer" class="btn btn--primary">
+                Post my commit
+                <span aria-hidden="true">→</span>
+              </a>
+              <a href="#PLACEHOLDER-cohort-thread" class="btn btn--ghost">See what others posted</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         BEAT 2 · THE PRODUCTION RUNBOOK
+         Source: Build Plan §M04 "Beat 2".
+         Download the template. Fill three sections. Upload it back.
+         The act of writing it surfaces the gaps you didn't notice.
+         ============================================================ -->
+    <section class="level level--alt" id="runbook" aria-labelledby="runbook-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">02</div>
+        <div class="level__body">
+          <p class="eyebrow">Move two · ~25 min</p>
+          <h2 id="runbook-title" class="level__title">Write the runbook.</h2>
+          <p class="level__sub">A short doc your future self will thank you for. Three sections.</p>
+
+          <p class="level__copy">
+            Every production integration needs a runbook. We give you the
+            template; you fill in what's true for your build. The value
+            isn't the finished document — it's the act of writing it.
+            Gaps you didn't notice during the live sessions surface here,
+            while they're still cheap to fix.
+          </p>
+
+          <ol class="runbook-beats">
+            <li>
+              <span class="runbook-beats__num">Section 01</span>
+              <h3 class="runbook-beats__title">Credentials &amp; access</h3>
+              <p>Which Salesforce account owns the credentials. Where they're stored. Who has access. Rotation cadence.</p>
+            </li>
+            <li>
+              <span class="runbook-beats__num">Section 02</span>
+              <h3 class="runbook-beats__title">Schedule &amp; cadence</h3>
+              <p>When the ETL workflow runs. When the report it pulls from updates. Why those two cadences are aligned.</p>
+            </li>
+            <li>
+              <span class="runbook-beats__num">Section 03</span>
+              <h3 class="runbook-beats__title">Monitoring &amp; alerts</h3>
+              <p>Who gets paged when the workflow fails. What "fails" means. The first thing to check when something looks off.</p>
+            </li>
+          </ol>
+
+          <div class="template-card" aria-label="Production runbook template">
+            <p class="template-card__label">📂 The template · download &amp; fill</p>
+            <div class="template-card__body">
+              <p>
+                Three sections matching the three beats above. Fillable.
+                Roughly one page per section. Use it for this build —
+                then keep using it for every future integration.
+              </p>
+            </div>
+
+            <div class="template-card__actions">
+              <!-- ============================================================
+                   PLACEHOLDER · LINK · Production runbook template download.
+                   Open question §10 — template needs to be authored.
+                   Suggested format: Qualtrics-branded Word doc or fillable PDF.
+                   Three sections matching the three beats above. Coordinate
+                   with the docs team for visual consistency.
+                   ============================================================ -->
+              <a href="#PLACEHOLDER-runbook-template" class="btn btn--primary">
+                Download the template
+                <span aria-hidden="true">↓</span>
+              </a>
+              <!-- ============================================================
+                   PLACEHOLDER · UPLOAD · Runbook upload field.
+                   Page Mechanics §M04 — accept PDF or markdown.
+                   Upload triggers the completion mark on the customer's
+                   community profile.
+                   ============================================================ -->
+              <a href="#PLACEHOLDER-runbook-upload" class="btn btn--ghost">
+                Upload my filled runbook
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         BEAT 3 · NEXT LABS
+         Source: Build Plan §M04 "Beat 3".
+         Personalized catalog filtered by integration use case from
+         Module 01 pre-work. Falls back to three curated cards if the
+         personalization integration isn't ready (Open question §10).
+         Reuses the .map-grid / .map-card pattern from the landing page.
+         ============================================================ -->
+    <section class="map" id="next-labs" aria-labelledby="next-labs-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Move three · ~10 min</p>
+          <h2 id="next-labs-title" class="section-head__title">
+            Pick what comes next.<br />
+            <span class="text-gradient">Sign up before you close this tab.</span>
+          </h2>
+          <p class="section-head__lede">
+            The customers who keep building are the ones who don't break
+            momentum. Three labs follow this one — each goes deeper into a
+            different direction your integration can branch.
+          </p>
+        </header>
+
+        <!-- ============================================================
+             PLACEHOLDER · PERSONALIZATION · This grid should be filtered
+             by the Q1 (object) and use-case responses from Module 01
+             pre-work. Same dependency as the L0 Level 05 page (Open
+             question §10). Fallback: static cards below.
+             ============================================================ -->
+        <ol class="map-grid" role="list">
+
+          <li class="map-card">
+            <!-- PLACEHOLDER · LINK · L2 EX Integration landing page -->
+            <a href="#PLACEHOLDER-l2-ex" class="map-card__link">
+              <span class="map-card__num">L2</span>
+              <span class="map-card__format" data-format="self">200 Level</span>
+              <h3 class="map-card__title">EX Integration</h3>
+              <p class="map-card__desc">
+                Wire employee data into Qualtrics from your HRIS. Same ETL
+                shape, different system, different stakes.
+              </p>
+              <p class="map-card__meta">2 weeks · Hybrid</p>
+            </a>
+          </li>
+
+          <li class="map-card">
+            <!-- PLACEHOLDER · LINK · L2 360 Feedback landing page -->
+            <a href="#PLACEHOLDER-l2-360" class="map-card__link">
+              <span class="map-card__num">L2</span>
+              <span class="map-card__format" data-format="self">200 Level</span>
+              <h3 class="map-card__title">360 Feedback</h3>
+              <p class="map-card__desc">
+                Build a multi-rater feedback program — nominations, reminders,
+                rollups. Builds on the directory work from this lab.
+              </p>
+              <p class="map-card__meta">2 weeks · Hybrid</p>
+            </a>
+          </li>
+
+          <li class="map-card map-card--live">
+            <!-- PLACEHOLDER · LINK · L2 Closed-Loop Action Planning landing page -->
+            <a href="#PLACEHOLDER-l2-clap" class="map-card__link">
+              <span class="map-card__num">L2</span>
+              <span class="map-card__format" data-format="live">200 Level</span>
+              <h3 class="map-card__title">Closed-Loop Action Planning</h3>
+              <p class="map-card__desc">
+                Take the write-back pattern further. When a response fires,
+                assign an action, track it to close, report on the cycle.
+              </p>
+              <p class="map-card__meta">2 weeks · Hybrid</p>
+            </a>
+          </li>
+
+        </ol>
+
+        <!-- ============================================================
+             THE 30/60-DAY CHALLENGE
+             Source: Build Plan §08 metrics — "Integration in production
+             within 30 days of Live 2 close." Target: 50%.
+             This is the lab's most important downstream metric and
+             belongs visible on the closing page, not buried.
+             ============================================================ -->
+        <div class="deadline-bar" role="region" aria-label="Production deadline challenge">
+          <div>
+            <p class="deadline-bar__label">⚡ The 30-day challenge</p>
+            <h3 class="deadline-bar__title">Get this integration into production.</h3>
+            <p>
+              The metric we care about isn't "lab completed." It's "integration
+              running in production within 30 days." Half of our customers
+              hit that mark. Be in that half. We'll check in twice — Day 30
+              and Day 60 — via a one-question survey.
+            </p>
+          </div>
+
+          <div class="deadline-bar__counts" aria-hidden="true">
+            <div class="deadline-bar__count">
+              <span class="deadline-bar__count-num">30</span>
+              <span class="deadline-bar__count-label">Day check-in</span>
+            </div>
+            <div class="deadline-bar__count">
+              <span class="deadline-bar__count-num">60</span>
+              <span class="deadline-bar__count-label">Day check-in</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         WHAT YOU LEAVE WITH (closing) + ALUMNI INVITE
+         Mirrors the L0 Level 05 closing pattern but the rewards are
+         200-Level-specific.
+         ============================================================ -->
+    <section class="cohort" id="alumni" aria-labelledby="alumni-title">
+      <div class="container cohort__inner">
+        <div class="cohort__copy">
+          <p class="eyebrow eyebrow--inverse">You're an alum now</p>
+          <h2 id="alumni-title" class="cohort__title">
+            What you leave with.
+          </h2>
+          <p class="cohort__lede">
+            The lab artifacts are yours. So is everything below. The
+            community stays open — you're a peer to the next cohort now,
+            not a participant.
+          </p>
+        </div>
+
+        <div class="cohort__panel" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); padding: var(--s-6); border-radius: 12px;">
+          <ul class="leave-list" style="color: rgba(255,255,255,0.95); margin: 0;">
+            <li style="color: rgba(255,255,255,0.95);">A public commitment to a production go-live date</li>
+            <li style="color: rgba(255,255,255,0.95);">A written runbook for the build — yours, not ours</li>
+            <li style="color: rgba(255,255,255,0.95);">At least one 200 Level lab on the calendar</li>
+            <li style="color: rgba(255,255,255,0.95);">A 200 Level completion mark on your community profile</li>
+            <li style="color: rgba(255,255,255,0.95);">Access to the alumni newsletter — quarterly, no fluff</li>
+            <li style="color: rgba(255,255,255,0.95);">A standing invitation to answer the next cohort's questions</li>
+          </ul>
+
+          <div style="margin-top: var(--s-5); display: flex; flex-wrap: wrap; gap: var(--s-3);">
+            <!-- ============================================================
+                 PLACEHOLDER · LINK · Alumni community thread.
+                 The persistent thread customers can return to after
+                 the lab closes. Page Mechanics §M04 — completion mark
+                 added on first visit; alumni newsletter opt-in.
+                 ============================================================ -->
+            <a href="#PLACEHOLDER-alumni-thread" class="btn btn--primary">
+              Join the alumni thread
+              <span aria-hidden="true">→</span>
+            </a>
+            <!-- ============================================================
+                 PLACEHOLDER · LINK · Post-lab survey (Day 0).
+                 Build Plan §06 — auto-send 24 hours after Live 2 close.
+                 This link is for customers who want to fill it earlier.
+                 ============================================================ -->
+            <a href="#PLACEHOLDER-post-lab-survey" class="btn btn--ghost-inverse">
+              Fill the post-lab survey
+            </a>
+          </div>
+
+          <p class="cohort__fineprint">
+            The Day 30 and Day 60 check-ins land in your inbox automatically.
+            Two minutes each. Honest answers help us run the next cohort better.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       SITE FOOTER
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <!-- PLACEHOLDER · LOGO (footer) — Qualtrics_black_RGB.svg -->
+        <span class="logo-placeholder logo-placeholder--sm" aria-hidden="true">QUALTRICS</span>
+        <p class="site-footer__tagline">Labs · 200 Level · Module 04</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="Footer">
+        <a href="#PLACEHOLDER-catalog">Lab catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#PLACEHOLDER-support">Support</a>
+        <a href="#PLACEHOLDER-privacy">Privacy</a>
+      </nav>
+      <p class="site-footer__legal">
+        © Qualtrics. Doc ref: 200-Level-TXN-SFDC-M04.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
