@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>200 Level · Transactional Salesforce Integration Lab — Qualtrics Labs</title>
+  <meta name="description" content="A bidirectional Salesforce-to-Qualtrics integration that you leave with already working. Two live sessions, four days of pre-work, one working build at the end." />
+
+  <!-- ============================================================
+       PLACEHOLDER · FAVICON
+       Replace with the Qualtrics 32×32 favicon SVG when deployed.
+       Brand asset: Logos/Qualtrics/Qualtrics_favicon/svg/Q_Favicon_32x32.svg
+       ============================================================ -->
+  <!-- <link rel="icon" type="image/svg+xml" href="/assets/Q_Favicon_32x32.svg" /> -->
+  <!-- <link rel="icon" type="image/png" href="/assets/Q_Favicon_32x32.png" /> -->
+
+  <!-- Inter from Google Fonts as a portable fallback for LMS embedding.
+       For production: self-host Inter + Qualtrics Sans Display per brand standards.
+       See styles.css for the @font-face placeholder block. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- ============================================================
+       Page-local styles ONLY.
+       Two narrow overrides on the shared metric-grid / metric-card
+       patterns so the three "What you'll build" tiles render cleanly:
+         · 3-column grid at desktop (vs. the default 4-col for metrics)
+         · smaller display font on the tile marker so multi-letter
+           words ("Write-back", "Survey") fit inside the card.
+       Everything else comes from styles.css.
+       ============================================================ -->
+  <style>
+    @media (min-width: 1024px) {
+      .metric-grid--three { grid-template-columns: repeat(3, 1fr); }
+    }
+    .metric-card--build .metric-card__num {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       SITE HEADER
+       Self-contained chunk. Safe to lift into LMS shared header.
+       ============================================================ -->
+  <header class="site-header" role="banner">
+    <div class="container site-header__inner">
+      <a class="site-header__brand" href="#PLACEHOLDER-labs-home" aria-label="Qualtrics Labs home">
+        <!-- ============================================================
+             PLACEHOLDER · LOGO
+             Replace this <span> with the Qualtrics gradient wordmark <img>.
+             Brand asset: Logos/Qualtrics/Qualtrics_logo/svg/Qualtrics_gradient_RGB.svg
+             Example:
+               <img src="/assets/Qualtrics_gradient_RGB.svg" alt="Qualtrics" height="22" />
+             ============================================================ -->
+        <span class="logo-placeholder" aria-hidden="true">QUALTRICS</span>
+        <span class="site-header__divider" aria-hidden="true">·</span>
+        <span class="site-header__lockup">Labs</span>
+      </a>
+      <nav class="site-header__nav" aria-label="Primary">
+        <!-- PLACEHOLDER LINKS · Replace with real Labs IA when available -->
+        <a href="#PLACEHOLDER-catalog">Lab Catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#cohort" class="site-header__cta">Enroll</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================================================
+         SECTION · HERO
+         Customer-facing copy from Build Plan §M01.1 (Landing page).
+         Three obvious pointers live here:
+           1. Primary CTA  → Enroll  (#cohort)
+           2. Ghost CTA    → See the map  (#map)
+           3. Resume link  → Start Module 01 pre-work  (already-enrolled path)
+         ============================================================ -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero__pattern" aria-hidden="true">
+        <!-- ============================================================
+             PLACEHOLDER · PATTERN BACKGROUND
+             Replace background-image in styles.css (.hero__pattern) with a
+             Qualtrics master pattern SVG at low opacity.
+             Brand asset: Patterns/-flattened_svg/Qualtrics_master_pattern{N}_flat.svg
+             Recommended: pattern 7, 12, or 18 at opacity 0.06–0.10.
+
+             FOR THIS PAGE SPECIFICALLY · the Build Plan hero illustration concept
+             is "two systems exchanging records" — coordinate with brand if a
+             unique illustration is desired in addition to the pattern wash.
+             Brand asset folder: /Brand/2026/Illustrations/
+             Recommended dimensions 1600×900.
+             ============================================================ -->
+      </div>
+
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <p class="eyebrow">Qualtrics Labs · 200 Level</p>
+          <h1 id="hero-title" class="hero__title">
+            Salesforce<br />Integration Lab.
+          </h1>
+          <p class="hero__lede">
+            In the 200 Level, Qualtrics stops being a survey tool and starts
+            being a <strong>system</strong>. You'll wire it to Salesforce both
+            directions — pulling contacts from a report, distributing a survey,
+            and writing the response back to the original record.
+          </p>
+          <p class="hero__lede">
+            Two live sessions, four days of pre-work, one working integration
+            at the end. By the time you finish, you'll have a build running
+            in your sandbox that you can take to production the next morning.
+          </p>
+
+          <div class="hero__actions">
+            <a href="#cohort" class="btn btn--primary">
+              Enroll in the next cohort
+              <span aria-hidden="true">→</span>
+            </a>
+            <a href="#map" class="btn btn--ghost">See the map</a>
+          </div>
+
+          <!-- Resume link for already-enrolled customers. Points at the
+               Module 01 pre-work page. Same pattern as L0 level-01. -->
+          <p class="level__copy" style="margin-top: var(--s-5); font-size: 0.95rem;">
+            Already enrolled?
+            <a href="module-01-pre-work.html">Start Module 01 pre-work →</a>
+          </p>
+        </div>
+
+        <aside class="hero__stats" aria-label="Lab at a glance">
+          <dl class="stat-grid">
+            <div class="stat-grid__item">
+              <dt>Time to clear</dt>
+              <dd>2 weeks</dd>
+            </div>
+            <div class="stat-grid__item">
+              <dt>Modules</dt>
+              <dd>4</dd>
+            </div>
+            <div class="stat-grid__item">
+              <dt>Cohort cap</dt>
+              <dd>20</dd>
+            </div>
+            <div class="stat-grid__item">
+              <dt>Format</dt>
+              <dd>Hybrid</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · THE MAP (4-module overview)
+         Anchor cards. Each links to the inline module section below
+         OR (eventually) to the standalone module page.
+         Source: Build Plan §03 (The map).
+         ============================================================ -->
+    <section class="map" id="map" aria-labelledby="map-title">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">The Map</p>
+          <h2 id="map-title" class="section-head__title">
+            Four modules.<br />
+            Two weeks.<br />
+            <span class="text-gradient">One working integration.</span>
+          </h2>
+          <p class="section-head__lede">
+            Module 01 is async pre-work that loads your environment.
+            Modules 02 and 03 are live webinars where the cohort builds
+            together. Module 04 is the post-game in community.
+          </p>
+        </header>
+
+        <ol class="map-grid" role="list">
+
+          <li class="map-card">
+            <a href="module-01-pre-work.html" class="map-card__link">
+              <span class="map-card__num">01</span>
+              <span class="map-card__format" data-format="self">Async pre-work</span>
+              <h3 class="map-card__title">Load Your Environment</h3>
+              <p class="map-card__desc">
+                Pre-work that gets your credentials, your Salesforce report, and
+                ten test contacts ready before Live Session 1.
+              </p>
+              <p class="map-card__meta">Days 1–4 · ~4 hours</p>
+            </a>
+          </li>
+
+          <li class="map-card map-card--live">
+            <a href="module-02-live-session-1.html" class="map-card__link">
+              <span class="map-card__num">02</span>
+              <span class="map-card__format" data-format="live">Live webinar</span>
+              <h3 class="map-card__title">Salesforce → Qualtrics</h3>
+              <p class="map-card__desc">
+                Build a scheduled ETL workflow that pulls a Salesforce report,
+                loads contacts to XM Directory, and distributes a survey.
+              </p>
+              <p class="map-card__meta">Day 5 · 90 min</p>
+            </a>
+          </li>
+
+          <li class="map-card map-card--live">
+            <a href="module-03-live-session-2.html" class="map-card__link">
+              <span class="map-card__num">03</span>
+              <span class="map-card__format" data-format="live">Live webinar</span>
+              <h3 class="map-card__title">Qualtrics → Salesforce</h3>
+              <p class="map-card__desc">
+                Build an event-driven workflow that fires on survey response
+                and writes back to the original Salesforce record.
+              </p>
+              <p class="map-card__meta">Day 9 · 90 min</p>
+            </a>
+          </li>
+
+          <li class="map-card">
+            <a href="module-04-community-follow-up.html" class="map-card__link">
+              <span class="map-card__num">04</span>
+              <span class="map-card__format" data-format="community">Community</span>
+              <h3 class="map-card__title">Path to Production</h3>
+              <p class="map-card__desc">
+                Post a public commit. Upload your runbook. Pick the next lab
+                that matches what you're integrating for.
+              </p>
+              <p class="map-card__meta">Days 10–14 · ~45 min</p>
+            </a>
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · BEFORE YOU ENROLL
+         Eligibility / prerequisites. Three things to bring.
+         Source: Build Plan §M01.1 — "You'll need three things to start."
+         ============================================================ -->
+    <section class="level" id="before-you-enroll" aria-labelledby="prereq-title">
+      <div class="container level__inner">
+        <div class="level__num" aria-hidden="true">00</div>
+        <div class="level__body">
+          <p class="eyebrow">Before you enroll</p>
+          <h2 id="prereq-title" class="level__title">Bring three things.</h2>
+          <p class="level__sub">If any of these are missing, the lab won't ship.</p>
+
+          <p class="level__copy">
+            The 200 Level is denser than the 100 series. Cohorts cap at 20 because
+            stuck-points take longer to debug when two systems are talking. We'd
+            rather you arrive ready than join unready and fall behind.
+          </p>
+
+          <h3 class="level__sub-h">What you'll need on Day 1</h3>
+          <ul class="leave-list">
+            <li>A Qualtrics CX license that includes the Salesforce connector</li>
+            <li>Salesforce credentials with access to reports and export permissions (sandbox strongly preferred)</li>
+            <li>About four hours of pre-work time before the first live session</li>
+          </ul>
+
+          <p class="level__copy">
+            New to Qualtrics?
+            <!-- ============================================================
+                 PLACEHOLDER · LINK · L0 Start-Up Lab landing page.
+                 Wire to index.html (the L0 page in this same project).
+                 ============================================================ -->
+            <a href="index.html">Start with the L0 Start-Up Lab →</a>
+            Customers who clear the 200 Level are typically the ones who
+            cleared L0 first — they already know workflows, embedded data,
+            and have a survey to wire up.
+          </p>
+
+          <dl class="level__meta">
+            <div><dt>License</dt><dd>CX + SFDC connector</dd></div>
+            <div><dt>Environment</dt><dd>Sandbox preferred</dd></div>
+            <div><dt>Pre-work</dt><dd>~4 hours</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · WHAT YOU'LL BUILD
+         Three tiles previewing the deliverables.
+         Source: Build Plan §M01.1 Page Mechanics and §02 (Lab outcome).
+         Uses the metric-card pattern to stay inside the existing CSS.
+         ============================================================ -->
+    <section class="metrics" aria-labelledby="build-title">
+      <div class="container">
+        <header class="section-head section-head--center">
+          <p class="eyebrow">What you'll build</p>
+          <h2 id="build-title" class="section-head__title">
+            Three working pieces.<br />
+            <span class="text-gradient">One closed loop.</span>
+          </h2>
+          <p class="section-head__lede">
+            Experience data without operational data is half a picture.
+            The integration is what closes the loop — and you leave with
+            it running, not described on a slide.
+          </p>
+        </header>
+
+        <ul class="metric-grid metric-grid--three" role="list">
+
+          <li class="metric-card metric-card--build">
+            <p class="metric-card__label">Piece 01 · The pull</p>
+            <p class="metric-card__num">ETL</p>
+            <p class="metric-card__desc">
+              A scheduled workflow that pulls a Salesforce report, transforms
+              the columns, and loads contacts into XM Directory on a cadence
+              you control.
+            </p>
+            <p class="metric-card__target">Built in Module 02</p>
+          </li>
+
+          <li class="metric-card metric-card--build">
+            <p class="metric-card__label">Piece 02 · The send</p>
+            <p class="metric-card__num">Survey</p>
+            <p class="metric-card__desc">
+              A transactional survey wired to embedded data from Salesforce,
+              distributed by email to the contacts the workflow just loaded.
+            </p>
+            <p class="metric-card__target">Built in Module 02</p>
+          </li>
+
+          <li class="metric-card metric-card--build">
+            <p class="metric-card__label">Piece 03 · The return</p>
+            <p class="metric-card__num">Write-back</p>
+            <p class="metric-card__desc">
+              An event-driven workflow that fires on survey response, decides
+              what to write, and updates the matching Salesforce record using
+              the original Object ID.
+            </p>
+            <p class="metric-card__target">Built in Module 03</p>
+          </li>
+
+        </ul>
+      </div>
+    </section>
+
+
+    <!-- ============================================================
+         SECTION · COHORT ENROLLMENT CTA
+         Primary enrollment surface. License gate is implemented at the
+         button level — see Page Mechanics in Build Plan §M01.1.
+         ============================================================ -->
+    <section class="cohort" id="cohort" aria-labelledby="cohort-title">
+      <div class="container cohort__inner">
+        <div class="cohort__copy">
+          <p class="eyebrow eyebrow--inverse">Next cohort</p>
+          <h2 id="cohort-title" class="cohort__title">
+            Ready to ship the integration?
+          </h2>
+          <p class="cohort__lede">
+            Cohorts cap at 20 — denser builds, more debug time per seat.
+            Pick a start date and we'll send the calendar invites for
+            Live Sessions 1 and 2, plus the Module 01 pre-work link.
+          </p>
+        </div>
+
+        <div class="cohort__panel">
+          <ul class="cohort-dates" role="list">
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with next live cohort start date -->
+                <span class="cohort-dates__day">Mon</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                <!-- PLACEHOLDER · Replace with seat count from registration system -->
+                [N] of 20 seats open
+              </p>
+              <!-- ============================================================
+                   PLACEHOLDER · LINK · Cohort enrollment endpoint.
+                   Wire to the same cohort system used for L0:
+                     /labs/enroll?lab=200-Level-TXN-SFDC&cohort=1
+                   License-gate this CTA — gray out for accounts without the
+                   Salesforce connector and show a "Talk to your account team"
+                   alternative. Confirm path with the platform team.
+                   ============================================================ -->
+              <a href="#PLACEHOLDER-cohort-1-signup" class="btn btn--primary btn--block">
+                Reserve a seat
+              </a>
+            </li>
+            <li class="cohort-dates__item">
+              <p class="cohort-dates__date">
+                <!-- PLACEHOLDER · Replace with second cohort start date -->
+                <span class="cohort-dates__day">Mon</span>
+                <span class="cohort-dates__num">[DATE]</span>
+                <span class="cohort-dates__month">[MONTH]</span>
+              </p>
+              <p class="cohort-dates__seats">
+                <!-- PLACEHOLDER · Replace with seat count from registration system -->
+                [N] of 20 seats open
+              </p>
+              <!-- PLACEHOLDER · LINK · Second cohort enrollment endpoint -->
+              <a href="#PLACEHOLDER-cohort-2-signup" class="btn btn--ghost-inverse btn--block">
+                Reserve a seat
+              </a>
+            </li>
+          </ul>
+          <p class="cohort__fineprint">
+            Module 01 unlocks the day you enroll. Modules 02 and 03 run live —
+            calendar invites land in your inbox after sign-up. Module 04 opens
+            after Live Session 2.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================
+       SITE FOOTER
+       Self-contained chunk. Safe to lift into LMS shared footer.
+       ============================================================ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container site-footer__inner">
+      <div class="site-footer__brand">
+        <!-- PLACEHOLDER · LOGO (footer)
+             Replace with Qualtrics_black_RGB.svg or gradient SVG -->
+        <span class="logo-placeholder logo-placeholder--sm" aria-hidden="true">QUALTRICS</span>
+        <p class="site-footer__tagline">Labs · 200 Level · Salesforce Integration Lab</p>
+      </div>
+      <nav class="site-footer__nav" aria-label="Footer">
+        <a href="#PLACEHOLDER-catalog">Lab catalog</a>
+        <a href="#PLACEHOLDER-community">Community</a>
+        <a href="#PLACEHOLDER-support">Support</a>
+        <a href="#PLACEHOLDER-privacy">Privacy</a>
+      </nav>
+      <p class="site-footer__legal">
+        © Qualtrics. Doc ref: 200-Level-TXN-SFDC-BUILD-V1.0.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
