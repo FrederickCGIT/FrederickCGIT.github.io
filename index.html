@@ -22,6 +22,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- ============================================================
+       Page-local styles ONLY.
+       Two narrow overrides on the shared metric-grid / metric-card
+       patterns so the three "What you'll build" tiles render cleanly:
+         · 3-column grid at desktop (vs. the default 4-col for metrics)
+         · smaller display font on the tile marker so multi-letter
+           words ("Write-back", "Survey") fit inside the card.
+       Everything else comes from styles.css.
+       ============================================================ -->
+  <style>
+    @media (min-width: 1024px) {
+      .metric-grid--three { grid-template-columns: repeat(3, 1fr); }
+    }
+    .metric-card--build .metric-card__num {
+      font-size: clamp(2rem, 3.5vw, 2.75rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+  </style>
 </head>
 <body>
 
@@ -109,12 +129,7 @@
                Module 01 pre-work page. Same pattern as L0 level-01. -->
           <p class="level__copy" style="margin-top: var(--s-5); font-size: 0.95rem;">
             Already enrolled?
-            <!-- ============================================================
-                 PLACEHOLDER · LINK · Module 01 pre-work page.
-                 Wire to the M01 page when produced. Suggested filename:
-                 module-01-pre-work.html (follows L0 file naming pattern).
-                 ============================================================ -->
-            <a href="#PLACEHOLDER-module-01">Start Module 01 pre-work →</a>
+            <a href="module-01-pre-work.html">Start Module 01 pre-work →</a>
           </p>
         </div>
 
@@ -167,12 +182,7 @@
         <ol class="map-grid" role="list">
 
           <li class="map-card">
-            <!-- ============================================================
-                 PLACEHOLDER · LINK · Wire each map-card to its module page
-                 once the M01–M04 pages are produced. Match the L0 pattern
-                 (level-01-choose-your-player.html, etc.).
-                 ============================================================ -->
-            <a href="#module-01" class="map-card__link">
+            <a href="module-01-pre-work.html" class="map-card__link">
               <span class="map-card__num">01</span>
               <span class="map-card__format" data-format="self">Async pre-work</span>
               <h3 class="map-card__title">Load Your Environment</h3>
@@ -185,7 +195,7 @@
           </li>
 
           <li class="map-card map-card--live">
-            <a href="#module-02" class="map-card__link">
+            <a href="module-02-live-session-1.html" class="map-card__link">
               <span class="map-card__num">02</span>
               <span class="map-card__format" data-format="live">Live webinar</span>
               <h3 class="map-card__title">Salesforce → Qualtrics</h3>
@@ -198,7 +208,7 @@
           </li>
 
           <li class="map-card map-card--live">
-            <a href="#module-03" class="map-card__link">
+            <a href="module-03-live-session-2.html" class="map-card__link">
               <span class="map-card__num">03</span>
               <span class="map-card__format" data-format="live">Live webinar</span>
               <h3 class="map-card__title">Qualtrics → Salesforce</h3>
@@ -211,7 +221,7 @@
           </li>
 
           <li class="map-card">
-            <a href="#module-04" class="map-card__link">
+            <a href="module-04-community-follow-up.html" class="map-card__link">
               <span class="map-card__num">04</span>
               <span class="map-card__format" data-format="community">Community</span>
               <h3 class="map-card__title">Path to Production</h3>
@@ -235,7 +245,7 @@
          ============================================================ -->
     <section class="level" id="before-you-enroll" aria-labelledby="prereq-title">
       <div class="container level__inner">
-        <div class="level__num" aria-hidden="true">★</div>
+        <div class="level__num" aria-hidden="true">00</div>
         <div class="level__body">
           <p class="eyebrow">Before you enroll</p>
           <h2 id="prereq-title" class="level__title">Bring three things.</h2>
@@ -297,9 +307,9 @@
           </p>
         </header>
 
-        <ul class="metric-grid" role="list">
+        <ul class="metric-grid metric-grid--three" role="list">
 
-          <li class="metric-card">
+          <li class="metric-card metric-card--build">
             <p class="metric-card__label">Piece 01 · The pull</p>
             <p class="metric-card__num">ETL</p>
             <p class="metric-card__desc">
@@ -310,7 +320,7 @@
             <p class="metric-card__target">Built in Module 02</p>
           </li>
 
-          <li class="metric-card">
+          <li class="metric-card metric-card--build">
             <p class="metric-card__label">Piece 02 · The send</p>
             <p class="metric-card__num">Survey</p>
             <p class="metric-card__desc">
@@ -320,7 +330,7 @@
             <p class="metric-card__target">Built in Module 02</p>
           </li>
 
-          <li class="metric-card">
+          <li class="metric-card metric-card--build">
             <p class="metric-card__label">Piece 03 · The return</p>
             <p class="metric-card__num">Write-back</p>
             <p class="metric-card__desc">
