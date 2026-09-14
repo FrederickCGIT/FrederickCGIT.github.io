@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Bag — LLAMÉ</title>
+<meta name="description" content="Your LLAMÉ bag. Three items, one free-shipping threshold, zero regrets.">
+
+<!-- ===================================================================
+     LLAMÉ — CART / BAG
+     Static design demonstration. Controls are intentionally non-functional:
+     no JS, no state, no checkout. Every control is present and styled so the
+     client can evaluate the layout and hierarchy of a real checkout flow.
+     =================================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="announce">
+  You're <span>$17</span> away from complimentary shipping
+</div>
+
+<header class="site-header">
+  <div class="wrap header-bar">
+    <a class="logo" href="index.html">LLAMÉ<sup>®</sup></a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Open menu">
+    <label class="nav-btn" for="nav-toggle"><span></span></label>
+    <nav class="nav" aria-label="Primary">
+      <a href="beauty.html">Beauty</a>
+      <a href="household.html">Household</a>
+      <a href="clothing.html">Clothing</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="header-actions">
+      <a class="icon-link" href="#search">Search</a>
+      <a class="icon-link" href="cart.html" aria-current="page">Cart <span class="cart-count">3</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="wrap section section--tight">
+
+    <p class="steps">
+      <span class="is-current">1 · Bag</span>
+      <span class="sep">———</span>
+      <span>2 · Delivery</span>
+      <span class="sep">———</span>
+      <span>3 · Payment</span>
+    </p>
+
+    <h1 style="font-size:var(--step-3);margin-bottom:var(--s-4)">Your bag <span class="fine" style="font-family:var(--body);letter-spacing:.1em">(3 items)</span></h1>
+
+    <p class="demo-note">
+      <strong>Design demonstration.</strong>
+      Quantity, promo, and checkout controls are styled but non-functional —
+      this page exists to show layout, hierarchy, and the checkout narrative.
+    </p>
+
+    <div class="cart-layout">
+
+      <!-- ===== LINE ITEMS ===== -->
+      <div>
+
+        <article class="line-item">
+          <!-- SWAP: cart-01 — 1:1 thumbnail -->
+          <div class="ph ph--1x1" data-slot="cart-01"></div>
+          <div>
+            <h3>Herd Mentality Cardigan</h3>
+            <p class="line-meta">Oat · Size M · Ships in 2 days</p>
+            <div class="line-actions">
+              <div class="qty" role="group" aria-label="Quantity for Herd Mentality Cardigan">
+                <button type="button" aria-label="Decrease quantity">−</button>
+                <output>1</output>
+                <button type="button" aria-label="Increase quantity">+</button>
+              </div>
+              <button class="text-btn" type="button">Save for later</button>
+              <button class="text-btn" type="button">Remove</button>
+            </div>
+          </div>
+          <p class="line-price">$186.00</p>
+        </article>
+
+        <article class="line-item">
+          <!-- SWAP: cart-02 — 1:1 thumbnail -->
+          <div class="ph ph--1x1" data-slot="cart-02"></div>
+          <div>
+            <h3>Spit Take Dewy Mist</h3>
+            <p class="line-meta">100 ml · Refillable glass · Ships in 2 days</p>
+            <div class="line-actions">
+              <div class="qty" role="group" aria-label="Quantity for Spit Take Dewy Mist">
+                <button type="button" aria-label="Decrease quantity">−</button>
+                <output>2</output>
+                <button type="button" aria-label="Increase quantity">+</button>
+              </div>
+              <button class="text-btn" type="button">Save for later</button>
+              <button class="text-btn" type="button">Remove</button>
+            </div>
+          </div>
+          <p class="line-price">$64.00</p>
+        </article>
+
+        <article class="line-item">
+          <!-- SWAP: cart-03 — 1:1 thumbnail -->
+          <div class="ph ph--1x1" data-slot="cart-03"></div>
+          <div>
+            <h3>Cud &amp; Coffee Mugs, Set of 2</h3>
+            <p class="line-meta">Speckled oat · Backordered — ships Oct 2</p>
+            <div class="line-actions">
+              <div class="qty" role="group" aria-label="Quantity for Cud and Coffee Mugs">
+                <button type="button" aria-label="Decrease quantity">−</button>
+                <output>1</output>
+                <button type="button" aria-label="Increase quantity">+</button>
+              </div>
+              <button class="text-btn" type="button">Save for later</button>
+              <button class="text-btn" type="button">Remove</button>
+            </div>
+          </div>
+          <p class="line-price">$38.00</p>
+        </article>
+
+        <!-- ===== GIFTING / NOTES ===== -->
+        <div class="mt-4" style="padding-top:var(--s-3)">
+          <div class="field">
+            <label for="gift-note">Add a gift note (free)</label>
+            <textarea class="input" id="gift-note" rows="3" placeholder="“Sorry about the group chat.” — 200 characters, hand-written on card stock."></textarea>
+          </div>
+        </div>
+
+        <p class="mt-4"><a class="link-arrow" href="clothing.html">Keep shopping</a></p>
+      </div>
+
+      <!-- ===== ORDER SUMMARY ===== -->
+      <aside class="summary" aria-label="Order summary">
+        <div class="progress">
+          <div class="progress-track"><div class="progress-fill"></div></div>
+          <p class="fine">$17.00 away from free shipping</p>
+        </div>
+
+        <h2>Summary</h2>
+
+        <div class="summary-row"><span>Subtotal</span><strong>$288.00</strong></div>
+        <div class="summary-row"><span>Shipping</span><strong>$8.00</strong></div>
+        <div class="summary-row"><span>Estimated tax</span><strong>$23.76</strong></div>
+        <div class="summary-row"><span>First-order credit</span><strong>−$20.00</strong></div>
+
+        <div class="summary-total">
+          <span>Total</span>
+          <span>$299.76</span>
+        </div>
+
+        <form class="mt-4" onsubmit="return false">
+          <div class="field">
+            <label for="promo">Promo code</label>
+            <div class="inline-form">
+              <input class="input" id="promo" type="text" placeholder="NOPROBLLAMA">
+              <button class="btn btn--ghost btn--sm" type="submit">Apply</button>
+            </div>
+          </div>
+        </form>
+
+        <button class="btn btn--accent btn--block mt-4" type="button">Checkout</button>
+        <p class="fine text-center" style="margin-top:.75rem">or pay in 4 installments of $74.94</p>
+
+        <ul class="trust-list">
+          <li>Free returns within 60 days</li>
+          <li>Carbon-neutral shipping on every order</li>
+          <li>Refill credit applied automatically</li>
+          <li>Real humans, Mon–Fri 9–5 CT</li>
+        </ul>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ===== LAST-CHANCE ADD-ONS ===== -->
+  <section class="section section--alt">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow eyebrow--muted">Small things, big regret if skipped</span>
+          <h2>Add before you go</h2>
+        </div>
+        <a class="link-arrow" href="household.html">Shop all household</a>
+      </div>
+
+      <div class="grid grid--products">
+        <article class="card">
+          <div class="card-media">
+            <!-- SWAP: addon-01 — 1:1 -->
+            <div class="ph ph--1x1" data-slot="addon-01 1:1"></div>
+            <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Add · $34</button></div>
+          </div>
+          <h3 class="card-title"><a href="household.html">Spit Guard Coasters</a></h3>
+          <div class="card-foot"><span class="price">$34</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-media">
+            <!-- SWAP: addon-02 — 1:1 -->
+            <div class="ph ph--1x1" data-slot="addon-02 1:1"></div>
+            <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Add · $26</button></div>
+          </div>
+          <h3 class="card-title"><a href="beauty.html">Lash Lengths Ahead</a></h3>
+          <div class="card-foot"><span class="price">$26</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-media">
+            <!-- SWAP: addon-03 — 1:1 -->
+            <div class="ph ph--1x1" data-slot="addon-03 1:1"></div>
+            <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Add · $52</button></div>
+          </div>
+          <h3 class="card-title"><a href="household.html">Home on the Range Candle</a></h3>
+          <div class="card-foot"><span class="price">$52</span></div>
+        </article>
+
+        <article class="card">
+          <div class="card-media">
+            <!-- SWAP: addon-04 — 1:1 -->
+            <div class="ph ph--1x1" data-slot="addon-04 1:1"></div>
+            <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Add · $48</button></div>
+          </div>
+          <h3 class="card-title"><a href="clothing.html">Spit Happens Tee</a></h3>
+          <div class="card-foot"><span class="price">$48</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== POLICY STRIP ===== -->
+  <section class="wrap section section--tight">
+    <div class="grid grid--3">
+      <div>
+        <h3>Shipping</h3>
+        <p class="card-desc">Free over $75. Standard 3–5 days, express 2 days for $18. We ship to the US, Canada, and the UK.</p>
+      </div>
+      <div>
+        <h3>Returns</h3>
+        <p class="card-desc">60 days, unworn, tags on. Beauty is returnable even if opened — we'd rather know it didn't work.</p>
+      </div>
+      <div>
+        <h3>Questions</h3>
+        <p class="card-desc">hello@llame.example or (512) 555-0184. Two humans, one business day, occasional jokes.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html">LLAMÉ<sup>®</sup></a>
+        <p class="fine" style="color:rgba(251,246,239,.7);max-width:34ch">
+          Nine boutiques and one website. Founded 2019 in Marfa, Texas,
+          which explains a lot.
+        </p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul class="footer-links">
+          <li><a href="beauty.html">Beauty</a></li>
+          <li><a href="household.html">Household Goods</a></li>
+          <li><a href="clothing.html">Clothing</a></li>
+          <li><a href="cart.html">Cart</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="about.html#values">Sourcing</a></li>
+          <li><a href="about.html#stores">Store Locator</a></li>
+          <li><a href="about.html#team">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Care</h4>
+        <ul class="footer-links">
+          <li><a href="cart.html">Shipping &amp; Returns</a></li>
+          <li><a href="cart.html">Track an Order</a></li>
+          <li><a href="about.html#contact">Contact</a></li>
+          <li><a href="about.html">Gift Cards</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 LLAMÉ Goods Co. All rights reserved. No llamas were consulted.</p>
+      <p>Design demonstration — prices and products are fictional.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
