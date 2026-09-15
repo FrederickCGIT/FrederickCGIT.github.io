@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beauty — LLAMÉ</title>
+<meta name="description" content="Small-batch skincare and color for people who read the ingredient list. Six products, zero promises about your youth.">
+
+<!-- ===================================================================
+     LLAMÉ — BEAUTY CATEGORY PAGE
+     6 product cards. All image slots are labelled .ph placeholders.
+     =================================================================== -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="announce">
+  Complimentary shipping over $75 <span>·</span> Returns accepted, judgment reserved
+</div>
+
+<header class="site-header">
+  <div class="wrap header-bar">
+    <a class="logo" href="index.html">LLAMÉ<sup>®</sup></a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Open menu">
+    <label class="nav-btn" for="nav-toggle"><span></span></label>
+    <nav class="nav" aria-label="Primary">
+      <a href="beauty.html" aria-current="page">Beauty</a>
+      <a href="household.html">Household</a>
+      <a href="clothing.html">Clothing</a>
+      <a href="about.html">About</a>
+    </nav>
+    <div class="header-actions">
+      <a class="icon-link" href="#search">Search</a>
+      <a class="icon-link" href="cart.html">Cart <span class="cart-count">3</span></a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ===== PAGE HEAD ===== -->
+  <section class="wrap page-head">
+    <p class="breadcrumb"><a href="index.html">Home</a><span>/</span>Beauty</p>
+    <h1>Beauty</h1>
+    <p class="lede mt-4">
+      Formulated in small batches, tested on volunteers who complain loudly, and
+      packaged in glass because we're insufferable about it.
+    </p>
+  </section>
+
+  <!-- ===== FILTER TOOLBAR ===== -->
+  <div class="wrap">
+    <div class="toolbar">
+      <div class="chip-row">
+        <button class="chip is-active" type="button" aria-pressed="true">All</button>
+        <button class="chip" type="button" aria-pressed="false">Skin</button>
+        <button class="chip" type="button" aria-pressed="false">Color</button>
+        <button class="chip" type="button" aria-pressed="false">Body</button>
+        <button class="chip" type="button" aria-pressed="false">Refillable</button>
+      </div>
+      <div class="chip-row" style="align-items:center;gap:1rem">
+        <span class="count">6 products</span>
+        <label class="visually-hidden" for="sort">Sort by</label>
+        <select class="select" id="sort">
+          <option>Sort: Featured</option>
+          <option>Price, low to high</option>
+          <option>Price, high to low</option>
+          <option>Newest</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PRODUCT GRID ===== -->
+  <section class="wrap section section--tight" style="padding-top:0">
+    <div class="grid grid--products">
+
+      <article class="card">
+        <div class="card-media">
+          <div class="card-flags"><span class="badge badge--accent">Bestseller</span></div>
+          <!-- SWAP: beauty-01 — 4:5, ~1200×1500 -->
+          <div class="ph ph--4x5" data-slot="beauty-01 4:5"></div>
+          <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
+        </div>
+        <h3 class="card-title"><a href="cart.html">Spit Take Dewy Mist</a></h3>
+        <p class="card-desc">Rosewater, glycerin, and a little panthenol. Sets makeup, ruins matte.</p>
+        <div class="card-foot">
+          <span class="price">$32</span>
+          <span class="stars">★★★★★ <span>412</span></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media">
+          <!-- SWAP: beauty-02 — 4:5 -->
+          <div class="ph ph--4x5" data-slot="beauty-02 4:5"></div>
+          <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
+        </div>
+        <h3 class="card-title"><a href="cart.html">Hair of the Llama Overnight Mask</a></h3>
+        <p class="card-desc">For the morning after the night you insist was fine.</p>
+        <div class="card-foot">
+          <span class="price">$46</span>
+          <span class="stars">★★★★★ <span>289</span></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media">
+          <div class="card-flags"><span class="badge badge--sage">Refillable</span></div>
+          <!-- SWAP: beauty-03 — 4:5 -->
+          <div class="ph ph--4x5" data-slot="beauty-03 4:5"></div>
+          <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
+        </div>
+        <h3 class="card-title"><a href="cart.html">Alpaca My Bags Eye Balm</a></h3>
+        <p class="card-desc">Caffeine and squalane. Named after our one professional rivalry.</p>
+        <div class="card-foot">
+          <span class="price">$38</span>
+          <span class="stars">★★★★☆ <span>176</span></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media">
+          <!-- SWAP: beauty-04 — 4:5 -->
+          <div class="ph ph--4x5" data-slot="beauty-04 4:5"></div>
+          <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
+        </div>
+        <h3 class="card-title"><a href="cart.html">Lash Lengths Ahead Mascara</a></h3>
+        <p class="card-desc">Tubing formula. Comes off with warm water, not a full breakdown.</p>
+        <div class="card-foot">
+          <span class="price">$26</span>
+          <div class="swatches" aria-label="2 shades">
+            <span class="swatch" style="background:#241E1A"></span>
+            <span class="swatch" style="background:#5A504A"></span>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media">
+          <div class="card-flags"><span class="badge badge--sand">New</span></div>
+          <!-- SWAP: beauty-05 — 4:5 -->
+          <div class="ph ph--4x5" data-slot="beauty-05 4:5"></div>
+          <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
+        </div>
+        <h3 class="card-title"><a href="cart.html">No Drama Barrier Cream</a></h3>
+        <p class="card-desc">Ceramides, oat, zero fragrance. For skin that's been through it.</p>
+        <div class="card-foot">
+          <span class="price">$44</span>
+          <span class="stars">★★★★★ <span>94</span></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-media">
+          <!-- SWAP: beauty-06 — 4:5 -->
+          <div class="ph ph--4x5" data-slot="beauty-06 4:5"></div>
+          <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
+        </div>
+        <h3 class="card-title"><a href="cart.html">Fleece-of-Mind Body Oil</a></h3>
+        <p class="card-desc">Dry-touch, faintly woody, absolutely a bathroom-shelf trophy.</p>
+        <div class="card-foot">
+          <span class="price">$52</span>
+          <span class="stars">★★★★☆ <span>121</span></span>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===== EDUCATIONAL BAND ===== -->
+  <section class="section section--alt">
+    <div class="wrap split split--reverse">
+      <div>
+        <span class="eyebrow">Our formulation rule</span>
+        <h2>If we can't pronounce it,<br>we didn't put it in.</h2>
+        <p class="lede">
+          Everything here is fragrance-optional, dermatologist-reviewed, and made in
+          batches small enough that the chemist knows your order number.
+        </p>
+        <a class="link-arrow" href="about.html#values">Full ingredient standards</a>
+      </div>
+      <div>
+        <!-- SWAP: beauty-editorial — 4:3 -->
+        <div class="ph ph--4x3" data-slot="beauty-editorial 4:3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CROSS-SELL ===== -->
+  <section class="wrap section section--tight">
+    <div class="section-head">
+      <h2>Pairs well with</h2>
+      <a class="link-arrow" href="household.html">Shop household</a>
+    </div>
+    <div class="grid grid--3">
+      <a class="tile" href="household.html">
+        <!-- SWAP: cross-01 — 16:9 -->
+        <div class="ph ph--16x9" data-slot="cross-01 16:9"></div>
+        <div class="tile-body"><h3>Home on the Range Candle</h3><p>$52</p></div>
+      </a>
+      <a class="tile" href="clothing.html">
+        <!-- SWAP: cross-02 — 16:9 -->
+        <div class="ph ph--16x9" data-slot="cross-02 16:9"></div>
+        <div class="tile-body"><h3>Spit Happens Tee</h3><p>$48</p></div>
+      </a>
+      <a class="tile" href="household.html">
+        <!-- SWAP: cross-03 — 16:9 -->
+        <div class="ph ph--16x9" data-slot="cross-03 16:9"></div>
+        <div class="tile-body"><h3>Wool Street Throw</h3><p>$168</p></div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="logo" href="index.html">LLAMÉ<sup>®</sup></a>
+        <p class="fine" style="color:rgba(251,246,239,.7);max-width:34ch">
+          Nine boutiques and one website. Founded 2019 in Marfa, Texas,
+          which explains a lot.
+        </p>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul class="footer-links">
+          <li><a href="beauty.html">Beauty</a></li>
+          <li><a href="household.html">Household Goods</a></li>
+          <li><a href="clothing.html">Clothing</a></li>
+          <li><a href="cart.html">Cart</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul class="footer-links">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="about.html#values">Sourcing</a></li>
+          <li><a href="about.html#stores">Store Locator</a></li>
+          <li><a href="about.html#team">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Care</h4>
+        <ul class="footer-links">
+          <li><a href="cart.html">Shipping &amp; Returns</a></li>
+          <li><a href="cart.html">Track an Order</a></li>
+          <li><a href="about.html">Contact</a></li>
+          <li><a href="about.html">Gift Cards</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 LLAMÉ Goods Co. All rights reserved. No llamas were consulted.</p>
+      <p>Design demonstration — prices and products are fictional.</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
