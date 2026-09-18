@@ -9,6 +9,18 @@
 <!-- ===================================================================
      LLAMÉ — ABOUT US
      Brand story, values, timeline, team, store locator, contact.
+
+     IMAGE PATTERN — important:
+     Images must stay wrapped in a .ph element. The wrapper supplies the
+     aspect ratio, the crop (object-fit: cover), the corner radius, and the
+     fallback placeholder if the src ever fails. A bare <img> inherits none
+     of that and renders at its own native size.
+
+         <div class="ph ph--4x5" data-slot="about-hero 4:5">
+           <img src="URL" alt="Descriptive alt">
+         </div>
+
+     Ratios in use here: founders 4:5 · editorial 3:2 · team portraits 1:1
      =================================================================== -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -58,7 +70,10 @@
         </p>
       </div>
       <div>
-        <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_fzvKHNihImkbXuH" alt="People"></div>
+        <div class="ph ph--4x5" data-slot="about-hero 4:5">
+          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_fzvKHNihImkbXuH"
+               alt="The LLAMÉ founders in the Marfa flagship" decoding="async">
+        </div>
       </div>
     </div>
   </section>
@@ -129,8 +144,10 @@
   <section class="section section--ink">
     <div class="wrap split">
       <div>
-        <!-- SWAP: about-ranch — 3:2 -->
-        <div class="ph ph--3x2" data-slot="about-ranch 3:2"></div>
+        <div class="ph ph--3x2" data-slot="about-ranch 3:2">
+          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_n99kYzdEGCNPh3Q"
+               alt="A llama on a co-op ranch in the Peruvian highlands" loading="lazy" decoding="async">
+        </div>
       </div>
       <div>
         <span class="eyebrow">A necessary clarification</span>
@@ -201,19 +218,28 @@
 
       <div class="grid grid--3">
         <div class="team-member">
-          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_3BQIVhfuinIALpA" alt="People"></div>
+          <div class="ph ph--1x1" data-slot="team-01 1:1">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_3BQIVhfuinIALpA"
+                 alt="Portrait of Nora Vance" loading="lazy" decoding="async">
+          </div>
           <h3>Nora Vance</h3>
           <p class="team-role">Founder &amp; Buyer</p>
           <p class="card-desc">Owns the original sweater. Will not let anyone else wear it. Sources every fiber piece personally.</p>
         </div>
         <div class="team-member">
-        <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_L75zgKZ2LqRoQ6l" alt="People"></div>
+          <div class="ph ph--1x1" data-slot="team-02 1:1">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_L75zgKZ2LqRoQ6l"
+                 alt="Portrait of John Summit" loading="lazy" decoding="async">
+          </div>
           <h3>John Summit</h3>
           <p class="team-role">Founder &amp; Operations</p>
           <p class="card-desc">Had the lease. Has the spreadsheets. Named the Llamp and refuses to take responsibility for it.</p>
         </div>
         <div class="team-member">
-         <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_mQpNqTsViBTvF33" alt="People"></div>
+          <div class="ph ph--1x1" data-slot="team-03 1:1">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_mQpNqTsViBTvF33"
+                 alt="Portrait of Dr. Imani Osei" loading="lazy" decoding="async">
+          </div>
           <h3>Dr. Imani Osei</h3>
           <p class="team-role">Head of Formulation</p>
           <p class="card-desc">Cosmetic chemist, fifteen years in. Vetoed four product names and was right every time.</p>
