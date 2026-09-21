@@ -8,13 +8,41 @@
 
 <!-- ===================================================================
      LLAMÉ — BEAUTY CATEGORY PAGE
-     6 product cards. All image slots are labelled .ph placeholders.
+     6 product cards.
+
+     IMAGE PATTERN — important:
+     The <img> goes INSIDE the .ph wrapper, not beside it. The wrapper
+     supplies the aspect ratio, the crop (object-fit: cover), the corner
+     radius, and the fallback placeholder if the src ever fails. An <img>
+     placed as a sibling leaves an empty placeholder on the page and renders
+     the photo at its own native size next to it.
+
+         <div class="ph ph--4x5" data-slot="beauty-01 4:5">
+           <img src="URL" alt="Descriptive alt">
+         </div>
+
+     Ratios in use here: product cards 4:5 · editorial 4:3 · cross-sell 16:9
      =================================================================== -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+     <!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+
+<script type='text/javascript'>
+
+(function(){var g=function(g){
+
+this.go=function(){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)};
+
+this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function(){t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}):t.go()};};
+
+try{(new g("https://zn3h3ffnghvk41n1s-x4agent23.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_3h3FfNGHVk41N1S")).start()}catch(i){}})();
+
+</script><div id='ZN_3h3FfNGHVk41N1S'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+
+<!--END WEBSITE FEEDBACK SNIPPET-->
 </head>
 <body>
 
@@ -84,9 +112,10 @@
       <article class="card">
         <div class="card-media">
           <div class="card-flags"><span class="badge badge--accent">Bestseller</span></div>
-          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_irtshnWFwGAZhTH"
-                 alt="Mask" decoding="async">
-          <div class="ph ph--4x5" data-slot="beauty-01 4:5"></div>
+          <div class="ph ph--4x5" data-slot="beauty-01 4:5">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_irtshnWFwGAZhTH"
+                 alt="Spit Take Dewy Mist in a glass bottle" decoding="async">
+          </div>
           <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
         </div>
         <h3 class="card-title"><a href="cart.html">Spit Take Dewy Mist</a></h3>
@@ -99,9 +128,10 @@
 
       <article class="card">
         <div class="card-media">
-          <div class="ph ph--4x5" data-slot="beauty-02 4:5"></div>
-             <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_hO4tmdoM2tGiMfe"
-                 alt="Mask" decoding="async">
+          <div class="ph ph--4x5" data-slot="beauty-02 4:5">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_hO4tmdoM2tGiMfe"
+                 alt="Hair of the Llama Overnight Mask jar" loading="lazy" decoding="async">
+          </div>
           <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
         </div>
         <h3 class="card-title"><a href="cart.html">Hair of the Llama Overnight Mask</a></h3>
@@ -115,9 +145,10 @@
       <article class="card">
         <div class="card-media">
           <div class="card-flags"><span class="badge badge--sage">Refillable</span></div>
-          <div class="ph ph--4x5" data-slot="beauty-03 4:5"></div>
-             <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_qRWKxtMrS50P8Mk"
-                 alt="Eye Balm" decoding="async">
+          <div class="ph ph--4x5" data-slot="beauty-03 4:5">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_qRWKxtMrS50P8Mk"
+                 alt="Alpaca My Bags Eye Balm in a refillable tin" loading="lazy" decoding="async">
+          </div>
           <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
         </div>
         <h3 class="card-title"><a href="cart.html">Alpaca My Bags Eye Balm</a></h3>
@@ -130,9 +161,10 @@
 
       <article class="card">
         <div class="card-media">
-         <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_IfAsblTGRB1y9tD"
-                 alt="Mascara" decoding="async">
-          <div class="ph ph--4x5" data-slot="beauty-04 4:5"></div>
+          <div class="ph ph--4x5" data-slot="beauty-04 4:5">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_IfAsblTGRB1y9tD"
+                 alt="Lash Lengths Ahead Mascara tube and wand" loading="lazy" decoding="async">
+          </div>
           <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
         </div>
         <h3 class="card-title"><a href="cart.html">Lash Lengths Ahead Mascara</a></h3>
@@ -149,10 +181,10 @@
       <article class="card">
         <div class="card-media">
           <div class="card-flags"><span class="badge badge--sand">New</span></div>
-          <!-- SWAP: beauty-05 — 4:5 -->
-          <div class="ph ph--4x5" data-slot="beauty-05 4:5"></div>
-             <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_DQ4aVdEKKQOrOuV"
-                 alt="Barrier Cream" decoding="async">
+          <div class="ph ph--4x5" data-slot="beauty-05 4:5">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_DQ4aVdEKKQOrOuV"
+                 alt="No Drama Barrier Cream in a glass jar" loading="lazy" decoding="async">
+          </div>
           <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
         </div>
         <h3 class="card-title"><a href="cart.html">No Drama Barrier Cream</a></h3>
@@ -165,10 +197,10 @@
 
       <article class="card">
         <div class="card-media">
-          <!-- SWAP: beauty-06 — 4:5 -->
-          <div class="ph ph--4x5" data-slot="beauty-06 4:5"></div>
-             <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_hPgKFK15fnyHV0Y"
-                 alt="Serum" decoding="async">
+          <div class="ph ph--4x5" data-slot="beauty-06 4:5">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_hPgKFK15fnyHV0Y"
+                 alt="Fleece-of-Mind Body Oil bottle" loading="lazy" decoding="async">
+          </div>
           <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
         </div>
         <h3 class="card-title"><a href="cart.html">Fleece-of-Mind Body Oil</a></h3>
@@ -195,10 +227,12 @@
         <a class="link-arrow" href="about.html#values">Full ingredient standards</a>
       </div>
       <div>
-        <!-- SWAP: beauty-editorial — 4:3 -->
-        <div class="ph ph--4x3" data-slot="beauty-editorial 4:3"></div>
-           <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_hO4tmdoM2tGiMfe"
-                 alt="Mask" decoding="async">
+        <!-- NOTE: this src is the same asset as the beauty-02 card above.
+             Swap in a dedicated editorial shot when you have one. -->
+        <div class="ph ph--4x3" data-slot="beauty-editorial 4:3">
+          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_hO4tmdoM2tGiMfe"
+               alt="Overnight mask open on a bathroom shelf" loading="lazy" decoding="async">
+        </div>
       </div>
     </div>
   </section>
@@ -211,23 +245,24 @@
     </div>
     <div class="grid grid--3">
       <a class="tile" href="household.html">
-        <!-- SWAP: cross-01 — 16:9 -->
-        <div class="ph ph--16x9" data-slot="cross-01 16:9"></div>
-           <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_nzvCTpFJUkAAFJv"
-                 alt="candle" decoding="async">
+        <div class="ph ph--16x9" data-slot="cross-01 16:9">
+          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_nzvCTpFJUkAAFJv"
+               alt="" loading="lazy" decoding="async">
+        </div>
         <div class="tile-body"><h3>Home on the Range Candle</h3><p>$52</p></div>
       </a>
       <a class="tile" href="clothing.html">
-        <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_hiG4nqYRuudtCZ8"
-                 alt="Joggers" decoding="async">
-        <div class="ph ph--16x9" data-slot="cross-02 16:9"></div>
+        <div class="ph ph--16x9" data-slot="cross-02 16:9">
+          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_hiG4nqYRuudtCZ8"
+               alt="" loading="lazy" decoding="async">
+        </div>
         <div class="tile-body"><h3>The Jogger</h3><p>$48</p></div>
       </a>
       <a class="tile" href="household.html">
-        <!-- SWAP: cross-03 — 16:9 -->
-        <div class="ph ph--16x9" data-slot="cross-03 16:9"></div>
-           <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_t6FRKfVskb9di5D"
-                 alt="candle" decoding="async">
+        <div class="ph ph--16x9" data-slot="cross-03 16:9">
+          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_t6FRKfVskb9di5D"
+               alt="" loading="lazy" decoding="async">
+        </div>
         <div class="tile-body"><h3>Wool Street Throw</h3><p>$168</p></div>
       </a>
     </div>
