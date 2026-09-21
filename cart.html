@@ -11,6 +11,21 @@
      Static design demonstration. Controls are intentionally non-functional:
      no JS, no state, no checkout. Every control is present and styled so the
      client can evaluate the layout and hierarchy of a real checkout flow.
+
+     IMAGE PATTERN — important:
+     The <img> goes INSIDE the .ph wrapper, not beside it. The wrapper
+     supplies the aspect ratio, the crop (object-fit: cover), the corner
+     radius, and the fallback placeholder if the src ever fails.
+
+         <div class="ph ph--1x1" data-slot="cart-01">
+           <img src="URL" alt="Descriptive alt">
+         </div>
+
+     This matters most in .line-item, which is a three-column grid
+     (104px thumbnail / details / price). A loose <img> becomes a fourth
+     child and pushes the price out of its column onto a new row.
+
+     Ratios in use here: line-item thumbnails 1:1 · add-on cards 1:1
      =================================================================== -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,13 +81,16 @@
 
     <div class="cart-layout">
 
-      <!-- ===== LINE ITEMS ===== -->
+      <!-- ===== LINE ITEMS =====
+           Each .line-item must have exactly three children:
+           the .ph thumbnail, the details <div>, and the .line-price. -->
       <div>
 
         <article class="line-item">
-         <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_zSIdzTxqjexgYz3"
-                 alt="Jacket" loading="lazy" decoding="async">
-          <div class="ph ph--1x1" data-slot="cart-01"></div>
+          <div class="ph ph--1x1" data-slot="cart-01">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_zSIdzTxqjexgYz3"
+                 alt="Herd Mentality Cardigan in oat" loading="lazy" decoding="async">
+          </div>
           <div>
             <h3>Herd Mentality Cardigan</h3>
             <p class="line-meta">Oat · Size M · Ships in 2 days</p>
@@ -90,9 +108,10 @@
         </article>
 
         <article class="line-item">
-          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_irtshnWFwGAZhTH"
-                 alt="Jacket" loading="lazy" decoding="async">
-          <div class="ph ph--1x1" data-slot="cart-02"></div>
+          <div class="ph ph--1x1" data-slot="cart-02">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_irtshnWFwGAZhTH"
+                 alt="Spit Take Dewy Mist in a glass bottle" loading="lazy" decoding="async">
+          </div>
           <div>
             <h3>Spit Take Dewy Mist</h3>
             <p class="line-meta">100 ml · Refillable glass · Ships in 2 days</p>
@@ -110,9 +129,10 @@
         </article>
 
         <article class="line-item">
-          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_5W8XmH8dUFSRyJh"
-                 alt="Jacket" loading="lazy" decoding="async">
-          <div class="ph ph--1x1" data-slot="cart-03"></div>
+          <div class="ph ph--1x1" data-slot="cart-03">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_5W8XmH8dUFSRyJh"
+                 alt="Pair of speckled stoneware mugs" loading="lazy" decoding="async">
+          </div>
           <div>
             <h3>Cud &amp; Coffee Mugs, Set of 2</h3>
             <p class="line-meta">Speckled oat · Backordered — ships Oct 2</p>
@@ -197,9 +217,10 @@
       <div class="grid grid--products">
         <article class="card">
           <div class="card-media">
-          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_TPR3lLuAN7d5MA6"
-                 alt="Jacket" loading="lazy" decoding="async">
-            <div class="ph ph--1x1" data-slot="addon-01 1:1"></div>
+            <div class="ph ph--1x1" data-slot="addon-01 1:1">
+              <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_TPR3lLuAN7d5MA6"
+                   alt="Set of four cork-backed travertine coasters" loading="lazy" decoding="async">
+            </div>
             <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Add · $34</button></div>
           </div>
           <h3 class="card-title"><a href="household.html">Spit Guard Coasters</a></h3>
@@ -208,9 +229,10 @@
 
         <article class="card">
           <div class="card-media">
-            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_IfAsblTGRB1y9tD"
-                 alt="Mascara" loading="lazy" decoding="async">
-            <div class="ph ph--1x1" data-slot="addon-02 1:1"></div>
+            <div class="ph ph--1x1" data-slot="addon-02 1:1">
+              <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_IfAsblTGRB1y9tD"
+                   alt="Lash Lengths Ahead Mascara tube and wand" loading="lazy" decoding="async">
+            </div>
             <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Add · $26</button></div>
           </div>
           <h3 class="card-title"><a href="beauty.html">Lash Lengths Ahead</a></h3>
@@ -219,9 +241,10 @@
 
         <article class="card">
           <div class="card-media">
-            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_nzvCTpFJUkAAFJv"
-                 alt="Candle" loading="lazy" decoding="async">
-            <div class="ph ph--1x1" data-slot="addon-03 1:1"></div>
+            <div class="ph ph--1x1" data-slot="addon-03 1:1">
+              <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_nzvCTpFJUkAAFJv"
+                   alt="Home on the Range candle in amber glass" loading="lazy" decoding="async">
+            </div>
             <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Add · $52</button></div>
           </div>
           <h3 class="card-title"><a href="household.html">Home on the Range Candle</a></h3>
@@ -230,9 +253,12 @@
 
         <article class="card">
           <div class="card-media">
-            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_PPlH3SMSFmNMRyI"
-                 alt="Candle" loading="lazy" decoding="async">
-            <div class="ph ph--1x1" data-slot="addon-04 1:1"></div>
+            <div class="ph ph--1x1" data-slot="addon-04 1:1">
+              <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_PPlH3SMSFmNMRyI"
+                   alt="The Hooves" loading="lazy" decoding="async">
+            </div>
+            <!-- PRICE MISMATCH: button says $48, price below says $96.
+                 Left as written — pick one. -->
             <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Add · $48</button></div>
           </div>
           <h3 class="card-title"><a href="clothing.html">The Hooves</a></h3>
