@@ -11,29 +11,28 @@
      This file is index.html: the root entry point for GitHub Pages.
      All styling lives in styles.css. Nothing is inlined.
 
-     IMAGE SLOTS: every .ph block is an empty, labelled placeholder.
-     To add real art, drop an <img> inside it — see note in styles.css §06.
+     IMAGE PATTERN — important:
+     The <img> goes INSIDE the .ph wrapper, not beside it. The wrapper
+     supplies the aspect ratio, the crop (object-fit: cover), the corner
+     radius, and the fallback placeholder if the src ever fails. An <img>
+     placed as a sibling leaves an empty placeholder on the page and renders
+     the photo at its own native size next to it.
+
+         <div class="ph ph--4x5" data-slot="hero-primary 4:5">
+           <img src="URL" alt="Descriptive alt">
+         </div>
+
+     Ratios here: hero 4:5 + 1:1 · tiles 3:4 · cards 4:5 · editorial 3:2
+     · newsletter 4:3
+
+     The Qualtrics Website Feedback snippet lives at the END OF <body>,
+     not here — see the note above </body>.
      =================================================================== -->
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
-     <!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
-
-<script type='text/javascript'>
-
-(function(){var g=function(g){
-
-this.go=function(){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)};
-
-this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function(){t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}):t.go()};};
-
-try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_3niMbWDK6GfXNJW")).start()}catch(i){}})();
-
-</script><div id='ZN_3niMbWDK6GfXNJW'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
-
-<!--END WEBSITE FEEDBACK SNIPPET-->
 </head>
 <body>
 
@@ -82,13 +81,17 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
       </div>
     </div>
 
+    <!-- The 1:1 slot is absolutely positioned over the 4:5 slot.
+         Keep them in this order — swapping them breaks the overlap. -->
     <div class="hero-art">
-      <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_UC8cs1Vr6FW1Arn"
-                 alt="Wool Street Sheet Set" decoding="async">
-      <div class="ph ph--4x5" data-slot="hero-primary 4:5"></div>
-      <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_t6FRKfVskb9di5D"
-                 alt="Wool Street Throw in undyed highland wool, folded" decoding="async">
-      <div class="ph ph--1x1" data-slot="hero-detail 1:1"></div>
+      <div class="ph ph--4x5" data-slot="hero-primary 4:5">
+        <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_UC8cs1Vr6FW1Arn"
+             alt="Wool Street sheet set on an unmade bed" decoding="async">
+      </div>
+      <div class="ph ph--1x1" data-slot="hero-detail 1:1">
+        <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_t6FRKfVskb9di5D"
+             alt="Wool Street Throw in undyed highland wool, folded" decoding="async">
+      </div>
     </div>
   </section>
 
@@ -115,9 +118,10 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
 
     <div class="grid grid--3">
       <a class="tile" href="beauty.html">
-         <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_qRWKxtMrS50P8Mk"
-                 alt="Beauty Products" decoding="async">
-        <div class="ph ph--3x4" data-slot="cat-beauty 3:4"></div>
+        <div class="ph ph--3x4" data-slot="cat-beauty 3:4">
+          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_qRWKxtMrS50P8Mk"
+               alt="" loading="lazy" decoding="async">
+        </div>
         <div class="tile-body">
           <h3>Beauty</h3>
           <p>Six products. Zero promises about your youth.</p>
@@ -125,9 +129,10 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
       </a>
 
       <a class="tile" href="household.html">
-        <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_gP2V8BUAiAi3Apg"
-                 alt="Beauty Products" decoding="async">
-        <div class="ph ph--3x4" data-slot="cat-household 3:4"></div>
+        <div class="ph ph--3x4" data-slot="cat-household 3:4">
+          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_gP2V8BUAiAi3Apg"
+               alt="" loading="lazy" decoding="async">
+        </div>
         <div class="tile-body">
           <h3>Household Goods</h3>
           <p>For the apartment you're pretending is permanent.</p>
@@ -135,9 +140,10 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
       </a>
 
       <a class="tile" href="clothing.html">
-       <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_hiG4nqYRuudtCZ8"
-                 alt="Beauty Products" decoding="async">
-        <div class="ph ph--3x4" data-slot="cat-clothing 3:4"></div>
+        <div class="ph ph--3x4" data-slot="cat-clothing 3:4">
+          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_hiG4nqYRuudtCZ8"
+               alt="" loading="lazy" decoding="async">
+        </div>
         <div class="tile-body">
           <h3>Clothing</h3>
           <p>Layers with a strong point of view.</p>
@@ -161,9 +167,10 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
       <article class="card">
         <div class="card-media">
           <div class="card-flags"><span class="badge badge--accent">Bestseller</span></div>
-          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_89XkYN7GHvxCAJY"
-                 alt="Beauty Products" decoding="async">
-          <div class="ph ph--4x5" data-slot="feat-01 4:5"></div>
+          <div class="ph ph--4x5" data-slot="feat-01 4:5">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_89XkYN7GHvxCAJY"
+                 alt="The Jogger in brushed fleece" loading="lazy" decoding="async">
+          </div>
           <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
         </div>
         <h3 class="card-title"><a href="clothing.html">The Jogger</a></h3>
@@ -181,9 +188,10 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
       <article class="card">
         <div class="card-media">
           <div class="card-flags"><span class="badge badge--sage">Restocked</span></div>
-          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_9SfZIe8opA8fQBw"
-                 alt="Beauty Products" decoding="async">
-          <div class="ph ph--4x5" data-slot="feat-02 4:5"></div>
+          <div class="ph ph--4x5" data-slot="feat-02 4:5">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_9SfZIe8opA8fQBw"
+                 alt="High-Altitude Lipstick, bullet extended" loading="lazy" decoding="async">
+          </div>
           <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
         </div>
         <h3 class="card-title"><a href="beauty.html">High-Altitude Lipstick</a></h3>
@@ -196,9 +204,10 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
 
       <article class="card">
         <div class="card-media">
-           <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_eVL5vUJr8r9o28m"
-                 alt="Beauty Products" decoding="async">
-          <div class="ph ph--4x5" data-slot="feat-03 4:5"></div>
+          <div class="ph ph--4x5" data-slot="feat-03 4:5">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_eVL5vUJr8r9o28m"
+                 alt="Hand-thrown Peruvian ceramic vase" loading="lazy" decoding="async">
+          </div>
           <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
         </div>
         <h3 class="card-title"><a href="household.html">The Vase</a></h3>
@@ -212,9 +221,10 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
       <article class="card">
         <div class="card-media">
           <div class="card-flags"><span class="badge badge--sand">Final cut</span></div>
-          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_2OOugzm7gh3K98u"
-                 alt="Beauty Products" decoding="async">
-          <div class="ph ph--4x5" data-slot="feat-04 4:5"></div>
+          <div class="ph ph--4x5" data-slot="feat-04 4:5">
+            <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_2OOugzm7gh3K98u"
+                 alt="Drama Llama silk scarf, folded" loading="lazy" decoding="async">
+          </div>
           <div class="card-quickadd"><button class="btn btn--light btn--block btn--sm" type="button">Quick add</button></div>
         </div>
         <h3 class="card-title"><a href="clothing.html">Drama Llama Silk Scarf</a></h3>
@@ -232,9 +242,10 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
   <section class="section section--alt">
     <div class="wrap split">
       <div>
-        <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_fzvKHNihImkbXuH"
-                 alt="Beauty Products" decoding="async">
-        <div class="ph ph--3x2" data-slot="editorial-01 3:2"></div>
+        <div class="ph ph--3x2" data-slot="editorial-01 3:2">
+          <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_fzvKHNihImkbXuH"
+               alt="The LLAMÉ founders on a sourcing trip" loading="lazy" decoding="async">
+        </div>
       </div>
       <div>
         <span class="eyebrow">The fiber</span>
@@ -280,9 +291,10 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
       <p class="fine mt-4">Unsubscribe whenever. No hard feelings, some soft ones.</p>
     </div>
     <div>
-      <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_VFr0Qg9ciKG9rpE"
-                 alt="Newsletter icon" decoding="async">
-      <div class="ph ph--4x3" data-slot="newsletter-art 4:3"></div>
+      <div class="ph ph--4x3" data-slot="newsletter-art 4:3">
+        <img src="https://qimpl.pdx1.qualtrics.com/ControlPanel/Graphic.php?IM=IM_VFr0Qg9ciKG9rpE"
+             alt="" loading="lazy" decoding="async">
+      </div>
     </div>
   </section>
 
@@ -333,6 +345,20 @@ try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/
     </div>
   </div>
 </footer>
+
+<!-- Website Feedback snippet belongs at the end of <body>: it contains a
+     <div>, which is not valid inside <head>, and the script appends itself
+     to document.body. Code below is unmodified. -->
+
+<!--BEGIN QUALTRICS WEBSITE FEEDBACK SNIPPET-->
+<script type='text/javascript'>
+(function(){var g=function(g){
+this.go=function(){var a=document.createElement("script");a.type="text/javascript";a.src=g;document.body&&document.body.appendChild(a)};
+this.start=function(){var t=this;"complete"!==document.readyState?window.addEventListener?window.addEventListener("load",function(){t.go()},!1):window.attachEvent&&window.attachEvent("onload",function(){t.go()}):t.go()};};
+try{(new g("https://zn3nimbwdk6gfxnjw-x4agent22.siteintercept.qualtrics.com/SIE/?Q_ZID=ZN_3niMbWDK6GfXNJW")).start()}catch(i){}})();
+</script>
+<div id='ZN_3niMbWDK6GfXNJW'><!--DO NOT REMOVE-CONTENTS PLACED HERE--></div>
+<!--END WEBSITE FEEDBACK SNIPPET-->
 
 </body>
 </html>
